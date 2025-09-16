@@ -148,7 +148,7 @@ export default function Home() {
                 <motion.div variants={itemVariants} className="feature-card">
                     <div className="feature-icon">🧠</div>
                     <h3>AI-Powered Assistance</h3>
-                    <p>Get instant, branch-aware academic help from our AI Chatbot whenever you're stuck on a concept.</p>
+                    <p>Get instant, branch-aware academic help from our AI Chatbot whenever you&apos;re stuck on a concept.</p>
                 </motion.div>
                 <motion.div variants={itemVariants} className="feature-card">
                     <div className="feature-icon">📚</div>
@@ -214,7 +214,7 @@ export default function Home() {
               viewport={{ once: true, amount: 0.5 }}
             >
               <h2 className="section-title">Get In Touch</h2>
-              <p className="section-subtitle">Have questions? We're here to help you on your journey to success.</p>
+              <p className="section-subtitle">Have questions? We&apos;re here to help you on your journey to success.</p>
             </motion.div>
             <motion.form 
               className="contact-form"
