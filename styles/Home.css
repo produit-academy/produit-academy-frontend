@@ -1,0 +1,325 @@
+.main-content {
+  padding-top: 95px; 
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 7rem 0;
+  position: relative; 
+  overflow: hidden;   
+}
+
+.hero-title {
+  font-family: 'Lora', serif;
+  font-size: 4rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.hero-title .highlight {
+  color: var(--accent-blue);
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto 2.5rem;
+}
+
+.cta-btn {
+  background-color: var(--accent-blue);
+  color: #ffffff;
+  border: none;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 63, 136, 0.3);
+}
+
+/* Stats Bar */
+.stats-bar {
+  background-color: var(--background-white);
+  padding: 3rem 0;
+  border-top: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.stats-bar .container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-item h3 {
+  font-family: 'Lora', serif;
+  font-size: 2.5rem;
+  color: var(--accent-blue);
+  margin-bottom: 0.5rem;
+}
+
+.stat-item p {
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* Common Section Styling */
+.section {
+  padding: 6rem 0;
+}
+
+.section-title {
+  font-family: 'Lora', serif;
+  text-align: center;
+  font-size: 2.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1.15rem;
+  margin-bottom: 4rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Animated Logo Section */
+.animated-logo-section {
+  text-align: center;
+  padding: 4rem 0;
+  background-color: var(--background-white);
+}
+
+.logo-animation-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+/* Features Section */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.feature-card {
+  background-color: var(--background-white);
+  padding: 2.5rem;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  color: var(--accent-blue);
+  margin-bottom: 1.5rem;
+}
+
+.feature-card h3 {
+  font-family: 'Lora', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.feature-card p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+
+/* SWIPER CAROUSEL STYLES */
+.mySwiper {
+  padding-bottom: 50px !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: var(--accent-blue) !important;
+}
+
+.swiper-slide {
+  height: auto;
+  display: flex;
+}
+
+.course-card {
+  width: 100%;
+}
+
+/* Courses Section Card Styles */
+.course-card {
+  background-color: var(--background-white);
+  padding: 2rem;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+}
+.course-card h4 {
+  font-family: 'Lora', serif;
+  font-size: 1.4rem;
+  color: var(--accent-blue);
+  margin-bottom: 1rem;
+}
+.course-card p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  flex-grow: 1;
+  margin-bottom: 1.5rem;
+}
+.course-card a {
+  color: var(--accent-blue);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+.course-card a:hover {
+  transform: translateX(5px);
+}
+
+
+/* CONTACT FORM STYLES */
+.contact-form {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: left;
+  background-color: var(--background-white);
+  padding: 2.5rem;
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
+}
+.contact-form input, .contact-form textarea {
+  background: var(--background-light);
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
+  padding: 1rem;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.contact-form input:focus, .contact-form textarea:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(0, 63, 136, 0.15);
+}
+
+
+/* CTA Section */
+.cta-section {
+  padding: 5rem 0;
+  background-color: var(--accent-blue);
+  color: #ffffff;
+  text-align: center;
+}
+.cta-section h2 {
+  font-family: 'Lora', serif;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+.cta-section p {
+  font-size: 1.15rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+.cta-section .cta-btn {
+  background-color: #ffffff;
+  color: var(--accent-blue);
+}
+.cta-section .cta-btn:hover {
+  background-color: var(--background-light);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* --- NEW: Kite Animation --- */
+.kites-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.kite {
+  position: absolute;
+  opacity: 0.7;
+}
+
+/* Define two different flight paths */
+@keyframes flyPath1 {
+  0% { transform: translateX(-10vw) translateY(20vh) rotate(-10deg); }
+  50% { transform: translateX(50vw) translateY(-10vh) rotate(10deg); }
+  100% { transform: translateX(110vw) translateY(5vh) rotate(-5deg); }
+}
+
+@keyframes flyPath2 {
+  0% { transform: translateX(-10vw) translateY(10vh) rotate(10deg); }
+  50% { transform: translateX(60vw) translateY(15vh) rotate(-15deg); }
+  100% { transform: translateX(110vw) translateY(-5vh) rotate(5deg); }
+}
+
+/* Apply animations randomly to each kite */
+.kite:nth-child(1) {
+  top: 5%;
+  font-size: 3rem;
+  animation: flyPath1 18s linear infinite;
+  animation-delay: -2s; /* Start part-way through */
+}
+
+.kite:nth-child(2) {
+  top: 15%;
+  font-size: 2.5rem;
+  animation: flyPath2 15s linear infinite;
+  animation-delay: -8s;
+}
+
+.kite:nth-child(3) {
+  top: 10%;
+  font-size: 3.5rem;
+  animation: flyPath1 22s linear infinite;
+  animation-delay: -15s;
+}
+
+.kite:nth-child(4) {
+  top: 25%;
+  font-size: 2rem;
+  animation: flyPath2 13s linear infinite;
+  animation-delay: -20s;
+}

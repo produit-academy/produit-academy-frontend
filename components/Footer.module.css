@@ -1,0 +1,7 @@
+.footer {
+  text-align: center;
+  padding: 3rem 0;
+  margin-top: 4rem;
+  border-top: 1px solid var(--card-border);
+  color: var(--text-secondary);
+}

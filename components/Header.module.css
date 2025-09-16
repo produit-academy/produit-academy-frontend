@@ -1,0 +1,91 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  
+  padding: 0.75rem 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoText {
+  font-family: 'Lora', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--accent-green-dark);
+}
+
+.header nav {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.header nav a {
+  color: var(--text-secondary);
+  font-weight: 400;
+  transition: color 0.3s ease;
+  padding-bottom: 5px;
+  border-bottom: 2px solid transparent;
+}
+
+.header nav a:hover {
+  color: var(--accent-green);
+  border-bottom-color: var(--accent-green);
+}
+
+/* --- NEW: Styles for the button container --- */
+.authButtons {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Space between the Login and SignUp buttons */
+}
+
+.loginBtn {
+  background-color: var(--accent-green);
+  color: #ffffff;
+  border: 2px solid transparent;
+  padding: 0.6rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.loginBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(50, 205, 50, 0.2);
+  background-color: var(--accent-green-dark);
+}
+
+/* --- NEW: Style for the SignUp button --- */
+.signupBtn {
+  background-color: var(--accent-green);
+  color: #ffffff;
+  border: 2px solid transparent; 
+  padding: 0.6rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.signupBtn:hover {
+  transform: translateY(-2px);
+  background-color: #920000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
