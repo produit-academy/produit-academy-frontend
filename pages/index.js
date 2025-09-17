@@ -46,7 +46,7 @@ export default function Home() {
       <Head>
         <title>Produit Academy - GATE Coaching</title>
         <meta name="description" content="Professional educational platform for GATE coaching." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/logo.ico" />
       </Head>
 
       <ul className="floating-elements">
