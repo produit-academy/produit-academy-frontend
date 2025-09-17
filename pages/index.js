@@ -68,7 +68,7 @@ export default function Home() {
         <div className="container">
           <section className="hero">
             <motion.h1 className="hero-title" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-              Unlock Your Potential with <span className="highlight">Produit Academy</span>
+              Unlock Your Potential with <span className="highlight"><br />Produit Academy</span>
             </motion.h1>
             <motion.p className="hero-subtitle" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
               A premier educational platform for excelling in GATE. Access expert-led classes, comprehensive materials, and track your progress seamlessly.
