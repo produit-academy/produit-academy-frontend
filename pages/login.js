@@ -62,7 +62,7 @@ export default function Login() {
                     Forgot Password?
                 </Link>
                 <span>
-                    Don't have an account? <Link href="/signup" style={{color: 'var(--accent-green)'}}><br></br>Sign Up</Link>
+                    Don&apos;t have an account? <Link href="/signup" style={{color: 'var(--accent-green)'}}>Sign Up</Link>
                 </span>
             </div>
           </motion.div>
