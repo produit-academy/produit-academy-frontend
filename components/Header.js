@@ -31,15 +31,15 @@ export default function Header() {
       <div className={`container ${styles.headerContent}`}>
         <div className={styles.logo}>
           <Link href="/" passHref>
-              <Image src="/logo.png" alt="Produit Academy Logo" width={40} height={40} priority />
+            <Image src="/logo.png" alt="Produit Academy Logo" width={40} height={40} priority />
           </Link>
           <span className={styles.logoText}>Produit Academy</span>
         </div>
 
         <nav>
-          <Link href="/#features" passHref>Features</Link>
-          <Link href="/#courses" passHref>Courses</Link>
-          <Link href="/#contact" passHref>Contact</Link>
+          <Link href="/#features">Features</Link>
+          <Link href="/#courses">Courses</Link>
+          <Link href="/#contact">Contact</Link>
         </nav>
 
         <div className={styles.authButtons}>
