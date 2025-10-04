@@ -1,0 +1,85 @@
+/* styles/Auth.css */
+
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding-top: 95px; /* Same as main-content */
+}
+
+.auth-container {
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 3rem;
+  background-color: var(--background-white);
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
+  text-align: center;
+}
+
+.auth-title {
+  font-family: 'Lora', serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.auth-subtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-bottom: 2.5rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: left;
+}
+
+.auth-form input, .auth-form select {
+  background: var(--background-light);
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
+  padding: 1rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-form input:focus, .auth-form select:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(0, 63, 136, 0.15);
+}
+
+.auth-form .cta-btn {
+  margin-top: 1rem;
+}
+
+.auth-switch {
+  margin-top: 2rem;
+  color: var(--text-secondary);
+}
+
+.auth-switch a {
+  color: var(--accent-blue);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.auth-switch a:hover {
+  color: var(--accent-green-dark);
+}
+
+.auth-error {
+  color: #dc2626;
+  background-color: #fee2e2;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}

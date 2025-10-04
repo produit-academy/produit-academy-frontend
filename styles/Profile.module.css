@@ -1,0 +1,100 @@
+.profileContainer {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 3rem;
+    background-color: var(--background-white);
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+}
+
+.profileTitle {
+    font-family: 'Lora', serif;
+    font-size: 2.8rem;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.formSection {
+    margin-bottom: 2.5rem;
+}
+
+.formTitle {
+    font-family: 'Lora', serif;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    text-align: left;
+}
+
+.profileForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.label {
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-align: left;
+    margin-bottom: -0.8rem;
+}
+
+.profileForm input {
+    background: var(--background-light);
+    border: 1px solid var(--card-border);
+    color: var(--text-primary);
+    padding: 0.8rem;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.profileForm input:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+.submitButton {
+    background-color: var(--accent-green);
+    color: #ffffff;
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 1rem;
+    align-self: flex-start;
+}
+
+.submitButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(50, 205, 50, 0.2);
+    background-color: var(--accent-green-dark);
+}
+
+.message {
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.divider {
+    margin: 2.5rem 0;
+    border: none;
+    border-top: 1px solid var(--card-border);
+}
