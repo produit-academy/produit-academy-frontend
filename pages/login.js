@@ -24,21 +24,27 @@ export default function Login() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: email, password }),
       });
+      
       const data = await response.json();
+
       if (response.ok) {
         localStorage.setItem('access_token', data.access);
         localStorage.setItem('refresh_token', data.refresh);
         const decodedToken = decodeToken(data.access);
         window.location.href = decodedToken?.is_staff ? '/admin/dashboard' : '/student/dashboard';
       } else {
+        console.error('Backend Error:', data); 
+        
         if (data.detail && data.detail.includes('inactive')) {
             router.push(`/verify-otp?email=${email}`);
         } else {
-            setError('No active account found with the given credentials.');
+            // Use the specific error from the backend if available
+            setError(data.detail || 'No active account found with the given credentials.');
         }
       }
     } catch (error) { 
-        setError('An error occurred. Please try again.'); 
+        setError('A network or parsing error occurred. Please try again.'); 
+        console.error('Fetch Error:', error);
     }
   };
 
