@@ -298,7 +298,7 @@
 /* Apply animations randomly to each kite */
 .kite:nth-child(1) {
   top: 5%;
-  font-size: 3rem;
+  font-size: 4em; 
   animation: flyPath1 18s linear infinite;
   animation-delay: -2s; /* Start part-way through */
 }
