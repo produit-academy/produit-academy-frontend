@@ -30,8 +30,10 @@ export default function Header() {
           const data = await res.json();
           setCourses(Array.isArray(data) ? data : []);
         }
-      } catch (_) {
-        // ignore; fallback to static links
+      } catch (error) {
+        if (error.message !== 'Session expired') {
+            console.error("Failed to fetch courses for header:", error);
+        }
       }
     };
     load();
@@ -68,23 +70,21 @@ export default function Header() {
 
   const dashboardUrl = user?.is_staff ? '/admin/dashboard' : '/student/dashboard';
 
+  // CORRECTED: This function now uses the correct data fields (id, name)
+  // from the API response and removes the hardcoded fallbacks.
   const renderCourseLinks = (onClick) => {
     if (courses && courses.length > 0) {
-      return courses.slice(0, 10).map((c, idx) => {
-        const slug = c.slug || c.id || idx;
-        const title = c.title || c.name || 'Course';
-        const href = `/courses/${slug}`;
+      return courses.slice(0, 10).map((course) => {
+        // Assuming you have a dynamic page like /courses/[id].js
+        // Using course.id and course.name from the /api/branches/ endpoint
+        const href = `/courses/${course.id}`; 
         return (
-          <Link key={`${slug}`} href={href} onClick={onClick}>{title}</Link>
+          <Link key={course.id} href={href} onClick={onClick}>{course.name}</Link>
         );
       });
     }
-    return (
-      <>
-        <Link href="/courses/gate-ee" onClick={onClick}>GATE Electrical</Link>
-        <Link href="/courses/gate-me" onClick={onClick}>GATE Mechanical</Link>
-      </>
-    );
+    // No fallbacks needed, just return null if no courses are loaded
+    return null;
   };
 
   return (

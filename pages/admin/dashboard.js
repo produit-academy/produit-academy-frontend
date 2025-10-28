@@ -23,10 +23,11 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchInitialData = async () => {
         try {
+            // FIX: Removed the hardcoded base URL from all paths
             const [requestsRes, branchesRes, studentsRes] = await Promise.all([
-                apiFetch('http://127.0.0.1:8000/api/admin/dashboard/'),
-                apiFetch('http://127.0.0.1:8000/api/branches/'),
-                apiFetch('http://127.0.0.1:8000/api/admin/students/')
+                apiFetch('/api/admin/dashboard/'),
+                apiFetch('/api/branches/'),
+                apiFetch('/api/admin/students/')
             ]);
 
             if (requestsRes.ok) setRequests(await requestsRes.json());
@@ -46,7 +47,8 @@ export default function AdminDashboard() {
 
   const handleRequestUpdate = async (requestId, newStatus) => {
     try {
-        const response = await apiFetch(`http://127.0.0.1:8000/api/courserequests/${requestId}/update/`, {
+        // FIX: Removed the hardcoded base URL
+        const response = await apiFetch(`/api/courserequests/${requestId}/update/`, {
             method: 'PATCH',
             body: JSON.stringify({ status: newStatus }),
         });
@@ -64,7 +66,8 @@ export default function AdminDashboard() {
   const handleDisableAccount = async (studentId) => {
     if (!confirm('Are you sure you want to disable this account?')) return;
     try {
-        const response = await apiFetch(`http://127.0.0.1:8000/api/admin/students/${studentId}/`, {
+        // FIX: Removed the hardcoded base URL
+        const response = await apiFetch(`/api/admin/students/${studentId}/`, {
             method: 'DELETE',
         });
         if (response.ok) {
@@ -88,7 +91,8 @@ export default function AdminDashboard() {
     formData.append('title', title);
     
     try {
-        const response = await apiFetch('http://127.0.0.1:8000/api/materials/upload/', {
+        // FIX: Removed the hardcoded base URL
+        const response = await apiFetch('/api/materials/upload/', {
             method: 'POST',
             body: formData,
         });

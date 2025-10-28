@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
+import apiFetch from '../utils/api'; 
 
 const slideInUp = { hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } } };
 
@@ -20,7 +21,7 @@ export default function Signup() {
     useEffect(() => {
         const fetchBranches = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/branches/');
+                const response = await apiFetch('/api/branches/'); 
                 if (response.ok) {
                     setBranches(await response.json());
                 } else {
@@ -41,11 +42,11 @@ export default function Signup() {
             return;
         }
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/signup/', {
+            const response = await apiFetch('/api/signup/', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username: name, email, password, branch: parseInt(branch) }),
             });
+            
             const data = await response.json();
             if (response.ok) {
                 router.push(`/verify-otp?email=${email}`);
@@ -53,7 +54,9 @@ export default function Signup() {
                 setError(Object.values(data).flat().join(' ') || 'Signup failed.');
             }
         } catch (error) {
-            setError('An error occurred.');
+            if (error.message !== 'Session expired') {
+                 setError('An error occurred.');
+            }
         }
     };
 
