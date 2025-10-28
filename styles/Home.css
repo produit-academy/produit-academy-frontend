@@ -108,6 +108,16 @@
   text-align: center;
   padding: 4rem 0;
   background-color: var(--background-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.animated-logo-section > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .logo-animation-container {
@@ -118,6 +128,12 @@
 }
 
 /* Features Section */
+#features > div:first-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -176,6 +192,13 @@
   width: 100%;
 }
 
+/* Courses Section */
+#courses > div:first-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 /* Courses Section Card Styles */
 .course-card {
   background-color: var(--background-white);
@@ -210,34 +233,7 @@
 }
 
 
-/* CONTACT FORM STYLES */
-.contact-form {
-  max-width: 700px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  text-align: left;
-  background-color: var(--background-white);
-  padding: 2.5rem;
-  border-radius: 10px;
-  box-shadow: var(--card-shadow);
-}
-.contact-form input, .contact-form textarea {
-  background: var(--background-light);
-  border: 1px solid var(--card-border);
-  color: var(--text-primary);
-  padding: 1rem;
-  border-radius: 5px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.contact-form input:focus, .contact-form textarea:focus {
-  outline: none;
-  border-color: var(--accent-blue);
-  box-shadow: 0 0 0 3px rgba(0, 63, 136, 0.15);
-}
+/* --- REMOVED OLD CONTACT FORM STYLES --- */
 
 
 /* CTA Section */
@@ -322,4 +318,457 @@
   font-size: 2rem;
   animation: flyPath2 13s linear infinite;
   animation-delay: -20s;
+}
+
+/* --- NEW: STYLES FOR UPDATED CONTACT SECTION --- */
+#contact > div:first-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact-container {
+  display: flex;
+  gap: 3rem;
+  background-color: #fff;
+  padding: 3rem;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  text-align: left;
+}
+
+.contact-form {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: left;
+  background-color: var(--background-white);
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  max-width: none;
+  margin: 0;
+}
+
+.form-group {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.contact-form input,
+.contact-form textarea,
+.contact-form select {
+  width: 100%;
+  background: var(--background-light);
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
+  padding: 1rem;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus,
+.contact-form select:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(0, 63, 136, 0.15);
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-form .cta-btn {
+  align-self: flex-start;
+}
+
+.contact-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: left;
+}
+
+.contact-info-image {
+  width: 100%;
+  margin-bottom: 1rem;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.contact-info-item h4 {
+  font-size: 1.2rem;
+  font-family: 'Lora', serif;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.contact-info-item p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.contact-info-item a {
+  color: var(--accent-blue);
+  text-decoration: none;
+  transition: text-decoration 0.3s ease;
+}
+
+.contact-info-item a:hover {
+  text-decoration: underline;
+}
+
+/* ========== MOBILE RESPONSIVE STYLES ========== */
+
+/* Tablet and below (768px) */
+@media screen and (max-width: 768px) {
+  .main-content {
+    padding-top: 80px;
+  }
+
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  .hero {
+    padding: 4rem 0;
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+    padding: 0 0.5rem;
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+    padding: 0 0.5rem;
+    text-align: center;
+  }
+
+  .cta-btn {
+    padding: 0.9rem 2rem;
+    font-size: 1rem;
+  }
+
+  .stats-bar {
+    padding: 2rem 0;
+  }
+
+  .stats-bar .container {
+    gap: 1.5rem;
+    padding: 0 1.5rem;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-item h3 {
+    font-size: 2rem;
+  }
+
+  .stat-item p {
+    font-size: 0.9rem;
+  }
+
+  .section {
+    padding: 4rem 0;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    padding: 0 0.5rem;
+    text-align: center;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+    padding: 0 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .feature-card {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .feature-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .cta-section {
+    padding: 3rem 0;
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-size: 1.8rem;
+    padding: 0 1rem;
+  }
+
+  .cta-section p {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+
+  .contact-container {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem 1rem;
+  }
+
+  .contact-form {
+    flex: 1;
+    width: 100%;
+  }
+
+  .contact-info {
+    flex: 1;
+    width: 100%;
+    text-align: left;
+  }
+
+  .animated-logo-section {
+    padding: 3rem 0;
+    text-align: center;
+  }
+
+  .animated-logo-section > div {
+    text-align: center;
+  }
+
+  .logo-animation-container {
+    margin-top: 2rem;
+  }
+
+  /* Ensure proper centering for section content */
+  #features > div:first-child,
+  #courses > div:first-child,
+  #contact > div:first-child {
+    text-align: center;
+    width: 100%;
+  }
+
+  .mySwiper {
+    padding: 0 1rem;
+  }
+
+  /* Hide some kites on mobile for better performance */
+  .kite:nth-child(3),
+  .kite:nth-child(4) {
+    display: none;
+  }
+}
+
+/* Mobile (480px and below) */
+@media screen and (max-width: 480px) {
+  .main-content {
+    padding-top: 70px;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .hero {
+    padding: 3rem 0;
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: 1.6rem;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .cta-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .stats-bar {
+    padding: 1.5rem 0;
+  }
+
+  .stats-bar .container {
+    gap: 1rem;
+    padding: 0 1rem;
+    flex-direction: column;
+  }
+
+  .stat-item {
+    text-align: center;
+    width: 100%;
+  }
+
+  .stat-item h3 {
+    font-size: 1.7rem;
+  }
+
+  .stat-item p {
+    font-size: 0.85rem;
+  }
+
+  .section {
+    padding: 3rem 0;
+  }
+
+  .section-title {
+    font-size: 1.45rem;
+    text-align: center;
+    padding: 0 0.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding: 0 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .features-grid {
+    gap: 1rem;
+  }
+
+  .feature-card {
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .feature-icon {
+    font-size: 2.3rem;
+  }
+
+  .feature-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .course-card {
+    padding: 1.5rem;
+  }
+
+  .course-card h4 {
+    font-size: 1.1rem;
+  }
+
+  .course-card p {
+    font-size: 0.9rem;
+  }
+
+  .cta-section {
+    padding: 2.5rem 0;
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-size: 1.4rem;
+    padding: 0 1rem;
+  }
+
+  .cta-section p {
+    font-size: 0.9rem;
+    padding: 0 1rem;
+  }
+
+  .contact-container {
+    padding: 1.5rem 1rem;
+    gap: 1.5rem;
+  }
+
+  .contact-form {
+    width: 100%;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .contact-info {
+    width: 100%;
+    text-align: left;
+  }
+
+  .contact-info-item p {
+    font-size: 0.95rem;
+  }
+
+  .animated-logo-section {
+    padding: 2.5rem 0;
+    text-align: center;
+  }
+
+  .animated-logo-section > div {
+    text-align: center;
+  }
+
+  .animated-logo-section > div img {
+    width: 150px !important;
+    height: 150px !important;
+  }
+
+  .logo-animation-container {
+    margin-top: 1.5rem;
+  }
+
+  /* Ensure proper centering for section content on mobile */
+  #features > div:first-child,
+  #courses > div:first-child,
+  #contact > div:first-child,
+  .animated-logo-section > div:first-child {
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Force center and equal size for key headings on mobile */
+  #features .section-title,
+  #courses .section-title,
+  #contact .section-title,
+  .animated-logo-section .section-title {
+    text-align: center !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.45rem;
+  }
+
+  .mySwiper {
+    padding: 0 0.5rem;
+  }
 }

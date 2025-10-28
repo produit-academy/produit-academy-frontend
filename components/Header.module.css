@@ -3,8 +3,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 10;
-  
+  z-index: 1000;
   padding: 0.75rem 0;
   background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
@@ -30,12 +29,47 @@
   color: var(--accent-green-dark);
 }
 
-.header nav {
+/* Hamburger Menu Button */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  z-index: 1001;
+}
+
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: var(--text-primary);
+  transition: all 0.3s ease;
+  border-radius: 3px;
+}
+
+.hamburger span.open:nth-child(1) {
+  transform: rotate(45deg) translateY(11px);
+}
+
+.hamburger span.open:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger span.open:nth-child(3) {
+  transform: rotate(-45deg) translateY(-11px);
+}
+
+/* Desktop Navigation */
+.desktopNav {
   display: flex;
+  align-items: center;
   gap: 2.5rem;
 }
 
-.header nav a {
+.desktopNav a {
   color: var(--text-secondary);
   font-weight: 400;
   transition: color 0.3s ease;
@@ -43,22 +77,21 @@
   border-bottom: 2px solid transparent;
 }
 
-.header nav a:hover {
-  color: var(--accent-green);
-  border-bottom-color: var(--accent-green);
+.desktopNav a:hover {
+  color: var(--accent-blue);
+  border-bottom-color: var(--accent-blue);
 }
 
-/* --- NEW: Styles for the button container --- */
 .authButtons {
   display: flex;
   align-items: center;
-  gap: 1rem; /* Space between the Login and SignUp buttons */
+  gap: 1rem;
 }
 
 .loginBtn {
-  background-color: var(--accent-green);
-  color: #ffffff;
-  border: 2px solid transparent;
+  background-color: transparent;
+  color: var(--accent-blue);
+  border: 2px solid var(--accent-blue);
   padding: 0.6rem 1.8rem;
   border-radius: 8px;
   font-weight: 600;
@@ -67,14 +100,12 @@
 }
 
 .loginBtn:hover {
+  background-color: rgba(0, 63, 136, 0.1);
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(50, 205, 50, 0.2);
-  background-color: var(--accent-green-dark);
 }
 
-/* --- NEW: Style for the SignUp button --- */
 .signupBtn {
-  background-color: var(--accent-green);
+  background-color: var(--accent-blue);
   color: #ffffff;
   border: 2px solid transparent; 
   padding: 0.6rem 1.8rem;
@@ -86,6 +117,330 @@
 
 .signupBtn:hover {
   transform: translateY(-2px);
-  background-color: #920000;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 63, 136, 0.2);
+}
+
+.enquiryBtn {
+  background-color: transparent;
+  color: var(--accent-blue);
+  border: 2px solid var(--accent-blue); 
+  padding: 0.6rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.enquiryBtn:hover {
+  transform: translateY(-2px);
+  background-color: rgba(0, 63, 136, 0.1);
+}
+
+/* Dropdown Menu Styles */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdownBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-weight: 400;
+  font-size: 1rem; 
+  font-family: inherit;
+  padding: 0;
+  padding-bottom: 5px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.3s ease;
+}
+
+.dropdownBtn span {
+  font-size: 0.8em;
+  margin-left: 5px;
+}
+
+.dropdownBtn:hover {
+  color: var(--accent-blue);
+  border-bottom-color: var(--accent-blue);
+}
+
+.dropdownContent {
+  display: none;
+  position: absolute;
+  background-color: #fff; 
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+  z-index: 1;
+  border-radius: 8px;
+  padding: 0.5rem 0;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.dropdownContent a {
+  color: var(--text-secondary);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  border-bottom: none;
+  font-weight: 400;
+  text-align: left;
+}
+
+.dropdownContent a:hover {
+  background-color: #f4f4f4;
+  color: var(--accent-blue);
+}
+
+.dropdown:hover .dropdownContent {
+  display: block;
+}
+
+/* Mobile Sidebar Styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  background-color: white;
+  z-index: 9999;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebarContent {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  overflow-y: auto;
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.closeBtn:hover {
+  color: var(--accent-blue);
+}
+
+.sidebarNav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.sidebarNav a {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--card-border);
+  transition: color 0.3s ease;
+}
+
+.sidebarNav a:hover {
+  color: var(--accent-blue);
+}
+
+.mobileDropdown {
+  margin: 0.5rem 0;
+}
+
+.sidebarButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.sidebarBtn,
+.sidebarBtnPrimary,
+.sidebarBtnDanger {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  border: none;
+}
+
+.sidebarBtn {
+  background-color: transparent;
+  color: var(--accent-blue);
+  border: 2px solid var(--accent-blue);
+}
+
+.sidebarBtn:hover {
+  background-color: rgba(0, 63, 136, 0.1);
+}
+
+.sidebarBtnPrimary {
+  background-color: var(--accent-blue);
+  color: white;
+  border: 2px solid transparent;
+}
+
+.sidebarBtnPrimary:hover {
+  background-color: var(--accent-green-dark);
+  transform: translateY(-2px);
+}
+
+.sidebarBtnDanger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+
+.sidebarBtnDanger:hover {
+  background-color: #c82333;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+}
+
+/* ========== MOBILE RESPONSIVE STYLES ========== */
+
+/* Tablet and below (768px) */
+@media screen and (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .desktopNav,
+  .authButtons {
+    display: none;
+  }
+
+  .headerContent {
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    flex-shrink: 0;
+  }
+
+  .logoText {
+    font-size: 1.3rem;
+  }
+
+  .sidebar {
+    width: 280px;
+  }
+}
+
+/* Mobile (480px and below) */
+@media screen and (max-width: 480px) {
+  .logoText {
+    font-size: 1.1rem;
+  }
+
+  .sidebar {
+    width: 85%;
+    max-width: 320px;
+  }
+
+  .sidebarContent {
+    padding: 1.5rem 1rem;
+  }
+
+  .sidebarNav a {
+    font-size: 1rem;
+  }
+
+  .sidebarBtn,
+  .sidebarBtnPrimary,
+  .sidebarBtnDanger {
+    font-size: 0.9rem;
+    padding: 0.65rem 0.85rem;
+  }
+}
+
+/* Ensure left alignment for items in the sidebar */
+.sidebarNav a,
+.dropdownBtn {
+  text-align: left;
+  width: 100%;
+}
+
+/* Mobile dropdown states */
+.mobileDropdown.open .dropdownBtn {
+  color: var(--accent-blue);
+}
+
+/* Show dropdown content when open in mobile sidebar */
+.dropdownContent.show {
+  display: block;
+  position: static;
+  box-shadow: none;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  margin-top: 0.5rem;
+}
+
+/* Sidebar buttons layout */
+.sidebarButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+/* Improve sidebar layout on small screens */
+@media screen and (max-width: 768px) {
+  .sidebarContent {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  .sidebarNav a,
+  .dropdownBtn {
+    font-size: 1rem;
+  }
+
+  .sidebarBtnPrimary {
+    font-weight: 700;
+  }
 }
