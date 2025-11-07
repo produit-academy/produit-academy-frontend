@@ -15,7 +15,7 @@ export default function Profile() {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await apiFetch('http://127.0.0.1:8000/api/profile/');
+                const response = await apiFetch('/api/profile/');
                 if (response.ok) {
                     const data = await response.json();
                     setProfile(data);
@@ -36,7 +36,7 @@ export default function Profile() {
         e.preventDefault();
         setMessage(''); setError('');
         try {
-            const response = await apiFetch('http://127.0.0.1:8000/api/profile/', {
+            const response = await apiFetch('/api/profile/', {
                 method: 'PUT',
                 body: JSON.stringify(profile),
             });
@@ -56,7 +56,7 @@ export default function Profile() {
         e.preventDefault();
         setMessage(''); setError('');
         try {
-            const response = await apiFetch('http://127.0.0.1:8000/api/change-password/', {
+            const response = await apiFetch('/api/change-password/', {
                 method: 'PUT',
                 body: JSON.stringify({ old_password: oldPassword, new_password: newPassword }),
             });

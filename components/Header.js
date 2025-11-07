@@ -39,6 +39,20 @@ export default function Header() {
     load();
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const header = document.querySelector(`.${styles.header}`);
+      if (window.scrollY > 20) {
+        header.classList.add(styles.scrolled);
+      } else {
+        header.classList.remove(styles.scrolled);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Lock body scroll when sidebar is open
   useEffect(() => {
     if (isMenuOpen) {
@@ -126,24 +140,21 @@ export default function Header() {
 
           <div className={styles.authButtons}>
             {user ? (
-              <>
-                <Link href="/profile" passHref><button className={styles.loginBtn}>Profile</button></Link>
-                <Link href={dashboardUrl} passHref><button className={styles.loginBtn}>Dashboard</button></Link>
-                
-                {/* --- NEW STUDENT LINKS --- */}
-                {user.role === 'student' && (
-                  <>
-                    <Link href="/student/mock-tests" passHref><button className={styles.loginBtn}>Mock Tests</button></Link>
-                    <Link href="/student/analytics" passHref><button className={styles.loginBtn}>Analytics</button></Link>
-                  </>
-                )}
-                
-                <button onClick={handleLogout} className={styles.signupBtn}>Logout</button>
-              </>
+              <div className={styles.dropdown}>
+                <button className={styles.dropdownBtn}>
+                  <Image src={user.profile_picture || '/default-avatar.png'} alt="Profile" width={40} height={40} className={styles.avatar} />
+                  {user.username} <span>&#9662;</span>
+                </button>
+                <div className={styles.dropdownContent}>
+                  <Link href={getDashboardUrl()}>Dashboard</Link>
+                  <Link href="/profile">Profile</Link>
+                  <a onClick={handleLogout} style={{cursor: 'pointer'}}>Logout</a>
+                </div>
+              </div>
             ) : (
               <>
-                <Link href="/#contact" passHref><button className={styles.enquiryBtn}>Enquiry Now</button></Link>
-                <Link href="/signup" passHref><button className={styles.signupBtn}>Start Learning</button></Link>
+                <Link href="/login" passHref><button className={styles.loginBtn}>Login</button></Link>
+                <Link href="/signup" passHref><button className={styles.signupBtn}>Sign Up</button></Link>
               </>
             )}
           </div>
@@ -151,7 +162,7 @@ export default function Header() {
       </header>
 
       {isMenuOpen && (
-        <div className={styles.overlay} onClick={closeMenu}></div>
+        <div className={`${styles.overlay} ${isMenuOpen ? styles.open : ''}`} onClick={closeMenu}></div>
       )}
 
       <div className={`${styles.sidebar} ${isMenuOpen ? styles.open : ''}`}>

@@ -1,0 +1,116 @@
+.quizContainer {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.quizTitle {
+  text-align: center;
+  color: var(--text-primary);
+  font-family: 'Lora', serif;
+}
+
+.questionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.questionText {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.questionMarks {
+  background-color: var(--accent-blue-light);
+  color: var(--accent-blue);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  margin-left: 1rem;
+}
+
+.choicesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.choiceButton {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  text-align: left;
+  background-color: #fff;
+  border: 2px solid var(--card-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-secondary);
+}
+
+.choiceButton:hover {
+  border-color: var(--accent-blue);
+  background-color: #f7faff;
+}
+
+.choiceButton.selected {
+  border-color: var(--accent-blue);
+  background-color: var(--accent-blue-light);
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  border-top: 1px solid var(--card-border);
+  padding-top: 1.5rem;
+}
+
+.navigation button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--accent-blue);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.navigation button:hover {
+  background-color: var(--accent-green-dark);
+}
+
+.navigation button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.navigation .submitButton {
+  background-color: var(--accent-green);
+}
+
+.navigation .submitButton:hover {
+  background-color: var(--accent-green-dark);
+}
+
+.questionProgress {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
