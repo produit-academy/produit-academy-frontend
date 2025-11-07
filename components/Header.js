@@ -31,9 +31,9 @@ export default function Header() {
           setCourses(Array.isArray(data) ? data : []);
         }
       } catch (error) {
-        if (error.message !== 'Session expired') {
+         if (error.message !== 'Session expired') {
             console.error("Failed to fetch courses for header:", error);
-        }
+         }
       }
     };
     load();
@@ -68,22 +68,25 @@ export default function Header() {
     setIsMobileCoursesOpen((v) => !v);
   };
 
-  const dashboardUrl = user?.is_staff ? '/admin/dashboard' : '/student/dashboard';
+  // Check user role for dashboard link
+  const getDashboardUrl = () => {
+    if (!user) return '/login';
+    if (user.role === 'admin') return '/admin/dashboard';
+    if (user.role === 'branch_admin') return '/branch-admin/dashboard'; // NOTE: You will need to create this page
+    return '/student/dashboard';
+  };
+  const dashboardUrl = getDashboardUrl();
 
-  // CORRECTED: This function now uses the correct data fields (id, name)
-  // from the API response and removes the hardcoded fallbacks.
+
   const renderCourseLinks = (onClick) => {
     if (courses && courses.length > 0) {
       return courses.slice(0, 10).map((course) => {
-        // Assuming you have a dynamic page like /courses/[id].js
-        // Using course.id and course.name from the /api/branches/ endpoint
-        const href = `/courses/${course.id}`; 
+        const href = `/courses/${course.id}`; // Assuming /courses/[id].js
         return (
           <Link key={course.id} href={href} onClick={onClick}>{course.name}</Link>
         );
       });
     }
-    // No fallbacks needed, just return null if no courses are loaded
     return null;
   };
 
@@ -124,9 +127,17 @@ export default function Header() {
           <div className={styles.authButtons}>
             {user ? (
               <>
-                <Link href="/#contact" passHref><button className={styles.enquiryBtn}>Enquiry Now</button></Link>
                 <Link href="/profile" passHref><button className={styles.loginBtn}>Profile</button></Link>
                 <Link href={dashboardUrl} passHref><button className={styles.loginBtn}>Dashboard</button></Link>
+                
+                {/* --- NEW STUDENT LINKS --- */}
+                {user.role === 'student' && (
+                  <>
+                    <Link href="/student/mock-tests" passHref><button className={styles.loginBtn}>Mock Tests</button></Link>
+                    <Link href="/student/analytics" passHref><button className={styles.loginBtn}>Analytics</button></Link>
+                  </>
+                )}
+                
                 <button onClick={handleLogout} className={styles.signupBtn}>Logout</button>
               </>
             ) : (
@@ -170,9 +181,17 @@ export default function Header() {
           <div className={styles.sidebarButtons}>
             {user ? (
               <>
-                <Link href="/#contact" passHref><button className={styles.sidebarBtn} onClick={closeMenu}>Enquiry Now</button></Link>
                 <Link href="/profile" passHref><button className={styles.sidebarBtn} onClick={closeMenu}>Profile</button></Link>
                 <Link href={dashboardUrl} passHref><button className={styles.sidebarBtn} onClick={closeMenu}>Dashboard</button></Link>
+                
+                {/* --- NEW STUDENT LINKS (MOBILE) --- */}
+                {user.role === 'student' && (
+                  <>
+                    <Link href="/student/mock-tests" passHref><button className={styles.sidebarBtn} onClick={closeMenu}>Mock Tests</button></Link>
+                    <Link href="/student/analytics" passHref><button className={styles.sidebarBtn} onClick={closeMenu}>Analytics</button></Link>
+                  </>
+                )}
+
                 <button onClick={() => { closeMenu(); handleLogout(); }} className={styles.sidebarBtnDanger}>Logout</button>
               </>
             ) : (

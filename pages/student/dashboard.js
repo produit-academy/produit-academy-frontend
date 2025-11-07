@@ -3,7 +3,8 @@ import Head from 'next/head';
 import { motion } from 'framer-motion';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import apiFetch from '@/utils/api'; // Import the new utility
+import apiFetch from '@/utils/api';
+import Link from 'next/link';
 
 const slideInUp = {
   hidden: { opacity: 0, y: 50 },
@@ -11,92 +12,119 @@ const slideInUp = {
 };
 
 export default function StudentDashboard() {
-  const [student, setStudent] = useState(null);
+  const [user, setUser] = useState(null);
   const [materials, setMaterials] = useState([]);
+  const [courseRequests, setCourseRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [courseRequest, setCourseRequest] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-        try {
-            const [studentRes, requestRes, materialsRes] = await Promise.all([
-                apiFetch('http://127.0.0.1:8000/api/student/dashboard/'),
-                apiFetch('http://127.0.0.1:8000/api/courserequest/'),
-                apiFetch('http://127.0.0.1:8000/api/materials/')
-            ]);
+    const fetchDashboardData = async () => {
+      try {
+        const [userRes, materialsRes, requestsRes] = await Promise.all([
+          apiFetch('/api/student/dashboard/'),
+          apiFetch('/api/materials/'),
+          apiFetch('/api/courserequest/')
+        ]);
 
-            if (studentRes.ok) setStudent(await studentRes.json());
-            if (requestRes.ok) setCourseRequest((await requestRes.json())[0]); 
-            if (materialsRes.ok) setMaterials(await materialsRes.json());
-            
-        } catch (error) {
-            if (error.message !== 'Session expired') {
-                console.error("Failed to fetch dashboard data:", error);
-            }
-        } finally {
-            setIsLoading(false);
+        if (userRes.ok) setUser(await userRes.json());
+        if (materialsRes.ok) setMaterials(await materialsRes.json());
+        if (requestsRes.ok) setCourseRequests(await requestsRes.json());
+
+      } catch (error) {
+        if (error.message !== 'Session expired') {
+          console.error("Failed to fetch dashboard data:", error);
         }
+      } finally {
+        setIsLoading(false);
+      }
     };
-
-    fetchData();
+    fetchDashboardData();
   }, []);
 
-  const handleMaterialView = async (materialId) => {
-    try {
-      const response = await apiFetch(`http://127.0.0.1:8000/api/materials/${materialId}/view/`);
-      if (response.ok) {
-        const fileBlob = await response.blob();
-        const fileUrl = URL.createObjectURL(fileBlob);
-        window.open(fileUrl, '_blank');
-      } else {
-        alert("Error: Could not access the material.");
-      }
-    } catch (error) {
-        if (error.message !== 'Session expired') {
-            console.error("An error occurred while fetching the material:", error);
-        }
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'Approved':
+        return 'var(--accent-green)';
+      case 'Rejected':
+        return 'var(--accent-red)';
+      case 'Pending':
+      default:
+        return 'var(--accent-blue)';
     }
   };
 
-  if (isLoading || !student) {
-    return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <>
+        <Head><title>Dashboard - Produit Academy</title></Head>
+        <Header />
+        <main className="main-content"><div className="container"><p>Loading dashboard...</p></div></main>
+        <Footer />
+      </>
+    );
   }
-  
-  const isApproved = courseRequest?.status === 'Approved';
 
   return (
     <>
-      <Head><title>Student Dashboard - Produit Academy</title></Head>
+      <Head><title>Dashboard - Produit Academy</title></Head>
       <Header />
       <main className="main-content">
         <div className="container">
-          <motion.div className="dashboard-container" variants={slideInUp} initial="hidden" animate="visible">
-            <div className="dashboard-header">
-              <h1 className="dashboard-title">Welcome, {student.username}</h1>
-              {courseRequest && (
-                <div className={`status-badge ${isApproved ? 'status-approved' : 'status-pending'}`}>
-                  Course Status: {courseRequest.status}
+          <motion.div variants={slideInUp} initial="hidden" animate="visible">
+            <h1 className="dashboard-title">My Dashboard</h1>
+            
+            {/* Welcome Message */}
+            {user && (
+              <div className="dashboard-section welcome-message">
+                <h2 className="section-title">Welcome, {user.username}!</h2>
+                <p>Your Student ID: <strong>{user.student_id}</strong></p>
+              </div>
+            )}
+
+            {/* Course Request Status Section */}
+            <div className="dashboard-section">
+              <h2 className="section-title">My Course Status</h2>
+              {courseRequests.length > 0 ? (
+                <div 
+                  className="status-badge" 
+                  style={{
+                    display: 'inline-block',
+                    padding: '10px 20px',
+                    borderRadius: '8px',
+                    fontWeight: '600',
+                    color: '#fff',
+                    backgroundColor: getStatusColor(courseRequests[0].status)
+                  }}
+                >
+                  {courseRequests[0].status}
                 </div>
+              ) : (
+                <p>You have not requested any course access.</p>
+              )}
+              {courseRequests.length > 0 && courseRequests[0].status === 'Pending' && (
+                <p style={{marginTop: '10px', color: 'var(--text-secondary)'}}>
+                  Your request is pending approval. You will get access to materials and mock tests once approved.
+                </p>
               )}
             </div>
-            
-            <div className="materials-container">
-              <h2 className="section-title">{isApproved ? 'Your Study Materials' : 'Course Preview'}</h2>
-              {!isApproved && <p>Your course request is pending. In the meantime, you can view a limited selection of our materials.</p>}
-              
-              <div className="materials-list" style={{marginTop: '1.5rem'}}>
-                {materials.length > 0 ? materials.map(material => (
-                  <div 
-                    key={material.id} 
-                    className="material-item"
-                    style={{cursor: 'pointer'}}
-                    onClick={() => handleMaterialView(material.id)}
-                  >
-                    {material.title}
-                  </div>
-                )) : <p>No materials available for your branch yet.</p>}
+
+            {/* Materials Section - COMING SOON */}
+            <div className="dashboard-section">
+              <h2 className="section-title">Study Materials</h2>
+              <div className="coming-soon-placeholder" style={{
+                padding: '40px 20px',
+                textAlign: 'center',
+                background: 'var(--card-bg)',
+                borderRadius: '8px',
+                border: '1px solid var(--card-border)'
+              }}>
+                <h3 style={{ fontSize: '1.5rem', color: 'var(--text-primary)' }}>Coming Soon!</h3>
+                <p style={{ color: 'var(--text-secondary)', marginTop: '0.5rem', fontSize: '1rem' }}>
+                  Our full library of study materials is being prepared and will be available here shortly.
+                </p>
               </div>
             </div>
+
           </motion.div>
         </div>
       </main>

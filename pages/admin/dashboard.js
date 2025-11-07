@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { motion } from 'framer-motion';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import apiFetch from '@/utils/api'; // Import the new utility
+import apiFetch from '@/utils/api'
 
 const slideInUp = {
   hidden: { opacity: 0, y: 50 },
@@ -23,7 +23,6 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchInitialData = async () => {
         try {
-            // FIX: Removed the hardcoded base URL from all paths
             const [requestsRes, branchesRes, studentsRes] = await Promise.all([
                 apiFetch('/api/admin/dashboard/'),
                 apiFetch('/api/branches/'),
@@ -47,7 +46,6 @@ export default function AdminDashboard() {
 
   const handleRequestUpdate = async (requestId, newStatus) => {
     try {
-        // FIX: Removed the hardcoded base URL
         const response = await apiFetch(`/api/courserequests/${requestId}/update/`, {
             method: 'PATCH',
             body: JSON.stringify({ status: newStatus }),
@@ -66,7 +64,6 @@ export default function AdminDashboard() {
   const handleDisableAccount = async (studentId) => {
     if (!confirm('Are you sure you want to disable this account?')) return;
     try {
-        // FIX: Removed the hardcoded base URL
         const response = await apiFetch(`/api/admin/students/${studentId}/`, {
             method: 'DELETE',
         });
@@ -91,7 +88,6 @@ export default function AdminDashboard() {
     formData.append('title', title);
     
     try {
-        // FIX: Removed the hardcoded base URL
         const response = await apiFetch('/api/materials/upload/', {
             method: 'POST',
             body: formData,
