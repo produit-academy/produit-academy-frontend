@@ -1,0 +1,52 @@
+/* styles/GateExam.module.css */
+.container { display: flex; flex-direction: column; height: 100vh; background: #f0f0f0; font-family: Arial, sans-serif; }
+
+/* Header */
+.header {
+    height: 60px; background: #fff; border-bottom: 2px solid #007bff;
+    display: flex; justify-content: space-between; align-items: center; padding: 0 20px;
+}
+.title { font-weight: bold; font-size: 1.2rem; }
+.timer { background: #333; color: #00ff00; padding: 5px 10px; font-weight: bold; border-radius: 4px; }
+
+/* Main Layout */
+.main { display: flex; flex: 1; overflow: hidden; }
+
+/* Left Question Area */
+.questionArea { width: 75%; background: #fff; padding: 20px; border-right: 1px solid #ccc; display: flex; flex-direction: column; }
+.questionHeader { border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; font-weight: bold; color: #555; display: flex; justify-content: space-between; }
+.questionText { font-size: 1.1rem; margin-bottom: 25px; line-height: 1.6; flex: 1; }
+
+.optionLabel { display: flex; align-items: center; padding: 12px; border: 1px solid #ddd; margin-bottom: 10px; cursor: pointer; border-radius: 4px; transition: background 0.2s; }
+.optionLabel:hover { background: #f5f5f5; }
+.radio { margin-right: 10px; transform: scale(1.2); }
+
+/* Footer Buttons */
+.footer { margin-top: auto; border-top: 1px solid #eee; padding-top: 20px; display: flex; justify-content: space-between; }
+.btn { padding: 10px 20px; border: none; cursor: pointer; font-weight: bold; border-radius: 4px; }
+.btnSave { background: #28a745; color: white; }
+.btnClear { background: #fff; border: 1px solid #ccc; }
+.btnReview { background: #6f42c1; color: white; }
+
+/* Right Sidebar */
+.sidebar { width: 25%; background: #e6f7ff; padding: 10px; display: flex; flex-direction: column; }
+.profile { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; background: #fff; padding: 5px; }
+.avatar { width: 40px; height: 40px; border-radius: 50%; background: #ccc; }
+
+/* Legend */
+.legend { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.8rem; margin-bottom: 20px; }
+.legendItem { display: flex; align-items: center; gap: 5px; }
+.dot { width: 20px; height: 20px; display: inline-block; }
+
+/* Status Styles */
+.status_not_visited { background: #fff; border: 1px solid #ccc; }
+.status_not_answered { background: #ff4d4d; color: white; clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%); }
+.status_answered { background: #28a745; color: white; clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%); }
+.status_marked { background: #6f42c1; color: white; border-radius: 50%; }
+
+/* Question Palette */
+.palette { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; overflow-y: auto; flex: 1; }
+.qBtn { width: 35px; height: 35px; border: 1px solid #ccc; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+.active { border: 2px solid blue; }
+
+.submitBtn { width: 100%; padding: 12px; background: #007bff; color: white; border: none; margin-top: 10px; font-size: 1rem; cursor: pointer; }

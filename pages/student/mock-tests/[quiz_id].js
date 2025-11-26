@@ -1,146 +1,162 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import apiFetch from '@/utils/api';
-import styles from '@/styles/Quiz.module.css';
+import styles from '../../styles/GateExam.module.css';
+import apiFetch from '../../utils/api';
 
-export default function QuizPage() {
-  const router = useRouter();
-  const { quiz_id } = router.query;
+export default function GateExamInterface() {
+    const router = useRouter();
+    const { quiz_id } = router.query;
+    
+    const [quiz, setQuiz] = useState(null);
+    const [qIndex, setQIndex] = useState(0);
+    const [answers, setAnswers] = useState({});
+    const [status, setStatus] = useState({});
+    const [loading, setLoading] = useState(true);
 
-  const [quiz, setQuiz] = useState(null);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState({}); // Stores { question_id: choice_id }
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
+    useEffect(() => {
+        if (!quiz_id) return;
+        
+        apiFetch(`/api/student/quizzes/${quiz_id}/`)
+            .then(res => res.json())
+            .then(data => {
+                setQuiz(data);
+                const initStatus = {};
+                data.questions.forEach(q => initStatus[q.id] = 'not_visited');
+                initStatus[data.questions[0].id] = 'not_answered';
+                setStatus(initStatus);
+                setLoading(false);
+            })
+            .catch(err => console.error(err));
+    }, [quiz_id]);
 
-  // Fetch the quiz data
-  useEffect(() => {
-    if (quiz_id) {
-      const fetchQuiz = async () => {
-        try {
-          const res = await apiFetch(`/api/student/quizzes/${quiz_id}/`);
-          if (res.ok) {
-            setQuiz(await res.json());
-          } else {
-            setError('Failed to load quiz. You may not have access.');
-          }
-        } catch (err) {
-          setError('An error occurred while fetching the quiz.');
-        } finally {
-          setIsLoading(false);
+    const changeQuestion = (index) => {
+        const currentQId = quiz.questions[qIndex].id;
+        // Logic: If leaving a question without answering, verify status
+        if (status[currentQId] === 'not_visited') {
+            setStatus(prev => ({...prev, [currentQId]: 'not_answered'}));
         }
-      };
-      fetchQuiz();
-    }
-  }, [quiz_id]);
+        
+        setQIndex(index);
+        
+        // Update new question status to not_answered if it was not_visited
+        const newQId = quiz.questions[index].id;
+        if (status[newQId] === 'not_visited') {
+            setStatus(prev => ({...prev, [newQId]: 'not_answered'}));
+        }
+    };
 
-  const handleSelectAnswer = (questionId, choiceId) => {
-    setSelectedAnswers(prev => ({
-      ...prev,
-      [questionId]: choiceId,
-    }));
-  };
+    const handleAnswer = (choiceId) => {
+        setAnswers(prev => ({ ...prev, [quiz.questions[qIndex].id]: choiceId }));
+    };
 
-  const handleNext = () => {
-    if (currentQuestionIndex < quiz.questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }
-  };
+    const saveAndNext = () => {
+        const qId = quiz.questions[qIndex].id;
+        setStatus(prev => ({
+            ...prev,
+            [qId]: answers[qId] ? 'answered' : 'not_answered'
+        }));
+        if (qIndex < quiz.questions.length - 1) changeQuestion(qIndex + 1);
+    };
 
-  const handlePrev = () => {
-    if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
-    }
-  };
+    const markForReview = () => {
+        const qId = quiz.questions[qIndex].id;
+        setStatus(prev => ({ ...prev, [qId]: 'marked' }));
+        if (qIndex < quiz.questions.length - 1) changeQuestion(qIndex + 1);
+    };
 
-  const handleSubmit = async () => {
-    if (!confirm('Are you sure you want to submit your test?')) {
-      return;
-    }
+    const submitExam = async () => {
+        if (!confirm("Are you sure you want to submit?")) return;
+        
+        const payload = Object.entries(answers).map(([qid, cid]) => ({
+            question_id: parseInt(qid),
+            choice_id: parseInt(cid)
+        }));
 
-    const answers = Object.entries(selectedAnswers).map(([qId, cId]) => ({
-      question_id: parseInt(qId),
-      choice_id: parseInt(cId),
-    }));
+        const res = await apiFetch(`/api/student/quizzes/${quiz_id}/submit/`, {
+            method: 'POST',
+            body: JSON.stringify({ answers: payload })
+        });
 
-    try {
-      const res = await apiFetch(`/api/student/quizzes/${quiz_id}/submit/`, {
-        method: 'POST',
-        body: JSON.stringify({ answers }),
-      });
+        if (res.ok) {
+            router.push('/student/dashboard');
+        }
+    };
 
-      if (res.ok) {
-        const result = await res.json();
-        // Redirect to analytics page to show the result
-        router.push(`/student/analytics?result_id=${result.id}`);
-      } else {
-        const data = await res.json();
-        setError(data.detail || 'Failed to submit quiz.');
-      }
-    } catch (err) {
-      setError('An error occurred during submission.');
-    }
-  };
+    if (loading) return <div style={{padding: '20px'}}>Loading Exam...</div>;
 
-  if (isLoading) return <p>Loading quiz...</p>;
-  if (error) return <p>{error}</p>;
-  if (!quiz) return <p>Quiz not found.</p>;
+    const currentQ = quiz.questions[qIndex];
+    const currentStatus = status[currentQ.id];
 
-  const currentQuestion = quiz.questions[currentQuestionIndex];
-  const selectedChoice = selectedAnswers[currentQuestion.id];
+    return (
+        <div className={styles.container}>
+            <header className={styles.header}>
+                <div className={styles.title}>{quiz.title}</div>
+                <div className={styles.timer}>Time Remaining: 180:00</div>
+            </header>
 
-  return (
-    <>
-      <Head><title>{quiz.title} - Produit Academy</title></Head>
-      <Header />
-      <main className="main-content">
-        <div className="container">
-          <h1 className={styles.quizTitle}>{quiz.title}</h1>
-          
-          <div className={styles.quizContainer}>
-            <div className={styles.questionHeader}>
-              <h2 className={styles.questionText}>
-                Q{currentQuestionIndex + 1}: {currentQuestion.text}
-              </h2>
-              <span className={styles.questionMarks}>{currentQuestion.marks} Mark(s)</span>
+            <div className={styles.main}>
+                {/* Left Area */}
+                <div className={styles.questionArea}>
+                    <div className={styles.questionHeader}>
+                        <span>Question {qIndex + 1}</span>
+                        <span>Marks: {currentQ.marks}</span>
+                    </div>
+                    
+                    <div className={styles.questionText}>{currentQ.text}</div>
+                    
+                    <div>
+                        {currentQ.choices.map(c => (
+                            <label key={c.id} className={styles.optionLabel}>
+                                <input 
+                                    type="radio" 
+                                    name="opt" 
+                                    className={styles.radio}
+                                    checked={answers[currentQ.id] === c.id} 
+                                    onChange={() => handleAnswer(c.id)}
+                                />
+                                {c.text}
+                            </label>
+                        ))}
+                    </div>
+
+                    <div className={styles.footer}>
+                        <button className={`${styles.btn} ${styles.btnReview}`} onClick={markForReview}>Mark for Review</button>
+                        <button className={`${styles.btn} ${styles.btnClear}`} onClick={() => {
+                            const newAns = {...answers}; delete newAns[currentQ.id]; setAnswers(newAns);
+                        }}>Clear Response</button>
+                        <button className={`${styles.btn} ${styles.btnSave}`} onClick={saveAndNext}>Save & Next</button>
+                    </div>
+                </div>
+
+                {/* Right Area */}
+                <div className={styles.sidebar}>
+                    <div className={styles.profile}>
+                        <div className={styles.avatar}></div>
+                        <span>Student</span>
+                    </div>
+
+                    <div className={styles.legend}>
+                        <div className={styles.legendItem}><span className={`${styles.dot} ${styles.status_answered}`}></span> Answered</div>
+                        <div className={styles.legendItem}><span className={`${styles.dot} ${styles.status_not_answered}`}></span> Not Ans</div>
+                        <div className={styles.legendItem}><span className={`${styles.dot} ${styles.status_marked}`}></span> Marked</div>
+                        <div className={styles.legendItem}><span className={`${styles.dot} ${styles.status_not_visited}`}></span> Not Visit</div>
+                    </div>
+
+                    <div className={styles.palette}>
+                        {quiz.questions.map((q, idx) => (
+                            <button 
+                                key={q.id} 
+                                className={`${styles.qBtn} ${styles[`status_${status[q.id]}`]} ${qIndex === idx ? styles.active : ''}`}
+                                onClick={() => changeQuestion(idx)}
+                            >
+                                {idx + 1}
+                            </button>
+                        ))}
+                    </div>
+
+                    <button className={styles.submitBtn} onClick={submitExam}>Submit Test</button>
+                </div>
             </div>
-
-            <div className={styles.choicesGrid}>
-              {currentQuestion.choices.map(choice => (
-                <button
-                  key={choice.id}
-                  className={`${styles.choiceButton} ${selectedChoice === choice.id ? styles.selected : ''}`}
-                  onClick={() => handleSelectAnswer(currentQuestion.id, choice.id)}
-                >
-                  {choice.text}
-                </button>
-              ))}
-            </div>
-
-            <div className={styles.navigation}>
-              <button onClick={handlePrev} disabled={currentQuestionIndex === 0}>
-                Previous
-              </button>
-              <span className={styles.questionProgress}>
-                Question {currentQuestionIndex + 1} of {quiz.questions.length}
-              </span>
-              {currentQuestionIndex === quiz.questions.length - 1 ? (
-                <button onClick={handleSubmit} className={styles.submitButton}>
-                  Submit Test
-                </button>
-              ) : (
-                <button onClick={handleNext}>
-                  Next
-                </button>
-              )}
-            </div>
-          </div>
         </div>
-      </main>
-      <Footer />
-    </>
-  );
+    );
 }
