@@ -12,7 +12,7 @@ export default function VerifyEmail() {
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
-        if (!params || params.length < 2) {
+        if (!params || params.length < 4) {
             setMessage('Invalid verification link.');
             setIsError(true);
             return;

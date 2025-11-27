@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import styles from '../styles/Profile.module.css';
-import apiFetch from '@/utils/api'; // Import the new utility
+import apiFetch from '@/utils/api';
 
 export default function Profile() {
     const [profile, setProfile] = useState({ username: '', email: '', college: '', phone_number: '' });

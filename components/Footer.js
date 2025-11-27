@@ -15,10 +15,10 @@ export default function Footer() {
         <div className={styles.footerColumn}>
           <h3 className={styles.footerHeading}>Categories</h3>
           <ul className={styles.footerLinks}>
-            <li><Link href="/courses/gate-ee">GATE Electrical</Link></li>
-            <li><Link href="/courses/gate-me">GATE Mechanical</Link></li>
-            <li><Link href="/courses/gate-ce">GATE Civil</Link></li>
-            <li><Link href="/courses/gate-cs">GATE Computer Sci</Link></li>
+            <li><Link href="/workinprogress">GATE Electrical</Link></li>
+            <li><Link href="/workinprogress">GATE Mechanical</Link></li>
+            <li><Link href="/workinprogress">GATE Civil</Link></li>
+            <li><Link href="/workinprogress">GATE Computer Sci</Link></li>
           </ul>
         </div>
 
@@ -27,18 +27,18 @@ export default function Footer() {
           <ul className={styles.footerLinks}>
             <li><Link href="/#features">About Us</Link></li>
             <li><Link href="/#contact">Contact Us</Link></li>
-            <li><Link href="/blogs">Blogs</Link></li>
-            <li><Link href="/affiliate">Affiliate</Link></li>
+            <li><Link href="/workinprogress">Blogs</Link></li>
+            <li><Link href="/workinprogress">Affiliate</Link></li>
           </ul>
         </div>
 
         <div className={styles.footerColumn}>
           <h3 className={styles.footerHeading}>Support</h3>
           <ul className={styles.footerLinks}>
-            <li><Link href="/help">Help Center</Link></li>
-            <li><Link href="/faq">FAQ's</Link></li>
-            <li><Link href="/privacy">Privacy Policy</Link></li>
-            <li><Link href="/terms">Terms & Conditions</Link></li>
+            <li><Link href="/workinprogress">Help Center</Link></li>
+            <li><Link href="/workinprogress">FAQ's</Link></li>
+            <li><Link href="/workinprogress">Privacy Policy</Link></li>
+            <li><Link href="/workinprogress">Terms & Conditions</Link></li>
           </ul>
         </div>
 

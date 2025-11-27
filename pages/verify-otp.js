@@ -62,7 +62,7 @@ export default function VerifyOTP() {
                     <h1 className="auth-title">Verify Your Account</h1>
                     <p className="auth-subtitle">An OTP has been sent to {email}. Please enter it below.</p>
                     <form className="auth-form" onSubmit={handleSubmit}>
-                        <input type="text" placeholder="Enter 4-Digit OTP" maxLength="4" required value={otp} onChange={(e) => setOtp(e.target.value)} />
+                        <input type="text" placeholder="Enter 6-Digit OTP" maxLength="6" required value={otp} onChange={(e) => setOtp(e.target.value)} />
                         <button type="submit" className="cta-btn">Verify Account</button>
                         {message && <p style={{ color: 'green', marginTop: '1rem' }}>{message}</p>}
                         {error && <p className="auth-error">{error}</p>}

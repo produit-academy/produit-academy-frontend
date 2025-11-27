@@ -86,7 +86,6 @@ export default function Header() {
   const getDashboardUrl = () => {
     if (!user) return '/login';
     if (user.role === 'admin') return '/admin/dashboard';
-    if (user.role === 'branch_admin') return '/branch-admin/dashboard'; // NOTE: You will need to create this page
     return '/student/dashboard';
   };
   const dashboardUrl = getDashboardUrl();
@@ -95,7 +94,7 @@ export default function Header() {
   const renderCourseLinks = (onClick) => {
     if (courses && courses.length > 0) {
       return courses.slice(0, 10).map((course) => {
-        const href = `/courses/${course.id}`; // Assuming /courses/[id].js
+        const href = `/courses/${course.id}`;
         return (
           <Link key={course.id} href={href} onClick={onClick}>{course.name}</Link>
         );
@@ -153,8 +152,8 @@ export default function Header() {
               </div>
             ) : (
               <>
-                <Link href="/login" passHref><button className={styles.loginBtn}>Login</button></Link>
-                <Link href="/signup" passHref><button className={styles.signupBtn}>Sign Up</button></Link>
+                <Link href="/#contact" passHref><button className={styles.loginBtn}>Enquiry Now</button></Link>
+                <Link href="/signup" passHref><button className={styles.signupBtn}>Start Learning</button></Link>
               </>
             )}
           </div>
