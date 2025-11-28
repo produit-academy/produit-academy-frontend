@@ -6,6 +6,7 @@ import AnimatedNumber from '../components/AnimatedNumber';
 import Carousel from '../components/Carousel';
 import { SwiperSlide } from 'swiper/react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 
 // Data: cards shown in the courses carousel
