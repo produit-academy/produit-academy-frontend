@@ -22,7 +22,7 @@ export default function VerifyEmail() {
 
         const verify = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/verify-email/${uidb64}/${token}/`);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/verify-email/${uidb64}/${token}/`);
                 if (response.ok) {
                     setMessage('Email successfully verified! You can now log in.');
                     setIsError(false);
@@ -49,7 +49,7 @@ export default function VerifyEmail() {
                     <p style={{ color: isError ? 'red' : 'green', fontSize: '1.2rem', marginTop: '1rem' }}>{message}</p>
                     {!isError && (
                         <Link href="/login" passHref>
-                           <button className="cta-btn" style={{marginTop: '2rem'}}>Go to Login</button>
+                            <button className="cta-btn" style={{ marginTop: '2rem' }}>Go to Login</button>
                         </Link>
                     )}
                 </div>

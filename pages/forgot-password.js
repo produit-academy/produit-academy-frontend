@@ -15,7 +15,7 @@ export default function ForgotPassword() {
         e.preventDefault();
         setMessage(''); setError('');
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/password-reset-otp/', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/password-reset-otp/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email }),

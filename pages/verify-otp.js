@@ -21,7 +21,7 @@ export default function VerifyOTP() {
         e.preventDefault();
         setMessage(''); setError('');
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/verify-otp/', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/verify-otp/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, otp }),
@@ -39,16 +39,16 @@ export default function VerifyOTP() {
     const handleResend = async () => {
         setMessage(''); setError('');
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/resend-otp/', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/resend-otp/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email }),
             });
-             const data = await response.json();
+            const data = await response.json();
             if (response.ok) {
                 setMessage(data.detail || 'A new OTP has been sent.');
             } else {
-                 setError(data.detail || 'Failed to resend OTP.');
+                setError(data.detail || 'Failed to resend OTP.');
             }
         } catch (err) { setError('An error occurred while resending.'); }
     };
@@ -67,7 +67,7 @@ export default function VerifyOTP() {
                         {message && <p style={{ color: 'green', marginTop: '1rem' }}>{message}</p>}
                         {error && <p className="auth-error">{error}</p>}
                     </form>
-                    <button onClick={handleResend} style={{background: 'none', border: 'none', color: 'var(--accent-green)', cursor: 'pointer', marginTop: '1rem'}}>
+                    <button onClick={handleResend} style={{ background: 'none', border: 'none', color: 'var(--accent-green)', cursor: 'pointer', marginTop: '1rem' }}>
                         Resend OTP
                     </button>
                 </div>
