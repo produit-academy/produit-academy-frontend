@@ -36,7 +36,7 @@ export default function Footer() {
           <h3 className={styles.footerHeading}>Support</h3>
           <ul className={styles.footerLinks}>
             <li><Link href="/workinprogress">Help Center</Link></li>
-            <li><Link href="/workinprogress">FAQ's</Link></li>
+            <li><Link href="/workinprogress">FAQ&apos;s</Link></li>
             <li><Link href="/workinprogress">Privacy Policy</Link></li>
             <li><Link href="/workinprogress">Terms & Conditions</Link></li>
           </ul>

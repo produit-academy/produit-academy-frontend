@@ -1,4 +1,5 @@
 import styles from "@/styles/work.module.css";
+import Image from 'next/image';
 
 export default function WorkInProgress() {
   return (
@@ -10,7 +11,7 @@ export default function WorkInProgress() {
       </div>
 
       <div className={styles.content}>
-        <img src="/work.png" className={styles.wipImg} alt="Work in Progress" />
+        <Image src="/work.png" className={styles.wipImg} alt="Work in Progress" width={500} height={300} />
 
         <h1 className={styles.title}>Work in Progress</h1>
 

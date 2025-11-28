@@ -168,7 +168,7 @@ export default function Home() {
               <h2 className="section-title">Why Choose Produit Academy?</h2>
               <p className="section-subtitle">We provide a complete ecosystem for GATE preparation, engineered for your success.</p>
             </motion.div>
-            
+
             <motion.div className="features-grid" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
               <motion.div variants={itemVariants} className="feature-card">
                 <div className="feature-icon">🧠</div>
@@ -202,7 +202,7 @@ export default function Home() {
               </motion.div>
             </motion.div>
           </section>
-          
+
           {/* Courses */}
           <section id="courses" className="section">
             <motion.div variants={slideInUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }}>
@@ -228,7 +228,7 @@ export default function Home() {
           <div className="container">
             <h2>Ready to Start Your GATE Preparation?</h2>
             <p>Join thousands of students who trust Produit Academy to achieve their dreams.</p>
-            <a href="/signup" className="cta-btn">Enroll Now</a>
+            <Link href="/signup" className="cta-btn">Enroll Now</Link>
           </div>
         </motion.section>
 
@@ -244,8 +244,8 @@ export default function Home() {
               <h2 className="section-title">Contact Us</h2>
               <p className="section-subtitle">We are here to help you. Feel free to contact us.</p>
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               className="contact-container"
               variants={itemVariants}
               initial="hidden"

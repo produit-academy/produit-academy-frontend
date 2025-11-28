@@ -24,7 +24,7 @@ export default function Analytics() {
             {results.length === 0 ? (
                 <div style={{ textAlign: 'center', marginTop: '50px', color: '#666' }}>
                     <h3>No Exam Data Available</h3>
-                    <p>You haven't taken any exams yet. Go to Mock Tests to start practicing!</p>
+                    <p>You haven&apos;t taken any exams yet. Go to Mock Tests to start practicing!</p>
                 </div>
             ) : (
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px', marginBottom: '30px' }}>

@@ -21,12 +21,12 @@ export default function StudentDashboard() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-      const role = localStorage.getItem('user_role');
-      if (role !== 'student') {
-          router.push('/login'); 
-      }
-  }, []);
-  
+    const role = localStorage.getItem('user_role');
+    if (role !== 'student') {
+      router.push('/login');
+    }
+  }, [router]);
+
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
@@ -71,27 +71,27 @@ export default function StudentDashboard() {
       <main className="main-content">
         <div className="container">
           <motion.div variants={slideInUp} initial="hidden" animate="visible">
-            
+
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h1 className="dashboard-title">My Dashboard</h1>
-                <Link href="/student/analytics" className="btn btn-primary" style={{ textDecoration: 'none' }}>
-                    View Performance Analytics
-                </Link>
+              <h1 className="dashboard-title">My Dashboard</h1>
+              <Link href="/student/analytics" className="btn btn-primary" style={{ textDecoration: 'none' }}>
+                View Performance Analytics
+              </Link>
             </div>
-            
+
             {/* Welcome & Status */}
             {user && (
               <div className="dashboard-section welcome-message">
                 <h2 className="section-title">Welcome, {user.username}!</h2>
                 <p>Student ID: <strong>{user.student_id}</strong></p>
                 <div style={{ marginTop: '10px' }}>
-                     Status: 
-                     <span style={{ 
-                         marginLeft: '10px', fontWeight: 'bold', 
-                         color: getStatusColor(courseRequests[0]?.status || 'Pending') 
-                     }}>
-                        {courseRequests[0]?.status || 'None'}
-                     </span>
+                  Status:
+                  <span style={{
+                    marginLeft: '10px', fontWeight: 'bold',
+                    color: getStatusColor(courseRequests[0]?.status || 'Pending')
+                  }}>
+                    {courseRequests[0]?.status || 'None'}
+                  </span>
                 </div>
               </div>
             )}
@@ -103,15 +103,15 @@ export default function StudentDashboard() {
                 <div className="materials-grid" style={{ display: 'grid', gap: '15px', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' }}>
                   {quizzes.map(quiz => (
                     <div key={quiz.id} className="card" style={{ padding: '15px', border: '1px solid #ddd', borderRadius: '8px' }}>
-                        <h3>{quiz.title}</h3>
-                        <p>{quiz.duration_minutes} Mins | {quiz.total_marks} Marks</p>
-                        <Link href={`/student/mock-tests/${quiz.id}`} style={{ 
-                            display: 'block', marginTop: '10px', textAlign: 'center', 
-                            background: '#0070f3', color: 'white', padding: '8px', 
-                            borderRadius: '5px', textDecoration: 'none' 
-                        }}>
-                            Attempt Test
-                        </Link>
+                      <h3>{quiz.title}</h3>
+                      <p>{quiz.duration_minutes} Mins | {quiz.total_marks} Marks</p>
+                      <Link href={`/student/mock-tests/${quiz.id}`} style={{
+                        display: 'block', marginTop: '10px', textAlign: 'center',
+                        background: '#0070f3', color: 'white', padding: '8px',
+                        borderRadius: '5px', textDecoration: 'none'
+                      }}>
+                        Attempt Test
+                      </Link>
                     </div>
                   ))}
                 </div>
@@ -126,14 +126,14 @@ export default function StudentDashboard() {
               {materials.length > 0 ? (
                 <ul className="materials-list" style={{ listStyle: 'none', padding: 0 }}>
                   {materials.map(mat => (
-                    <li key={mat.id} style={{ 
-                        display: 'flex', justifyContent: 'space-between', alignItems: 'center', 
-                        padding: '15px', borderBottom: '1px solid #eee' 
+                    <li key={mat.id} style={{
+                      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                      padding: '15px', borderBottom: '1px solid #eee'
                     }}>
                       <div>
                         <strong>{mat.title}</strong>
                         <span style={{ marginLeft: '10px', fontSize: '0.8rem', background: '#eee', padding: '2px 6px', borderRadius: '4px' }}>
-                            {mat.classification}
+                          {mat.classification}
                         </span>
                       </div>
                       <Link href={`/materials/${mat.id}`} style={{ color: '#0070f3', fontWeight: 'bold' }}>
@@ -144,7 +144,7 @@ export default function StudentDashboard() {
                 </ul>
               ) : (
                 <div className="coming-soon-placeholder" style={{ padding: '20px', textAlign: 'center', background: '#f9f9f9' }}>
-                   <p>No materials uploaded for your branch yet.</p>
+                  <p>No materials uploaded for your branch yet.</p>
                 </div>
               )}
             </div>
