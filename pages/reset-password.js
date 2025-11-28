@@ -46,7 +46,7 @@ export default function ResetPassword() {
                     <h1 className="auth-title">Reset Your Password</h1>
                     <p className="auth-subtitle">An OTP has been sent to {email}. Enter it below with your new password.</p>
                     <form className="auth-form" onSubmit={handleSubmit}>
-                        <input type="text" placeholder="Enter OTP" maxLength="4" required value={otp} onChange={(e) => setOtp(e.target.value)} />
+                        <input type="text" placeholder="Enter OTP" maxLength="6" required value={otp} onChange={(e) => setOtp(e.target.value)} />
                         <input type="password" placeholder="Enter New Password" required value={password} onChange={(e) => setPassword(e.target.value)} />
                         <button type="submit" className="cta-btn">Reset Password</button>
                         {message && <p style={{ color: 'green', marginTop: '1rem' }}>{message}</p>}

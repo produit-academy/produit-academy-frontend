@@ -21,6 +21,13 @@ export default function StudentDashboard() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+      const role = localStorage.getItem('user_role');
+      if (role !== 'student') {
+          router.push('/login'); 
+      }
+  }, []);
+  
+  useEffect(() => {
     const fetchDashboardData = async () => {
       try {
         // Added /api/student/quizzes/ to the fetch list

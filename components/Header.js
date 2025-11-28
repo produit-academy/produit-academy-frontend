@@ -31,9 +31,9 @@ export default function Header() {
           setCourses(Array.isArray(data) ? data : []);
         }
       } catch (error) {
-         if (error.message !== 'Session expired') {
-            console.error("Failed to fetch courses for header:", error);
-         }
+        if (error.message !== 'Session expired') {
+          console.error("Failed to fetch courses for header:", error);
+        }
       }
     };
     load();
@@ -122,7 +122,7 @@ export default function Header() {
 
           <nav className={styles.desktopNav}>
             <Link href="/">Home</Link>
-            
+
             <div className={styles.dropdown}>
               <button className={styles.dropdownBtn}>
                 Courses <span>&#9662;</span>
@@ -132,7 +132,7 @@ export default function Header() {
                 <Link href="/#courses">All Courses</Link>
               </div>
             </div>
-            
+
             <Link href="/#features">About Us</Link>
             <Link href="/#contact">Contact Us</Link>
           </nav>
@@ -146,8 +146,8 @@ export default function Header() {
                 </button>
                 <div className={styles.dropdownContent}>
                   <Link href={getDashboardUrl()}>Dashboard</Link>
-                  <Link href="/profile">Profile</Link>
-                  <a onClick={handleLogout} style={{cursor: 'pointer'}}>Logout</a>
+                  {user.role !== 'admin' && <Link href="/profile">Profile</Link>}
+                  <a onClick={handleLogout} style={{ cursor: 'pointer' }}>Logout</a>
                 </div>
               </div>
             ) : (
@@ -173,7 +173,7 @@ export default function Header() {
 
           <nav className={styles.sidebarNav}>
             <Link href="/" onClick={closeMenu}>Home</Link>
-            
+
             <div className={`${styles.mobileDropdown} ${isMobileCoursesOpen ? styles.open : ''}`}>
               <button className={styles.dropdownBtn} onClick={toggleMobileCourses} aria-expanded={isMobileCoursesOpen} aria-controls="mobile-courses">
                 Courses <span>{isMobileCoursesOpen ? '\u25B2' : '\u25BC'}</span>
@@ -183,7 +183,7 @@ export default function Header() {
                 <Link href="/#courses" onClick={closeMenu}>All Courses</Link>
               </div>
             </div>
-            
+
             <Link href="/#features" onClick={closeMenu}>About Us</Link>
             <Link href="/#contact" onClick={closeMenu}>Contact Us</Link>
           </nav>
@@ -191,9 +191,11 @@ export default function Header() {
           <div className={styles.sidebarButtons}>
             {user ? (
               <>
-                <Link href="/profile" passHref><button className={styles.sidebarBtn} onClick={closeMenu}>Profile</button></Link>
+                {user.role !== 'admin' && (
+                  <Link href="/profile" passHref><button className={styles.sidebarBtn} onClick={closeMenu}>Profile</button></Link>
+                )}
                 <Link href={dashboardUrl} passHref><button className={styles.sidebarBtn} onClick={closeMenu}>Dashboard</button></Link>
-                
+
                 {/* --- NEW STUDENT LINKS (MOBILE) --- */}
                 {user.role === 'student' && (
                   <>

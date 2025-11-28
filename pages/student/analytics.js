@@ -19,18 +19,25 @@ export default function Analytics() {
     return (
         <div className={styles.container} style={{ padding: '20px' }}>
             <h1>Performance Analytics</h1>
-            
+
             {/* List of Attempts */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px', marginBottom: '30px' }}>
-                {results.map(r => (
-                    <div key={r.id} style={{ border: '1px solid #ddd', padding: '15px', borderRadius: '8px', background: 'white' }}>
-                        <h3>{r.quiz.title}</h3>
-                        <p>Score: <strong>{r.score}</strong> / {r.quiz.total_marks}</p>
-                        <p>Date: {new Date(r.submitted_at).toLocaleDateString()}</p>
-                        <button onClick={() => viewAnalysis(r.id)} style={{ marginTop: '10px', padding: '5px 10px', background: '#007bff', color: 'white', border: 'none', cursor: 'pointer' }}>View Analysis</button>
-                    </div>
-                ))}
-            </div>
+            {results.length === 0 ? (
+                <div style={{ textAlign: 'center', marginTop: '50px', color: '#666' }}>
+                    <h3>No Exam Data Available</h3>
+                    <p>You haven't taken any exams yet. Go to Mock Tests to start practicing!</p>
+                </div>
+            ) : (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px', marginBottom: '30px' }}>
+                    {results.map(r => (
+                        <div key={r.id} style={{ border: '1px solid #ddd', padding: '15px', borderRadius: '8px', background: 'white' }}>
+                            <h3>{r.quiz.title}</h3>
+                            <p>Score: <strong>{r.score}</strong> / {r.quiz.total_marks}</p>
+                            <p>Date: {new Date(r.submitted_at).toLocaleDateString()}</p>
+                            <button onClick={() => viewAnalysis(r.id)} style={{ marginTop: '10px', padding: '5px 10px', background: '#007bff', color: 'white', border: 'none', cursor: 'pointer' }}>View Analysis</button>
+                        </div>
+                    ))}
+                </div>
+            )}
 
             {/* Detailed Analysis View */}
             {selectedResult && (
@@ -41,8 +48,8 @@ export default function Analytics() {
                             <h4>Q{idx + 1}: {q.text}</h4>
                             <ul>
                                 {q.choices.map(c => (
-                                    <li key={c.id} style={{ 
-                                        color: c.is_correct ? 'green' : 'black', 
+                                    <li key={c.id} style={{
+                                        color: c.is_correct ? 'green' : 'black',
                                         fontWeight: c.is_correct ? 'bold' : 'normal'
                                     }}>
                                         {c.text} {c.is_correct && "(Correct Answer)"}

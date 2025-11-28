@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import styles from '../../styles/GateExam.module.css';
-import apiFetch from '../../utils/api';
+// FIX: Use the '@' alias to import from the root styles folder
+import styles from '@/styles/GateExam.module.css'; 
+import apiFetch from '@/utils/api';
 
 export default function GateExamInterface() {
     const router = useRouter();
@@ -9,10 +10,11 @@ export default function GateExamInterface() {
     
     const [quiz, setQuiz] = useState(null);
     const [qIndex, setQIndex] = useState(0);
-    const [answers, setAnswers] = useState({});
-    const [status, setStatus] = useState({});
+    const [answers, setAnswers] = useState({}); // { qId: choiceId }
+    const [status, setStatus] = useState({}); // { qId: 'not_visited' | 'answered' ... }
     const [loading, setLoading] = useState(true);
 
+    // Fetch Quiz Data
     useEffect(() => {
         if (!quiz_id) return;
         
@@ -20,35 +22,40 @@ export default function GateExamInterface() {
             .then(res => res.json())
             .then(data => {
                 setQuiz(data);
+                // Initialize all questions as 'not_visited'
                 const initStatus = {};
                 data.questions.forEach(q => initStatus[q.id] = 'not_visited');
-                initStatus[data.questions[0].id] = 'not_answered';
+                // The first question is 'not_answered' immediately
+                if(data.questions.length > 0) initStatus[data.questions[0].id] = 'not_answered';
                 setStatus(initStatus);
                 setLoading(false);
             })
             .catch(err => console.error(err));
     }, [quiz_id]);
 
+    // Handle Question Navigation
     const changeQuestion = (index) => {
         const currentQId = quiz.questions[qIndex].id;
-        // Logic: If leaving a question without answering, verify status
+        // If leaving a question without answering, mark it red (not_answered)
         if (status[currentQId] === 'not_visited') {
             setStatus(prev => ({...prev, [currentQId]: 'not_answered'}));
         }
         
         setQIndex(index);
         
-        // Update new question status to not_answered if it was not_visited
+        // Mark new question as visited (red) if it was white
         const newQId = quiz.questions[index].id;
         if (status[newQId] === 'not_visited') {
             setStatus(prev => ({...prev, [newQId]: 'not_answered'}));
         }
     };
 
+    // Handle Option Click
     const handleAnswer = (choiceId) => {
         setAnswers(prev => ({ ...prev, [quiz.questions[qIndex].id]: choiceId }));
     };
 
+    // Save & Next Button
     const saveAndNext = () => {
         const qId = quiz.questions[qIndex].id;
         setStatus(prev => ({
@@ -58,12 +65,14 @@ export default function GateExamInterface() {
         if (qIndex < quiz.questions.length - 1) changeQuestion(qIndex + 1);
     };
 
+    // Mark for Review Button
     const markForReview = () => {
         const qId = quiz.questions[qIndex].id;
         setStatus(prev => ({ ...prev, [qId]: 'marked' }));
         if (qIndex < quiz.questions.length - 1) changeQuestion(qIndex + 1);
     };
 
+    // Submit Logic
     const submitExam = async () => {
         if (!confirm("Are you sure you want to submit?")) return;
         
@@ -78,24 +87,27 @@ export default function GateExamInterface() {
         });
 
         if (res.ok) {
+            alert("Exam Submitted Successfully!");
             router.push('/student/dashboard');
+        } else {
+            alert("Submission failed. Please try again.");
         }
     };
 
     if (loading) return <div style={{padding: '20px'}}>Loading Exam...</div>;
+    if (!quiz) return <div style={{padding: '20px'}}>Quiz not found.</div>;
 
     const currentQ = quiz.questions[qIndex];
-    const currentStatus = status[currentQ.id];
 
     return (
         <div className={styles.container}>
             <header className={styles.header}>
                 <div className={styles.title}>{quiz.title}</div>
-                <div className={styles.timer}>Time Remaining: 180:00</div>
+                <div className={styles.timer}>Time Remaining: {quiz.duration_minutes}:00</div>
             </header>
 
             <div className={styles.main}>
-                {/* Left Area */}
+                {/* Left Area: Question */}
                 <div className={styles.questionArea}>
                     <div className={styles.questionHeader}>
                         <span>Question {qIndex + 1}</span>
@@ -128,13 +140,8 @@ export default function GateExamInterface() {
                     </div>
                 </div>
 
-                {/* Right Area */}
+                {/* Right Area: Palette */}
                 <div className={styles.sidebar}>
-                    <div className={styles.profile}>
-                        <div className={styles.avatar}></div>
-                        <span>Student</span>
-                    </div>
-
                     <div className={styles.legend}>
                         <div className={styles.legendItem}><span className={`${styles.dot} ${styles.status_answered}`}></span> Answered</div>
                         <div className={styles.legendItem}><span className={`${styles.dot} ${styles.status_not_answered}`}></span> Not Ans</div>

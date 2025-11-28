@@ -33,6 +33,9 @@ export default function Login() {
         localStorage.setItem('access_token', data.access);
         localStorage.setItem('refresh_token', data.refresh);
         
+        const role = data.role === 'admin' ? 'admin' : 'student';
+        localStorage.setItem('user_role', role);
+        
         // 2. Redirect based on Role (Sent from backend)
         if (data.role === 'admin') {
             window.location.href = '/admin/dashboard';

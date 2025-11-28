@@ -5,19 +5,22 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import apiFetch from '@/utils/api';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const slideInUp = {
   hidden: { opacity: 0, y: 50 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } },
 };
 
+
 export default function AdminDashboard() {
   // --- State Management ---
   const [requests, setRequests] = useState([]);
   const [students, setStudents] = useState([]);
   const [branches, setBranches] = useState([]);
-  const [quizzes, setQuizzes] = useState([]); // Stores list of quizzes
-  const [submissions, setSubmissions] = useState([]); // Stores recent student exam attempts
+  const [quizzes, setQuizzes] = useState([]);
+  const [submissions, setSubmissions] = useState([]);
+  const router = useRouter();
 
   // Upload Form State
   const [file, setFile] = useState(null);
@@ -26,6 +29,14 @@ export default function AdminDashboard() {
   const [classification, setClassification] = useState('');
   
   const [isLoading, setIsLoading] = useState(true);
+
+  // Login Kick
+  useEffect(() => {
+      const role = localStorage.getItem('user_role');
+      if (role !== 'admin') {
+          router.push('/login');
+      }
+  }, []);
 
   // --- Fetch Data on Load ---
   useEffect(() => {
