@@ -1,21 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import apiFetch from '@/utils/api';
 import styles from '@/styles/Dashboard.module.css';
-import dynamic from 'next/dynamic';
-import { pdfjs } from 'react-pdf';
 
-const PDFDocument = dynamic(() => import('react-pdf').then(mod => mod.Document), {
+const Document = dynamic(() => import('react-pdf').then(mod => mod.Document), {
     ssr: false,
-    loading: () => <p>Loading PDF viewer...</p>,
+    loading: () => <p style={{ color: 'white' }}>Loading PDF...</p>,
 });
-const PDFPage = dynamic(() => import('react-pdf').then(mod => mod.Page), {
+const Page = dynamic(() => import('react-pdf').then(mod => mod.Page), {
     ssr: false,
 });
-
-if (typeof window !== "undefined") {
-    pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
-}
 
 export default function SecurePdfViewer() {
     const router = useRouter();
@@ -25,8 +20,14 @@ export default function SecurePdfViewer() {
     const [fileUrl, setFileUrl] = useState(null);
 
     useEffect(() => {
+        // Dynamically import pdfjs to avoid server-side execution
+        import('react-pdf').then(({ pdfjs }) => {
+            pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+        });
+    }, []);
+
+    useEffect(() => {
         if (!id) return;
-        // Fetch the Signed URL or File URL
         apiFetch(`/api/materials/${id}/view/`)
             .then(res => {
                 if (!res.ok) throw new Error("Failed to load");
@@ -40,8 +41,6 @@ export default function SecurePdfViewer() {
     }, [id]);
 
     const onDocumentLoadSuccess = ({ numPages }) => setNumPages(numPages);
-
-    // Disable Right Click
     const handleContextMenu = (e) => e.preventDefault();
 
     return (
@@ -53,14 +52,14 @@ export default function SecurePdfViewer() {
 
             <div style={{ display: 'flex', justifyContent: 'center', background: '#555', padding: '20px', minHeight: '80vh', overflow: 'auto' }}>
                 {fileUrl && (
-                    <PDFDocument
+                    <Document
                         file={fileUrl}
                         onLoadSuccess={onDocumentLoadSuccess}
                         error={<div style={{ color: 'white' }}>Failed to load PDF.</div>}
                         loading={<div style={{ color: 'white' }}>Loading...</div>}
                     >
-                        <PDFPage pageNumber={pageNumber} renderTextLayer={false} renderAnnotationLayer={false} height={800} />
-                    </PDFDocument>
+                        <Page pageNumber={pageNumber} renderTextLayer={false} renderAnnotationLayer={false} height={800} />
+                    </Document>
                 )}
             </div>
 
