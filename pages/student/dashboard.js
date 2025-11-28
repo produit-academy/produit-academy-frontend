@@ -30,15 +30,23 @@ export default function StudentDashboard() {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        // Added /api/student/quizzes/ to the fetch list
         const [userRes, materialsRes, requestsRes, quizzesRes] = await Promise.all([
           apiFetch('/api/student/dashboard/'),
           apiFetch('/api/materials/'),
           apiFetch('/api/courserequest/'),
-          apiFetch('/api/student/quizzes/') // Assuming you created this endpoint in backend
+          apiFetch('/api/student/quizzes/')
         ]);
 
-        if (userRes.ok) setUser(await userRes.json());
+        if (userRes.ok) {
+          const userData = await userRes.json();
+          setUser(userData);
+
+          // Enforce Profile Completion
+          if (!userData.college || !userData.phone_number) {
+            router.push('/student/complete-profile');
+            return;
+          }
+        }
         if (materialsRes.ok) setMaterials(await materialsRes.json());
         if (requestsRes.ok) setCourseRequests(await requestsRes.json());
         if (quizzesRes.ok) setQuizzes(await quizzesRes.json());
@@ -52,7 +60,7 @@ export default function StudentDashboard() {
       }
     };
     fetchDashboardData();
-  }, []);
+  }, [router]);
 
   const getStatusColor = (status) => {
     switch (status) {
