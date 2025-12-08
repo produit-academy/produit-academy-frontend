@@ -145,21 +145,7 @@ export default function AdminDashboard() {
                                     </p>
                                 </div>
 
-                                {/* 2. Categories Card */}
-                                <div onClick={() => router.push('/admin/categories')}
-                                    style={{
-                                        padding: '20px', background: 'white', border: '1px solid #ddd', borderRadius: '8px',
-                                        cursor: 'pointer', boxShadow: '0 2px 5px rgba(0,0,0,0.05)', transition: 'transform 0.2s'
-                                    }}
-                                    onMouseOver={e => e.currentTarget.style.transform = 'translateY(-3px)'}
-                                    onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
-                                >
-                                    <div style={{ fontSize: '2rem', marginBottom: '10px' }}>🏷️</div>
-                                    <h3 style={{ margin: '0 0 10px 0', color: '#28a745' }}>Manage Categories</h3>
-                                    <p style={{ color: '#666', fontSize: '0.9rem', margin: 0 }}>
-                                        Create topics like "Aptitude", "Thermodynamics", etc., to organize your questions.
-                                    </p>
-                                </div>
+
 
                                 {/* 3. Create Question Shortcut */}
                                 <div onClick={() => router.push('/admin/questions/create')}

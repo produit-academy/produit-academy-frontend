@@ -1,15 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { fetchAllCategories, createQuestion } from '../../../utils/api';
+import { createQuestion } from '../../../utils/api';
+import apiFetch from '@/utils/api'; // Needed for fetchBranches
 
 export default function CreateQuestion() {
     const router = useRouter();
-    const [categories, setCategories] = useState([]);
+    // Fixed Categories
+    const categories = ['General Aptitude', 'Engineering Mathematics', 'Subject Paper'];
 
     // Form State
     const [text, setText] = useState('');
     const [marks, setMarks] = useState(1);
-    const [categoryId, setCategoryId] = useState('');
+    const [category, setCategory] = useState('');
+    const [branch, setBranch] = useState('');
+    const [branches, setBranches] = useState([]);
+
     const [choices, setChoices] = useState([
         { text: '', is_correct: false },
         { text: '', is_correct: false },
@@ -18,13 +23,13 @@ export default function CreateQuestion() {
     ]);
 
     useEffect(() => {
-        fetchAllCategories().then(res => setCategories(res.data));
+        // Fetch branches for the dropdown
+        apiFetch('/api/branches/').then(res => res.json()).then(data => setBranches(data));
     }, []);
 
     const handleChoiceChange = (index, field, value) => {
         const newChoices = [...choices];
         if (field === 'is_correct') {
-            // Ensure only one is correct (Radio button behavior manually)
             newChoices.forEach(c => c.is_correct = false);
             newChoices[index].is_correct = true;
         } else {
@@ -36,16 +41,22 @@ export default function CreateQuestion() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Validation
         if (!choices.some(c => c.is_correct)) {
             alert("Please mark one option as correct.");
+            return;
+        }
+
+        // Validation: Branch is required unless category is General Aptitude
+        if (category !== 'General Aptitude' && !branch) {
+            alert("Please select a branch for this subject.");
             return;
         }
 
         const payload = {
             text,
             marks,
-            category: categoryId || null,
+            category,
+            branch: category === 'General Aptitude' ? null : branch,
             choices
         };
 
@@ -76,19 +87,36 @@ export default function CreateQuestion() {
                     </div>
 
                     {/* Metadata Row */}
-                    <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
-                        <div style={{ flex: 1 }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '20px', marginBottom: '20px' }}>
+                        <div>
                             <label>Category</label>
                             <select
-                                value={categoryId}
-                                onChange={e => setCategoryId(e.target.value)}
+                                value={category}
+                                onChange={e => setCategory(e.target.value)}
+                                required
                                 style={{ width: '100%', padding: '10px', marginTop: '5px' }}
                             >
                                 <option value="">-- Select Category --</option>
-                                {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                                {categories.map(c => <option key={c} value={c}>{c}</option>)}
                             </select>
                         </div>
-                        <div style={{ flex: 1 }}>
+
+                        {/* Branch Dropdown - Hidden for General Aptitude */}
+                        <div>
+                            <label style={{ opacity: category === 'General Aptitude' ? 0.5 : 1 }}>Branch</label>
+                            <select
+                                value={branch}
+                                onChange={e => setBranch(e.target.value)}
+                                disabled={category === 'General Aptitude'}
+                                required={category !== 'General Aptitude'}
+                                style={{ width: '100%', padding: '10px', marginTop: '5px' }}
+                            >
+                                <option value="">-- Select Branch --</option>
+                                {branches.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
+                            </select>
+                        </div>
+
+                        <div>
                             <label>Marks</label>
                             <input
                                 type="number"

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
-import { submitMockTest } from '../../../utils/api';
-import styles from '../../../styles/GateExam.module.css'; // You will need to create this CSS file
+import { submitMockTest } from '@/utils/api';
+import styles from '@/styles/GateExam.module.css';
 
 export default function AttemptTest() {
     const router = useRouter();

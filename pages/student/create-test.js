@@ -8,27 +8,45 @@ import { motion } from 'framer-motion';
 
 export default function CreateTest() {
     const router = useRouter();
-    const [categories, setCategories] = useState([]);
+
+    const [branches, setBranches] = useState([]); // New State
     const [loading, setLoading] = useState(false);
 
     // Form Config
+    const [selectedBranch, setSelectedBranch] = useState(''); // New State
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [numQuestions, setNumQuestions] = useState(10);
     const [timeLimit, setTimeLimit] = useState(15);
     const [allowRepeats, setAllowRepeats] = useState(true);
 
+    // Fixed Categories for Selection
+    const fixedCategories = [
+        { id: 'General Aptitude', name: 'General Aptitude' },
+        { id: 'Engineering Mathematics', name: 'Engineering Mathematics' },
+        { id: 'Subject Paper', name: 'Subject Paper' }
+    ];
+
     useEffect(() => {
-        // Fetch Categories via Admin endpoint (or public/student read-only endpoint if separate)
-        const loadCats = async () => {
+        const loadData = async () => {
             try {
-                // Assuming we created a public/student readable endpoint or re-using admin for simplicity
-                // ideally: /api/categories/ (public)
-                // For now using the admin one if permissons allow, OR check api.js for student specific
-                const res = await apiFetch('/api/admin/categories/');
-                if (res.ok) setCategories(await res.json());
+                // Fetch Branches and User Profile
+                const [branchRes, userRes] = await Promise.all([
+                    apiFetch('/api/branches/'),
+                    apiFetch('/api/student/dashboard/')
+                ]);
+
+                if (userRes.ok) {
+                    const userData = await userRes.json();
+                    if (!userData.college || !userData.phone_number) {
+                        router.push('/student/complete-profile');
+                        return;
+                    }
+                }
+
+                if (branchRes.ok) setBranches(await branchRes.json());
             } catch (e) { console.error(e); }
         }
-        loadCats();
+        loadData();
     }, []);
 
     const handleGenerate = async (e) => {
@@ -36,7 +54,8 @@ export default function CreateTest() {
         setLoading(true);
 
         const config = {
-            category_ids: selectedCategories.length > 0 ? selectedCategories : null,
+            branch_id: selectedBranch ? parseInt(selectedBranch) : null,
+            categories: selectedCategories.length > 0 ? selectedCategories : [], // Send empty list if none selected
             number_of_questions: parseInt(numQuestions),
             time_limit_minutes: parseInt(timeLimit),
             allow_repeats: allowRepeats
@@ -50,7 +69,6 @@ export default function CreateTest() {
 
             if (res.ok) {
                 const sessionData = await res.json();
-                // Save session for quick access in instructions
                 localStorage.setItem('currentTestSession', JSON.stringify(sessionData));
                 router.push(`/student/test/${sessionData.id}/instructions`);
             } else {
@@ -81,11 +99,26 @@ export default function CreateTest() {
 
                         <form onSubmit={handleGenerate}>
 
-                            {/* 1. Category Selection */}
+                            {/* 1. Branch Selection (NEW) */}
+                            <div style={{ marginBottom: '25px' }}>
+                                <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold' }}>Select Branch (Optional)</label>
+                                <select
+                                    value={selectedBranch}
+                                    onChange={(e) => setSelectedBranch(e.target.value)}
+                                    style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+                                >
+                                    <option value="">All Branches (Mixed)</option>
+                                    {branches.map(b => (
+                                        <option key={b.id} value={b.id}>{b.name}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* 2. Category Selection */}
                             <div style={{ marginBottom: '25px' }}>
                                 <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold' }}>Select Topics (Optional)</label>
                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                                    {categories.map(cat => (
+                                    {fixedCategories.map(cat => (
                                         <div key={cat.id}
                                             onClick={() => toggleCat(cat.id)}
                                             style={{
@@ -99,11 +132,11 @@ export default function CreateTest() {
                                             {cat.name}
                                         </div>
                                     ))}
-                                    {categories.length === 0 && <span style={{ color: '#888' }}>No categories found. Test will be mixed.</span>}
+
                                 </div>
                             </div>
 
-                            {/* 2. Sliders/Inputs */}
+                            {/* 3. Sliders/Inputs */}
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '25px' }}>
                                 <div>
                                     <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Questions</label>
@@ -117,7 +150,7 @@ export default function CreateTest() {
                                 </div>
                             </div>
 
-                            {/* 3. Repeats Toggle */}
+                            {/* 4. Repeats Toggle */}
                             <div style={{ marginBottom: '30px' }}>
                                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
                                     <input type="checkbox" checked={allowRepeats} onChange={e => setAllowRepeats(e.target.checked)} style={{ width: '20px', height: '20px', marginRight: '10px' }} />

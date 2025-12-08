@@ -11,7 +11,16 @@ export default function History() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        apiFetch('/api/student/tests/history/')
+        // Check Profile Completion First
+        apiFetch('/api/student/dashboard/')
+            .then(res => res.json())
+            .then(user => {
+                if (!user.college || !user.phone_number) {
+                    router.push('/student/complete-profile');
+                } else {
+                    return apiFetch('/api/student/tests/history/');
+                }
+            })
             .then(res => res.json())
             .then(data => {
                 setTests(data);

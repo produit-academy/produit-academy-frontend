@@ -23,7 +23,16 @@ export default function StudentDashboard() {
           apiFetch('/api/student/tests/history/')
         ]);
 
-        if (userRes.ok) setUser(await userRes.json());
+        if (userRes.ok) {
+          const userData = await userRes.json();
+          setUser(userData);
+
+          // Enforce Profile Completion
+          if (!userData.college || !userData.phone_number) {
+            router.push('/student/complete-profile');
+            return;
+          }
+        }
         if (reqRes.ok) {
           const reqs = await reqRes.json();
           if (reqs.length > 0) setCourseReq(reqs[0]);
@@ -40,6 +49,9 @@ export default function StudentDashboard() {
     };
     loadDashboard();
   }, []);
+
+  // Check if the student is approved
+  const isApproved = courseReq?.status === 'Approved';
 
   if (loading) return <div style={{ padding: '50px', textAlign: 'center' }}>Loading Dashboard...</div>;
 
@@ -65,28 +77,66 @@ export default function StudentDashboard() {
               </button>
             </div>
 
+            {/* Warning if not approved */}
+            {!isApproved && (
+              <div style={{ padding: '15px', background: '#fff3cd', color: '#856404', borderRadius: '5px', marginBottom: '30px', border: '1px solid #ffeeba' }}>
+                <strong>Account Pending:</strong> You can access mock tests and materials once your course request is approved by the admin.
+              </div>
+            )}
+
             {/* 2. Main Action Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', marginBottom: '40px' }}>
 
-              {/* Create Test Card */}
-              <div className="card-hover" onClick={() => router.push('/student/create-test')}
-                style={{ padding: '25px', background: 'linear-gradient(135deg, #0070f3 0%, #005bb5 100%)', color: 'white', borderRadius: '10px', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,112,243,0.3)' }}>
-                <h2 style={{ margin: '0 0 10px 0' }}>🚀 Take a Mock Test</h2>
-                <p style={{ margin: 0, opacity: 0.9 }}>Generate a custom test based on your preferences. Choose topics, time, and questions.</p>
+              {/* Create Test Card - LOCKED if not approved */}
+              <div
+                className={isApproved ? "card-hover" : ""}
+                onClick={() => isApproved ? router.push('/student/create-test') : alert('Your account is not approved yet.')}
+                style={{
+                  padding: '25px',
+                  background: isApproved ? 'linear-gradient(135deg, #0070f3 0%, #005bb5 100%)' : '#e0e0e0',
+                  color: isApproved ? 'white' : '#888',
+                  borderRadius: '10px',
+                  cursor: isApproved ? 'pointer' : 'not-allowed',
+                  boxShadow: isApproved ? '0 4px 10px rgba(0,112,243,0.3)' : 'none'
+                }}>
+                <h2 style={{ margin: '0 0 10px 0' }}>📝 Take a Mock Test</h2>
+                <p style={{ margin: 0, opacity: 0.9 }}>
+                  {isApproved ? 'Generate a custom test based on your preferences.' : 'Waiting for approval...'}
+                </p>
               </div>
 
-              {/* Study Materials Card */}
-              <div className="card-hover" onClick={() => router.push('/materials')}
-                style={{ padding: '25px', background: 'white', border: '1px solid #eee', borderRadius: '10px', cursor: 'pointer', boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
+              {/* Study Materials Card - LOCKED if not approved */}
+              <div
+                className={isApproved ? "card-hover" : ""}
+                onClick={() => isApproved ? router.push('/materials') : alert('Your account is not approved yet.')}
+                style={{
+                  padding: '25px',
+                  background: 'white',
+                  border: '1px solid #eee',
+                  borderRadius: '10px',
+                  cursor: isApproved ? 'pointer' : 'not-allowed',
+                  boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+                  opacity: isApproved ? 1 : 0.6
+                }}>
                 <h2 style={{ margin: '0 0 10px 0', color: '#333' }}>📚 Study Materials</h2>
                 <p style={{ color: '#666', margin: 0 }}>Access Notes, PYQs, and One-shots for your branch.</p>
               </div>
 
-              {/* Analytics/History Card */}
-              <div className="card-hover" onClick={() => router.push('/student/history')}
-                style={{ padding: '25px', background: 'white', border: '1px solid #eee', borderRadius: '10px', cursor: 'pointer', boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
+              {/* Analytics/History Card - LOCKED if not approved */}
+              <div
+                className={isApproved ? "card-hover" : ""}
+                onClick={() => isApproved ? router.push('/student/history') : alert('Your account is not approved yet.')}
+                style={{
+                  padding: '25px',
+                  background: 'white',
+                  border: '1px solid #eee',
+                  borderRadius: '10px',
+                  cursor: isApproved ? 'pointer' : 'not-allowed',
+                  boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+                  opacity: isApproved ? 1 : 0.6
+                }}>
                 <h2 style={{ margin: '0 0 10px 0', color: '#333' }}>📊 Past Results</h2>
-                <p style={{ color: '#666', margin: 0 }}>View detailed analytics and review answers of your previous attempts.</p>
+                <p style={{ color: '#666', margin: 0 }}>View detailed analytics and review answers.</p>
               </div>
             </div>
 
@@ -94,7 +144,9 @@ export default function StudentDashboard() {
             <div style={{ background: 'white', padding: '25px', borderRadius: '10px', border: '1px solid #eee' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <h2 style={{ margin: 0 }}>Recent Test History</h2>
-                <button onClick={() => router.push('/student/history')} style={{ color: '#0070f3', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 'bold' }}>View All &rarr;</button>
+                {isApproved && (
+                  <button onClick={() => router.push('/student/history')} style={{ color: '#0070f3', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 'bold' }}>View All &rarr;</button>
+                )}
               </div>
 
               {recentTests.length > 0 ? (
@@ -135,7 +187,9 @@ export default function StudentDashboard() {
                   </tbody>
                 </table>
               ) : (
-                <p style={{ color: '#666', fontStyle: 'italic', textAlign: 'center', padding: '20px' }}>You haven't taken any tests yet.</p>
+                <p style={{ color: '#666', fontStyle: 'italic', textAlign: 'center', padding: '20px' }}>
+                  {isApproved ? "You haven't taken any tests yet." : "Approvals pending."}
+                </p>
               )}
             </div>
 

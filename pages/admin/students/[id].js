@@ -107,18 +107,19 @@ export default function StudentProfile() {
                                 </thead>
                                 <tbody>
                                     {history.map((record) => {
-                                        const percent = ((record.score / record.quiz.total_marks) * 100).toFixed(1);
+                                        const totalMarks = record.total_marks || record.total_questions; // Fallback
+                                        const percent = totalMarks > 0 ? ((record.score / totalMarks) * 100).toFixed(1) : 0;
                                         return (
                                             <tr key={record.id} style={{ borderBottom: '1px solid #eee' }}>
-                                                <td style={{ padding: '12px', fontWeight: '500' }}>{record.quiz.title}</td>
+                                                <td style={{ padding: '12px', fontWeight: '500' }}>Mock Test #{record.id}</td>
                                                 <td style={{ padding: '12px', textAlign: 'center', color: '#666' }}>
-                                                    {new Date(record.submitted_at).toLocaleDateString()}
+                                                    {new Date(record.completed_at || record.created_at).toLocaleDateString()}
                                                 </td>
                                                 <td style={{ padding: '12px', textAlign: 'center', fontWeight: 'bold', color: '#0070f3' }}>
                                                     {record.score}
                                                 </td>
                                                 <td style={{ padding: '12px', textAlign: 'center' }}>
-                                                    {record.quiz.total_marks}
+                                                    {totalMarks}
                                                 </td>
                                                 <td style={{ padding: '12px', textAlign: 'center' }}>
                                                     <span style={{
