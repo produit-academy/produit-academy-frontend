@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import { submitMockTest } from '@/utils/api';
 import styles from '@/styles/GateExam.module.css';
-import Image from 'next/image';
 
 export default function AttemptTest() {
     const router = useRouter();
@@ -33,7 +33,27 @@ export default function AttemptTest() {
         }
     }, [id]);
 
-    // Timer Logic
+    // --- MOVED UP: handleSubmit must be defined BEFORE it is used in useEffect ---
+    const handleSubmit = useCallback(async (auto = false) => {
+        if (!auto && !confirm("Are you sure you want to submit the test?")) return;
+
+        // Transform answers map to array for API
+        const payload = Object.entries(answers).map(([qId, cId]) => ({
+            question_id: parseInt(qId),
+            choice_id: parseInt(cId)
+        }));
+
+        try {
+            await submitMockTest(testData.id, payload);
+            localStorage.removeItem('currentTestSession');
+            router.push(`/student/test/${testData.id}/result`);
+        } catch (error) {
+            console.error("Submission error:", error);
+            alert("Submission failed. Please try again.");
+        }
+    }, [answers, testData, router]);
+
+    // Timer Logic (Now safe to use handleSubmit)
     useEffect(() => {
         if (timeLeft > 0) {
             timerRef.current = setInterval(() => {
@@ -88,24 +108,6 @@ export default function AttemptTest() {
         delete newAnswers[qId];
         setAnswers(newAnswers);
     };
-
-    const handleSubmit = useCallback(async (auto = false) => {
-        if (!auto && !confirm("Are you sure you want to submit the test?")) return;
-
-        // Transform answers map to array for API
-        const payload = Object.entries(answers).map(([qId, cId]) => ({
-            question_id: parseInt(qId),
-            choice_id: parseInt(cId)
-        }));
-
-        try {
-            await submitMockTest(testData.id, payload);
-            localStorage.removeItem('currentTestSession');
-            router.push(`/student/test/${testData.id}/result`);
-        } catch (error) {
-            alert("Submission failed. Please try again.");
-        }
-    }, [answers, testData, router]);
 
     // --- RENDER HELPERS ---
 
@@ -169,13 +171,8 @@ export default function AttemptTest() {
                 {/* --- SIDEBAR PALETTE (RIGHT) --- */}
                 <div className={styles.sidebar}>
                     <div className={styles.profileSection}>
-                        <Image
-                            src="/default-avatar.png"
-                            alt="User"
-                            width={50}
-                            height={50}
-                        />
-                        <span>{user.name}</span>
+                        <Image src="/default-avatar.png" alt="User" width={50} height={50} />
+                        <span>Candidate</span>
                     </div>
 
                     <div className={styles.paletteGrid}>
