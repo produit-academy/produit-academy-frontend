@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { submitMockTest } from '@/utils/api';
 import styles from '@/styles/GateExam.module.css';
+import Image from 'next/image';
 
 export default function AttemptTest() {
     const router = useRouter();
@@ -47,7 +48,7 @@ export default function AttemptTest() {
             }, 1000);
         }
         return () => clearInterval(timerRef.current);
-    }, [timeLeft]);
+    }, [timeLeft, handleSubmit]);
 
     // Format Time (HH:MM:SS)
     const formatTime = (seconds) => {
@@ -88,7 +89,7 @@ export default function AttemptTest() {
         setAnswers(newAnswers);
     };
 
-    const handleSubmit = async (auto = false) => {
+    const handleSubmit = useCallback(async (auto = false) => {
         if (!auto && !confirm("Are you sure you want to submit the test?")) return;
 
         // Transform answers map to array for API
@@ -104,7 +105,7 @@ export default function AttemptTest() {
         } catch (error) {
             alert("Submission failed. Please try again.");
         }
-    };
+    }, [answers, testData, router]);
 
     // --- RENDER HELPERS ---
 
@@ -168,8 +169,13 @@ export default function AttemptTest() {
                 {/* --- SIDEBAR PALETTE (RIGHT) --- */}
                 <div className={styles.sidebar}>
                     <div className={styles.profileSection}>
-                        <img src="/default-avatar.png" alt="User" width="50" />
-                        <span>Candidate</span>
+                        <Image
+                            src="/default-avatar.png"
+                            alt="User"
+                            width={50}
+                            height={50}
+                        />
+                        <span>{user.name}</span>
                     </div>
 
                     <div className={styles.paletteGrid}>

@@ -19,7 +19,7 @@ export default function WorkInProgress() {
 
         <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: '#33ae78' }}>Under Construction</h1>
         <p style={{ fontSize: '1.2rem', color: '#228B22', marginBottom: '2rem' }}>
-          We're working hard to improve this page. Please check back later!
+          We&apos;re working hard to improve this page. Please check back later!
         </p>
 
         <button
