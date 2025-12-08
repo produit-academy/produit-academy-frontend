@@ -48,7 +48,7 @@ export default function StudentDashboard() {
       }
     };
     loadDashboard();
-  }, []);
+  }, [router]);
 
   // Check if the student is approved
   const isApproved = courseReq?.status === 'Approved';

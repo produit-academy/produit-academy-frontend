@@ -40,7 +40,7 @@ export default function ExamInstructions() {
                     <div style={styles.colorBox('#d9534f', 'white')}>3</div> <div>You have not answered the question.</div>
                     <div style={styles.colorBox('#5cb85c', 'white')}>5</div> <div>You have answered the question.</div>
                     <div style={styles.colorBox('#6f42c1', 'white')}>7</div> <div>You have NOT answered the question, but have marked the question for review.</div>
-                    <div style={styles.colorBox('#6f42c1', 'white', true)}>9</div> <div>The question(s) "Answered and Marked for Review" will be considered for evaluation.</div>
+                    <div style={styles.colorBox('#6f42c1', 'white', true)}>9</div> <div>The question(s) &quot;Answered and Marked for Review&quot; will be considered for evaluation.</div>
                 </div>
 
                 <h3>2. Navigating to a Question:</h3>

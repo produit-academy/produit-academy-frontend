@@ -47,7 +47,7 @@ export default function CreateTest() {
             } catch (e) { console.error(e); }
         }
         loadData();
-    }, []);
+    }, [router]);
 
     const handleGenerate = async (e) => {
         e.preventDefault();

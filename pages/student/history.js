@@ -27,7 +27,7 @@ export default function History() {
                 setLoading(false);
             })
             .catch(err => setLoading(false));
-    }, []);
+    }, [router]);
 
     if (loading) return <div className="container" style={{ paddingTop: '50px', textAlign: 'center' }}>Loading history...</div>;
 
