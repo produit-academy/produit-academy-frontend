@@ -10,47 +10,40 @@ export default function CreateQuiz() {
     const [branches, setBranches] = useState([]);
     const [error, setError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
-
-    // Initial State
     const [quizData, setQuizData] = useState({
-        title: '', 
-        branch: '', 
-        duration_minutes: 180, 
-        total_marks: 100, 
+        title: '',
+        branch: '',
+        duration_minutes: 180,
+        total_marks: 100,
         questions: []
     });
 
-    // Load Branches on Mount
     useEffect(() => {
         apiFetch('/api/branches/')
             .then(r => r.json())
             .then(data => setBranches(data))
             .catch(err => console.error("Failed to load branches"));
-        
-        // Start with one empty question
         addQuestion();
     }, []);
-
-    // --- Handlers ---
 
     const addQuestion = () => {
         setQuizData(prev => ({
             ...prev,
-            questions: [...prev.questions, { 
-                text: '', 
-                marks: 1, 
+            questions: [...prev.questions, {
+                text: '',
+                marks: 1,
                 choices: [
-                    { text: '', is_correct: false }, 
-                    { text: '', is_correct: false }, 
-                    { text: '', is_correct: false }, 
+                    { text: '', is_correct: false },
+                    { text: '', is_correct: false },
+                    { text: '', is_correct: false },
                     { text: '', is_correct: false }
-                ] 
+                ]
             }]
         }));
     };
 
     const removeQuestion = (index) => {
-        if (quizData.questions.length === 1) return; // Must have at least 1 question
+        if (quizData.questions.length === 1) return;
         const newQs = quizData.questions.filter((_, i) => i !== index);
         setQuizData({ ...quizData, questions: newQs });
     };
@@ -69,13 +62,10 @@ export default function CreateQuiz() {
 
     const setCorrectChoice = (qIndex, cIndex) => {
         const newQs = [...quizData.questions];
-        // Reset all choices for this question to false first (Single Correct Answer)
         newQs[qIndex].choices.forEach(c => c.is_correct = false);
         newQs[qIndex].choices[cIndex].is_correct = true;
         setQuizData({ ...quizData, questions: newQs });
     };
-
-    // --- Validation & Submit ---
 
     const validateForm = () => {
         if (!quizData.title.trim()) return "Quiz Title is required.";
@@ -86,12 +76,8 @@ export default function CreateQuiz() {
             const q = quizData.questions[i];
             if (!q.text.trim()) return `Question ${i + 1} text is empty.`;
             if (q.marks <= 0) return `Question ${i + 1} marks must be positive.`;
-            
-            // Check if at least 2 options are filled (to make a valid MCQ)
             const filledOptions = q.choices.filter(c => c.text.trim() !== '');
             if (filledOptions.length < 2) return `Question ${i + 1} must have at least 2 filled options.`;
-
-            // Check if a correct answer is selected
             const hasCorrect = q.choices.some(c => c.is_correct);
             if (!hasCorrect) return `Question ${i + 1}: Select a correct answer (Radio button).`;
         }
@@ -100,24 +86,22 @@ export default function CreateQuiz() {
 
     const handleSubmit = async () => {
         setError('');
-        
-        // Run Validation
         const validationMsg = validateForm();
         if (validationMsg) {
             setError(validationMsg);
-            window.scrollTo(0,0);
+            window.scrollTo(0, 0);
             return;
         }
 
-        if(!confirm("Are you sure you want to create and publish this quiz?")) return;
+        if (!confirm("Are you sure you want to create and publish this quiz?")) return;
 
         setIsSubmitting(true);
         try {
             const res = await apiFetch('/api/admin/quizzes/create/', {
-                method: 'POST', 
+                method: 'POST',
                 body: JSON.stringify(quizData)
             });
-            
+
             if (res.ok) {
                 alert('Quiz Created Successfully!');
                 router.push('/admin/dashboard');
@@ -138,11 +122,11 @@ export default function CreateQuiz() {
             <Head><title>Create Quiz - Produit Academy</title></Head>
             <Header />
             <div className={styles.container}>
-                
+
                 {/* Header Section */}
                 <div className={styles.header}>
                     <h1 className={styles.title}>Create New Quiz</h1>
-                    <button onClick={() => router.push('/admin/dashboard')} style={{background:'transparent', border:'1px solid #ccc', padding:'8px 12px', borderRadius:'4px', cursor:'pointer'}}>
+                    <button onClick={() => router.push('/admin/dashboard')} style={{ background: 'transparent', border: '1px solid #ccc', padding: '8px 12px', borderRadius: '4px', cursor: 'pointer' }}>
                         Cancel
                     </button>
                 </div>
@@ -152,23 +136,23 @@ export default function CreateQuiz() {
                 {/* 1. Quiz Settings Card */}
                 <div className={styles.section}>
                     <h3 style={{ marginBottom: '15px', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>Quiz Settings</h3>
-                    
+
                     <div className={styles.row}>
                         <div className={styles.group} style={{ flex: 2 }}>
                             <label className={styles.label}>Quiz Title</label>
-                            <input 
-                                className={styles.input} 
-                                placeholder="e.g., Thermodynamics Weekly Test 1" 
+                            <input
+                                className={styles.input}
+                                placeholder="e.g., Thermodynamics Weekly Test 1"
                                 value={quizData.title}
-                                onChange={e => setQuizData({...quizData, title: e.target.value})}
+                                onChange={e => setQuizData({ ...quizData, title: e.target.value })}
                             />
                         </div>
                         <div className={styles.group}>
                             <label className={styles.label}>Branch</label>
-                            <select 
-                                className={styles.select} 
+                            <select
+                                className={styles.select}
                                 value={quizData.branch}
-                                onChange={e => setQuizData({...quizData, branch: e.target.value})}
+                                onChange={e => setQuizData({ ...quizData, branch: e.target.value })}
                             >
                                 <option value="">Select Branch</option>
                                 {branches.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
@@ -179,18 +163,18 @@ export default function CreateQuiz() {
                     <div className={styles.row}>
                         <div className={styles.group}>
                             <label className={styles.label}>Duration (Minutes)</label>
-                            <input 
-                                type="number" className={styles.input} 
+                            <input
+                                type="number" className={styles.input}
                                 value={quizData.duration_minutes}
-                                onChange={e => setQuizData({...quizData, duration_minutes: parseInt(e.target.value)})}
+                                onChange={e => setQuizData({ ...quizData, duration_minutes: parseInt(e.target.value) })}
                             />
                         </div>
                         <div className={styles.group}>
                             <label className={styles.label}>Total Marks (Displayed)</label>
-                            <input 
-                                type="number" className={styles.input} 
+                            <input
+                                type="number" className={styles.input}
                                 value={quizData.total_marks}
-                                onChange={e => setQuizData({...quizData, total_marks: parseInt(e.target.value)})}
+                                onChange={e => setQuizData({ ...quizData, total_marks: parseInt(e.target.value) })}
                             />
                         </div>
                     </div>
@@ -207,9 +191,9 @@ export default function CreateQuiz() {
 
                             {/* Question Text */}
                             <div style={{ marginBottom: '15px' }}>
-                                <label className={styles.label} style={{marginBottom:'5px', display:'block'}}>Question Text</label>
-                                <textarea 
-                                    className={styles.input} 
+                                <label className={styles.label} style={{ marginBottom: '5px', display: 'block' }}>Question Text</label>
+                                <textarea
+                                    className={styles.input}
                                     style={{ width: '100%', minHeight: '80px', resize: 'vertical' }}
                                     placeholder="Type the question here..."
                                     value={q.text}
@@ -220,7 +204,7 @@ export default function CreateQuiz() {
                             {/* Marks Input */}
                             <div style={{ marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                                 <label className={styles.label}>Marks for this question:</label>
-                                <input 
+                                <input
                                     type="number" className={styles.input} style={{ width: '80px' }}
                                     value={q.marks}
                                     onChange={e => updateQuestion(qIdx, 'marks', parseInt(e.target.value))}
@@ -232,15 +216,15 @@ export default function CreateQuiz() {
                                 <label className={styles.label}>Options (Select the Radio Button for the Correct Answer):</label>
                                 {q.choices.map((c, cIdx) => (
                                     <div key={cIdx} className={styles.optionRow}>
-                                        <input 
-                                            type="radio" 
+                                        <input
+                                            type="radio"
                                             name={`q_${qIdx}_correct`}
                                             className={styles.radio}
                                             checked={c.is_correct}
                                             onChange={() => setCorrectChoice(qIdx, cIdx)}
                                             title="Mark as correct answer"
                                         />
-                                        <input 
+                                        <input
                                             className={styles.optionInput}
                                             placeholder={`Option ${cIdx + 1}`}
                                             value={c.text}
@@ -258,11 +242,9 @@ export default function CreateQuiz() {
                     <button className={styles.addBtn} onClick={addQuestion}>
                         + Add Another Question
                     </button>
-                    
-                    {/* SAVE BUTTON AT THE BOTTOM */}
-                    <button 
-                        className={styles.saveBtn} 
-                        onClick={handleSubmit} 
+                    <button
+                        className={styles.saveBtn}
+                        onClick={handleSubmit}
                         disabled={isSubmitting}
                         style={{ padding: '15px', fontSize: '1.2rem', marginTop: '10px' }}
                     >

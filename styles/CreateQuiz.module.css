@@ -15,30 +15,55 @@
     padding-bottom: 15px;
 }
 
-.title { color: #333; margin: 0; font-size: 1.8rem; }
+.title {
+    color: #333;
+    margin: 0;
+    font-size: 1.8rem;
+}
 
 /* Form Sections */
 .section {
     background: white;
     padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     margin-bottom: 25px;
     border: 1px solid #e0e0e0;
 }
 
-.row { display: flex; gap: 20px; margin-bottom: 15px; }
-.group { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
 
-.label { font-weight: 600; color: #555; font-size: 0.9rem; }
-.input, .select {
+.group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.label {
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.input,
+.select {
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 1rem;
     transition: border 0.2s;
 }
-.input:focus, .select:focus { border-color: #007bff; outline: none; }
+
+.input:focus,
+.select:focus {
+    border-color: #007bff;
+    outline: none;
+}
 
 /* Question Card */
 .questionCard {
@@ -65,7 +90,10 @@
     cursor: pointer;
     font-size: 0.9rem;
 }
-.deleteBtn:hover { text-decoration: underline; }
+
+.deleteBtn:hover {
+    text-decoration: underline;
+}
 
 .optionRow {
     display: flex;
@@ -78,9 +106,22 @@
     border-radius: 4px;
 }
 
-.radio { width: 18px; height: 18px; cursor: pointer; }
-.optionInput { border: none; flex: 1; padding: 5px; outline: none; }
-.optionInput:focus { background: #f0f8ff; }
+.radio {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.optionInput {
+    border: none;
+    flex: 1;
+    padding: 5px;
+    outline: none;
+}
+
+.optionInput:focus {
+    background: #f0f8ff;
+}
 
 /* Buttons */
 .addBtn {
@@ -94,7 +135,10 @@
     cursor: pointer;
     transition: background 0.2s;
 }
-.addBtn:hover { background: #e6f2ff; }
+
+.addBtn:hover {
+    background: #e6f2ff;
+}
 
 .saveBtn {
     background: #28a745;
@@ -107,7 +151,11 @@
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(40, 167, 69, 0.2);
 }
-.saveBtn:hover { background: #218838; transform: translateY(-1px); }
+
+.saveBtn:hover {
+    background: #218838;
+    transform: translateY(-1px);
+}
 
 .errorMsg {
     background: #ffebee;

@@ -22,7 +22,6 @@ export default function Header() {
     }
   }, []);
 
-  // Load courses for dropdown; runs once
   useEffect(() => {
     const load = async () => {
       try {
@@ -55,7 +54,6 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock body scroll when sidebar is open
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -84,7 +82,6 @@ export default function Header() {
     setIsMobileCoursesOpen((v) => !v);
   };
 
-  // Check user role for dashboard link
   const getDashboardUrl = () => {
     if (!user) return '/login';
     if (user.role === 'admin') return '/admin/dashboard';
@@ -198,7 +195,6 @@ export default function Header() {
                 )}
                 <Link href={dashboardUrl} passHref><button className={styles.sidebarBtn} onClick={closeMenu}>Dashboard</button></Link>
 
-                {/* --- NEW STUDENT LINKS (MOBILE) --- */}
                 {user.role === 'student' && (
                   <>
                     <Link href="/student/mock-tests" passHref><button className={styles.sidebarBtn} onClick={closeMenu}>Mock Tests</button></Link>

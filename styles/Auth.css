@@ -1,11 +1,9 @@
-/* styles/Auth.css */
-
 .auth-page {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding-top: 95px; /* Same as main-content */
+  padding-top: 95px;
 }
 
 .auth-container {
@@ -39,7 +37,8 @@
   text-align: left;
 }
 
-.auth-form input, .auth-form select {
+.auth-form input,
+.auth-form select {
   background: var(--background-light);
   border: 1px solid var(--card-border);
   color: var(--text-primary);
@@ -49,7 +48,8 @@
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.auth-form input:focus, .auth-form select:focus {
+.auth-form input:focus,
+.auth-form select:focus {
   outline: none;
   border-color: var(--accent-blue);
   box-shadow: 0 0 0 3px rgba(0, 63, 136, 0.15);

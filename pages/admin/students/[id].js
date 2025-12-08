@@ -29,8 +29,6 @@ export default function StudentProfile() {
                 if (historyRes.ok) {
                     const data = await historyRes.json();
                     setHistory(data);
-
-                    // Calculate Stats
                     const totalScore = data.reduce((acc, curr) => acc + curr.score, 0);
                     const avg = data.length > 0 ? (totalScore / data.length).toFixed(1) : 0;
                     setStats({ totalTests: data.length, avgScore: avg });

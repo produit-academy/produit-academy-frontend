@@ -16,7 +16,7 @@ export default function TestResult() {
 
     if (!result) return <div>Loading Results...</div>;
 
-    const percentage = ((result.score / (result.questions.length * 1)) * 100).toFixed(2); // Assuming 1 mark avg for simplicity in calculation
+    const percentage = ((result.score / (result.questions.length * 1)) * 100).toFixed(2);
 
     return (
         <div className="container" style={{ padding: '40px' }}>

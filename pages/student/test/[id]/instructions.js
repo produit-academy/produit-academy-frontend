@@ -8,7 +8,7 @@ export default function ExamInstructions() {
     const [testData, setTestData] = useState(null);
 
     useEffect(() => {
-        // Retrieve session data passed from creation step
+        p
         const stored = localStorage.getItem('currentTestSession');
         if (stored) setTestData(JSON.parse(stored));
     }, []);

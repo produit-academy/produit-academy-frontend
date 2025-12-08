@@ -8,18 +8,13 @@ import { motion } from 'framer-motion';
 
 export default function CreateTest() {
     const router = useRouter();
-
-    const [branches, setBranches] = useState([]); // New State
+    const [branches, setBranches] = useState([]);
     const [loading, setLoading] = useState(false);
-
-    // Form Config
-    const [selectedBranch, setSelectedBranch] = useState(''); // New State
+    const [selectedBranch, setSelectedBranch] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [numQuestions, setNumQuestions] = useState(10);
     const [timeLimit, setTimeLimit] = useState(15);
     const [allowRepeats, setAllowRepeats] = useState(true);
-
-    // Fixed Categories for Selection
     const fixedCategories = [
         { id: 'General Aptitude', name: 'General Aptitude' },
         { id: 'Engineering Mathematics', name: 'Engineering Mathematics' },
@@ -29,7 +24,6 @@ export default function CreateTest() {
     useEffect(() => {
         const loadData = async () => {
             try {
-                // Fetch Branches and User Profile
                 const [branchRes, userRes] = await Promise.all([
                     apiFetch('/api/branches/'),
                     apiFetch('/api/student/dashboard/')
@@ -99,7 +93,7 @@ export default function CreateTest() {
 
                         <form onSubmit={handleGenerate}>
 
-                            {/* 1. Branch Selection (NEW) */}
+                            {/* 1. Branch Selection */}
                             <div style={{ marginBottom: '25px' }}>
                                 <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold' }}>Select Branch (Optional)</label>
                                 <select

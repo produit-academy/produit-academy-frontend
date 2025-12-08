@@ -1,61 +1,52 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-// FIX: Use the '@' alias to import from the root styles folder
-import styles from '@/styles/GateExam.module.css'; 
+import styles from '@/styles/GateExam.module.css';
 import apiFetch from '@/utils/api';
 
 export default function GateExamInterface() {
     const router = useRouter();
     const { quiz_id } = router.query;
-    
     const [quiz, setQuiz] = useState(null);
     const [qIndex, setQIndex] = useState(0);
-    const [answers, setAnswers] = useState({}); // { qId: choiceId }
-    const [status, setStatus] = useState({}); // { qId: 'not_visited' | 'answered' ... }
+    const [answers, setAnswers] = useState({});
+    const [status, setStatus] = useState({});
     const [loading, setLoading] = useState(true);
 
-    // Fetch Quiz Data
     useEffect(() => {
         if (!quiz_id) return;
-        
+
         apiFetch(`/api/student/quizzes/${quiz_id}/`)
             .then(res => res.json())
             .then(data => {
                 setQuiz(data);
-                // Initialize all questions as 'not_visited'
                 const initStatus = {};
                 data.questions.forEach(q => initStatus[q.id] = 'not_visited');
-                // The first question is 'not_answered' immediately
-                if(data.questions.length > 0) initStatus[data.questions[0].id] = 'not_answered';
+                if (data.questions.length > 0) initStatus[data.questions[0].id] = 'not_answered';
                 setStatus(initStatus);
                 setLoading(false);
             })
             .catch(err => console.error(err));
     }, [quiz_id]);
 
-    // Handle Question Navigation
     const changeQuestion = (index) => {
         const currentQId = quiz.questions[qIndex].id;
-        // If leaving a question without answering, mark it red (not_answered)
+
         if (status[currentQId] === 'not_visited') {
-            setStatus(prev => ({...prev, [currentQId]: 'not_answered'}));
+            setStatus(prev => ({ ...prev, [currentQId]: 'not_answered' }));
         }
-        
+
         setQIndex(index);
-        
-        // Mark new question as visited (red) if it was white
+
         const newQId = quiz.questions[index].id;
         if (status[newQId] === 'not_visited') {
-            setStatus(prev => ({...prev, [newQId]: 'not_answered'}));
+            setStatus(prev => ({ ...prev, [newQId]: 'not_answered' }));
         }
     };
 
-    // Handle Option Click
     const handleAnswer = (choiceId) => {
         setAnswers(prev => ({ ...prev, [quiz.questions[qIndex].id]: choiceId }));
     };
 
-    // Save & Next Button
     const saveAndNext = () => {
         const qId = quiz.questions[qIndex].id;
         setStatus(prev => ({
@@ -65,17 +56,15 @@ export default function GateExamInterface() {
         if (qIndex < quiz.questions.length - 1) changeQuestion(qIndex + 1);
     };
 
-    // Mark for Review Button
     const markForReview = () => {
         const qId = quiz.questions[qIndex].id;
         setStatus(prev => ({ ...prev, [qId]: 'marked' }));
         if (qIndex < quiz.questions.length - 1) changeQuestion(qIndex + 1);
     };
 
-    // Submit Logic
     const submitExam = async () => {
         if (!confirm("Are you sure you want to submit?")) return;
-        
+
         const payload = Object.entries(answers).map(([qid, cid]) => ({
             question_id: parseInt(qid),
             choice_id: parseInt(cid)
@@ -94,8 +83,8 @@ export default function GateExamInterface() {
         }
     };
 
-    if (loading) return <div style={{padding: '20px'}}>Loading Exam...</div>;
-    if (!quiz) return <div style={{padding: '20px'}}>Quiz not found.</div>;
+    if (loading) return <div style={{ padding: '20px' }}>Loading Exam...</div>;
+    if (!quiz) return <div style={{ padding: '20px' }}>Quiz not found.</div>;
 
     const currentQ = quiz.questions[qIndex];
 
@@ -113,17 +102,17 @@ export default function GateExamInterface() {
                         <span>Question {qIndex + 1}</span>
                         <span>Marks: {currentQ.marks}</span>
                     </div>
-                    
+
                     <div className={styles.questionText}>{currentQ.text}</div>
-                    
+
                     <div>
                         {currentQ.choices.map(c => (
                             <label key={c.id} className={styles.optionLabel}>
-                                <input 
-                                    type="radio" 
-                                    name="opt" 
+                                <input
+                                    type="radio"
+                                    name="opt"
                                     className={styles.radio}
-                                    checked={answers[currentQ.id] === c.id} 
+                                    checked={answers[currentQ.id] === c.id}
                                     onChange={() => handleAnswer(c.id)}
                                 />
                                 {c.text}
@@ -134,7 +123,7 @@ export default function GateExamInterface() {
                     <div className={styles.footer}>
                         <button className={`${styles.btn} ${styles.btnReview}`} onClick={markForReview}>Mark for Review</button>
                         <button className={`${styles.btn} ${styles.btnClear}`} onClick={() => {
-                            const newAns = {...answers}; delete newAns[currentQ.id]; setAnswers(newAns);
+                            const newAns = { ...answers }; delete newAns[currentQ.id]; setAnswers(newAns);
                         }}>Clear Response</button>
                         <button className={`${styles.btn} ${styles.btnSave}`} onClick={saveAndNext}>Save & Next</button>
                     </div>
@@ -151,8 +140,8 @@ export default function GateExamInterface() {
 
                     <div className={styles.palette}>
                         {quiz.questions.map((q, idx) => (
-                            <button 
-                                key={q.id} 
+                            <button
+                                key={q.id}
                                 className={`${styles.qBtn} ${styles[`status_${status[q.id]}`]} ${qIndex === idx ? styles.active : ''}`}
                                 onClick={() => changeQuestion(idx)}
                             >

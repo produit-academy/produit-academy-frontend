@@ -19,8 +19,6 @@ export default function Analytics() {
     return (
         <div className={styles.container} style={{ padding: '20px' }}>
             <h1>Performance Analytics</h1>
-
-            {/* List of Attempts */}
             {results.length === 0 ? (
                 <div style={{ textAlign: 'center', marginTop: '50px', color: '#666' }}>
                     <h3>No Exam Data Available</h3>
@@ -39,7 +37,6 @@ export default function Analytics() {
                 </div>
             )}
 
-            {/* Detailed Analysis View */}
             {selectedResult && (
                 <div style={{ background: '#f9f9f9', padding: '20px', borderTop: '2px solid #333' }}>
                     <h2>Analysis: {selectedResult.quiz.title}</h2>

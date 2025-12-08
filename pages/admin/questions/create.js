@@ -1,20 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { createQuestion } from '../../../utils/api';
-import apiFetch from '@/utils/api'; // Needed for fetchBranches
+import apiFetch from '@/utils/api';
 
 export default function CreateQuestion() {
     const router = useRouter();
-    // Fixed Categories
     const categories = ['General Aptitude', 'Engineering Mathematics', 'Subject Paper'];
-
-    // Form State
     const [text, setText] = useState('');
     const [marks, setMarks] = useState(1);
     const [category, setCategory] = useState('');
     const [branch, setBranch] = useState('');
     const [branches, setBranches] = useState([]);
-
     const [choices, setChoices] = useState([
         { text: '', is_correct: false },
         { text: '', is_correct: false },
@@ -23,7 +19,6 @@ export default function CreateQuestion() {
     ]);
 
     useEffect(() => {
-        // Fetch branches for the dropdown
         apiFetch('/api/branches/').then(res => res.json()).then(data => setBranches(data));
     }, []);
 
@@ -46,7 +41,6 @@ export default function CreateQuestion() {
             return;
         }
 
-        // Validation: Branch is required unless category is General Aptitude
         if (category !== 'General Aptitude' && !branch) {
             alert("Please select a branch for this subject.");
             return;

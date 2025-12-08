@@ -5,9 +5,7 @@ import { fetchAllQuestions, deleteQuestion } from '../../../utils/api';
 export default function QuestionBank() {
     const router = useRouter();
     const [questions, setQuestions] = useState([]);
-    const [filterCategory, setFilterCategory] = useState('All'); // New State
-
-    // Fixed Categories
+    const [filterCategory, setFilterCategory] = useState('All');
     const categories = ['General Aptitude', 'Engineering Mathematics', 'Subject Paper'];
 
     useEffect(() => {
@@ -26,13 +24,11 @@ export default function QuestionBank() {
     const handleDelete = async (id) => {
         if (confirm('Delete this question?')) {
             await deleteQuestion(id);
-            // Reload questions only
             const res = await fetchAllQuestions();
             if (res.data) setQuestions(res.data);
         }
     };
 
-    // Filter Logic
     const filteredQuestions = filterCategory === 'All'
         ? questions
         : questions.filter(q => q.category === filterCategory);

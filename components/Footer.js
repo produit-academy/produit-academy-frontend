@@ -2,8 +2,6 @@ import Link from 'next/link';
 import styles from './Footer.module.css';
 import Image from 'next/image';
 
-// Footer: five-column layout with bottom bar.
-// Icons are served from /public/icons/*.svg; update links as needed.
 export default function Footer() {
   return (
     <footer className={styles.footer}>
@@ -46,7 +44,7 @@ export default function Footer() {
           <h3 className={styles.footerHeading}>Get in touch</h3>
           <ul className={styles.footerLinks}>
             <li><a href="mailto:produitacademy@gmail.com">produitacademy@gmail.com</a></li>
-            <li><a href="tel:9876543210">9876543210</a></li>
+            <li><a href="tel:8139805996">+91 8139 805 996</a></li>
           </ul>
         </div>
       </div>

@@ -16,7 +16,6 @@ export default function CompleteProfile() {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
-        // Ensure user is logged in
         const token = localStorage.getItem('access_token');
         if (!token) {
             router.push('/login');

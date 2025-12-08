@@ -9,7 +9,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
-// Data: cards shown in the courses carousel
 const coursesData = [
   { title: "GATE for Electrical Engineering", description: "Comprehensive coverage of all core subjects, from circuits to power systems." },
   { title: "GATE for Mechanical Engineering", description: "Master thermodynamics, fluid mechanics, and machine design with expert guidance." },
@@ -18,7 +17,6 @@ const coursesData = [
   { title: "GATE for Electronics & Comm.", description: "Explore digital circuits, communication systems, and advanced electronics." },
 ];
 
-// Animation variants used across sections
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.2 } } };
 const itemVariants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } } };
 const slideInUp = { hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } } };
@@ -75,7 +73,6 @@ export default function Home() {
         <link rel="icon" href="/logo.ico" />
       </Head>
 
-      {/* Background, header, and main content */}
       <ul className="floating-elements">
         <li>α</li>
         <li>β</li>
@@ -303,14 +300,13 @@ export default function Home() {
                 </div>
                 <div className="contact-info-item">
                   <h4>Phone</h4>
-                  <p><a href="tel:9876543210">9876543210</a></p>
+                  <p><a href="tel:8139805996">+91 8139 805 996</a></p>
                 </div>
               </div>
             </motion.div>
           </section>
         </div>
       </main>
-
       <Footer />
     </>
   );

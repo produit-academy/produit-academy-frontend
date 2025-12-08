@@ -1,4 +1,3 @@
-// utils/api.js
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 import axios from 'axios';
 
@@ -52,12 +51,10 @@ const apiFetch = async (path, options = {}) => {
         ...options.headers,
     };
 
-    // Add the Authorization header if a token exists
     if (token) {
         headers['Authorization'] = `Bearer ${token}`;
     }
 
-    // If we are sending FormData, we don't set Content-Type
     if (!(options.body instanceof FormData)) {
         headers['Content-Type'] = 'application/json';
     }
@@ -66,25 +63,14 @@ const apiFetch = async (path, options = {}) => {
     if (!baseUrl.endsWith('/api')) {
         baseUrl += '/api';
     }
-
-    // If path starts with /api/, remove it to avoid duplication with baseUrl
     const finalPath = path.startsWith('/api/') ? path.slice(4) : path;
-
     const response = await fetch(`${baseUrl}${finalPath}`, { ...options, headers });
 
-    // This is the crucial part: check for 401 Unauthorized
     if (response.status === 401) {
-        // Clear tokens from storage
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
-
-        // Show the popup message
         alert('Your session has expired. Please log in again.');
-
-        // Redirect to the login page
         window.location.href = '/login';
-
-        // Throw an error to stop further execution
         throw new Error('Session expired');
     }
 

@@ -7,22 +7,15 @@ import styles from '@/styles/GateExam.module.css';
 export default function AttemptTest() {
     const router = useRouter();
     const { id } = router.query;
-
-    // Test Data
     const [testData, setTestData] = useState(null);
     const [questions, setQuestions] = useState([]);
-
-    // User State
     const [currentQIndex, setCurrentQIndex] = useState(0);
-    const [answers, setAnswers] = useState({}); // { question_id: choice_id }
+    const [answers, setAnswers] = useState({});
     const [visited, setVisited] = useState(new Set([0]));
     const [markedForReview, setMarkedForReview] = useState(new Set());
-
-    // Timer
-    const [timeLeft, setTimeLeft] = useState(0); // in seconds
+    const [timeLeft, setTimeLeft] = useState(0);
     const timerRef = useRef(null);
 
-    // Load Data
     useEffect(() => {
         const stored = localStorage.getItem('currentTestSession');
         if (stored) {
@@ -33,11 +26,9 @@ export default function AttemptTest() {
         }
     }, [id]);
 
-    // --- MOVED UP: handleSubmit must be defined BEFORE it is used in useEffect ---
     const handleSubmit = useCallback(async (auto = false) => {
         if (!auto && !confirm("Are you sure you want to submit the test?")) return;
 
-        // Transform answers map to array for API
         const payload = Object.entries(answers).map(([qId, cId]) => ({
             question_id: parseInt(qId),
             choice_id: parseInt(cId)
@@ -53,14 +44,13 @@ export default function AttemptTest() {
         }
     }, [answers, testData, router]);
 
-    // Timer Logic (Now safe to use handleSubmit)
     useEffect(() => {
         if (timeLeft > 0) {
             timerRef.current = setInterval(() => {
                 setTimeLeft(prev => {
                     if (prev <= 1) {
                         clearInterval(timerRef.current);
-                        handleSubmit(true); // Auto submit
+                        handleSubmit(true);
                         return 0;
                     }
                     return prev - 1;
@@ -70,7 +60,6 @@ export default function AttemptTest() {
         return () => clearInterval(timerRef.current);
     }, [timeLeft, handleSubmit]);
 
-    // Format Time (HH:MM:SS)
     const formatTime = (seconds) => {
         const h = Math.floor(seconds / 3600);
         const m = Math.floor((seconds % 3600) / 60);
@@ -78,7 +67,6 @@ export default function AttemptTest() {
         return `${h}:${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
     };
 
-    // Navigation & Status Logic
     const handleQuestionSelect = (index) => {
         setCurrentQIndex(index);
         setVisited(prev => new Set(prev).add(index));
@@ -89,7 +77,6 @@ export default function AttemptTest() {
     };
 
     const handleSaveNext = () => {
-        // Saving is automatic via 'answers' state, just move next
         if (currentQIndex < questions.length - 1) {
             handleQuestionSelect(currentQIndex + 1);
         }
@@ -116,7 +103,7 @@ export default function AttemptTest() {
         const isMarked = markedForReview.has(qId);
         const isVisited = visited.has(index);
 
-        if (isAnswered && isMarked) return 'purple-green'; // Custom class
+        if (isAnswered && isMarked) return 'purple-green';
         if (isMarked) return 'purple';
         if (isAnswered) return 'green';
         if (isVisited && !isAnswered) return 'red';

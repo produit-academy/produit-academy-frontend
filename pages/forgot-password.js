@@ -22,7 +22,6 @@ export default function ForgotPassword() {
             });
 
             if (response.ok) {
-                // Redirect to the new reset page with the email
                 router.push(`/reset-password?email=${email}`);
             } else {
                 setError('No account found with that email address.');

@@ -19,7 +19,6 @@ export default function Login() {
     setError('');
 
     try {
-      // API call to the backend
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/login/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -36,7 +35,7 @@ export default function Login() {
         const role = data.role === 'admin' ? 'admin' : 'student';
         localStorage.setItem('user_role', role);
 
-        // 2. Redirect based on Role (Sent from backend)
+        // 2. Redirect based on Role
         if (data.role === 'admin') {
           window.location.href = '/admin/dashboard';
         } else {
@@ -50,11 +49,9 @@ export default function Login() {
       } else {
         console.error('Backend Error:', data);
 
-        // Handle Inactive Account (Redirect to Verify OTP)
         if (data.detail && data.detail.toLowerCase().includes('inactive')) {
           router.push(`/verify-otp?email=${email}`);
         } else {
-          // Show specific error or generic message
           setError(data.detail || 'No active account found with the given credentials.');
         }
       }

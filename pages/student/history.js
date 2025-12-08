@@ -11,7 +11,6 @@ export default function History() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Check Profile Completion First
         apiFetch('/api/student/dashboard/')
             .then(res => res.json())
             .then(user => {

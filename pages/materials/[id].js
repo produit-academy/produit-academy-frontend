@@ -20,7 +20,6 @@ export default function SecurePdfViewer() {
     const [fileUrl, setFileUrl] = useState(null);
 
     useEffect(() => {
-        // Dynamically import pdfjs to avoid server-side execution
         import('react-pdf').then(({ pdfjs }) => {
             pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
         });

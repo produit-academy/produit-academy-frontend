@@ -16,7 +16,6 @@ export default function StudentDashboard() {
   useEffect(() => {
     const loadDashboard = async () => {
       try {
-        // Fetch User Data, Course Request Status, and Recent Test History
         const [userRes, reqRes, historyRes] = await Promise.all([
           apiFetch('/api/student/dashboard/'),
           apiFetch('/api/courserequest/'),
@@ -27,7 +26,6 @@ export default function StudentDashboard() {
           const userData = await userRes.json();
           setUser(userData);
 
-          // Enforce Profile Completion
           if (!userData.college || !userData.phone_number) {
             router.push('/student/complete-profile');
             return;
@@ -39,7 +37,7 @@ export default function StudentDashboard() {
         }
         if (historyRes.ok) {
           const history = await historyRes.json();
-          setRecentTests(history.slice(0, 3)); // Show only top 3 recent
+          setRecentTests(history.slice(0, 3));
         }
       } catch (err) {
         console.error("Dashboard Load Error:", err);
@@ -50,7 +48,6 @@ export default function StudentDashboard() {
     loadDashboard();
   }, [router]);
 
-  // Check if the student is approved
   const isApproved = courseReq?.status === 'Approved';
 
   if (loading) return <div style={{ padding: '50px', textAlign: 'center' }}>Loading Dashboard...</div>;
@@ -77,7 +74,6 @@ export default function StudentDashboard() {
               </button>
             </div>
 
-            {/* Warning if not approved */}
             {!isApproved && (
               <div style={{ padding: '15px', background: '#fff3cd', color: '#856404', borderRadius: '5px', marginBottom: '30px', border: '1px solid #ffeeba' }}>
                 <strong>Account Pending:</strong> You can access mock tests and materials once your course request is approved by the admin.
@@ -86,8 +82,6 @@ export default function StudentDashboard() {
 
             {/* 2. Main Action Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', marginBottom: '40px' }}>
-
-              {/* Create Test Card - LOCKED if not approved */}
               <div
                 className={isApproved ? "card-hover" : ""}
                 onClick={() => isApproved ? router.push('/student/create-test') : alert('Your account is not approved yet.')}
@@ -104,8 +98,6 @@ export default function StudentDashboard() {
                   {isApproved ? 'Generate a custom test based on your preferences.' : 'Waiting for approval...'}
                 </p>
               </div>
-
-              {/* Study Materials Card - LOCKED if not approved */}
               <div
                 className={isApproved ? "card-hover" : ""}
                 onClick={() => isApproved ? router.push('/materials') : alert('Your account is not approved yet.')}
@@ -121,8 +113,6 @@ export default function StudentDashboard() {
                 <h2 style={{ margin: '0 0 10px 0', color: '#333' }}>📚 Study Materials</h2>
                 <p style={{ color: '#666', margin: 0 }}>Access Notes, PYQs, and One-shots for your branch.</p>
               </div>
-
-              {/* Analytics/History Card - LOCKED if not approved */}
               <div
                 className={isApproved ? "card-hover" : ""}
                 onClick={() => isApproved ? router.push('/student/history') : alert('Your account is not approved yet.')}

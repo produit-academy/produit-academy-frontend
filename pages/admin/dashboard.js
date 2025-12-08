@@ -13,20 +13,15 @@ const slideInUp = {
 };
 
 export default function AdminDashboard() {
-    // --- State Management ---
     const [requests, setRequests] = useState([]);
     const [branches, setBranches] = useState([]);
     const router = useRouter();
-
-    // Upload Form State
     const [file, setFile] = useState(null);
     const [title, setTitle] = useState('');
     const [branch, setBranch] = useState('');
     const [classification, setClassification] = useState('');
-
     const [isLoading, setIsLoading] = useState(true);
 
-    // Login Check
     useEffect(() => {
         const role = localStorage.getItem('user_role');
         if (role !== 'admin') {
@@ -34,14 +29,11 @@ export default function AdminDashboard() {
         }
     }, [router]);
 
-    // --- Fetch Data on Load ---
     useEffect(() => {
         const fetchInitialData = async () => {
             try {
-                // We now only fetch Requests and Branches. 
-                // Questions and Categories are managed on their own pages to avoid loading heavy data here.
                 const [requestsRes, branchesRes] = await Promise.all([
-                    apiFetch('/api/admin/dashboard/'), // Returns pending course requests
+                    apiFetch('/api/admin/dashboard/'),
                     apiFetch('/api/branches/'),
                 ]);
 
@@ -56,8 +48,6 @@ export default function AdminDashboard() {
         };
         fetchInitialData();
     }, []);
-
-    // --- Action Handlers ---
 
     const handleRequestUpdate = async (requestId, newStatus) => {
         const res = await apiFetch(`/api/courserequests/${requestId}/update/`, {
@@ -124,7 +114,6 @@ export default function AdminDashboard() {
                             </Link>
                         </div>
 
-                        {/* --- NEW SECTION: EXAMINATION SYSTEM MANAGEMENT --- */}
                         <div className="dashboard-section">
                             <h2 className="section-title">Examination System</h2>
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>

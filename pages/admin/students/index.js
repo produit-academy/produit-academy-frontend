@@ -4,7 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import apiFetch from '@/utils/api';
 import Link from 'next/link';
-import styles from '@/styles/Dashboard.module.css'; // Reusing your existing styles
+import styles from '@/styles/Dashboard.module.css';
 
 export default function StudentList() {
     const [students, setStudents] = useState([]);
@@ -14,8 +14,8 @@ export default function StudentList() {
         apiFetch('/api/admin/students/').then(r => r.json()).then(setStudents);
     }, []);
 
-    const filteredStudents = students.filter(s => 
-        s.username.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    const filteredStudents = students.filter(s =>
+        s.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
         s.student_id?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -27,8 +27,8 @@ export default function StudentList() {
                 <div className="container">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                         <h1>Existing Students Directory</h1>
-                        <input 
-                            placeholder="🔍 Search by Name or ID..." 
+                        <input
+                            placeholder="🔍 Search by Name or ID..."
                             style={{ padding: '10px', width: '300px', borderRadius: '5px', border: '1px solid #ccc' }}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
@@ -57,9 +57,9 @@ export default function StudentList() {
                                         </td>
                                         <td style={{ padding: '15px' }}>{student.email}</td>
                                         <td style={{ padding: '15px', textAlign: 'center' }}>
-                                            <Link href={`/admin/students/${student.id}`} style={{ 
-                                                background: '#0070f3', color: 'white', padding: '6px 12px', 
-                                                borderRadius: '4px', textDecoration: 'none', fontSize: '0.9rem' 
+                                            <Link href={`/admin/students/${student.id}`} style={{
+                                                background: '#0070f3', color: 'white', padding: '6px 12px',
+                                                borderRadius: '4px', textDecoration: 'none', fontSize: '0.9rem'
                                             }}>
                                                 View Performance
                                             </Link>
