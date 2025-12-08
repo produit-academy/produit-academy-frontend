@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './Header.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -13,6 +13,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileCoursesOpen, setIsMobileCoursesOpen] = useState(false);
   const [courses, setCourses] = useState([]);
+  const headerRef = useRef(null);
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
@@ -41,11 +42,12 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const header = document.querySelector(`.${styles.header}`);
-      if (window.scrollY > 20) {
-        header.classList.add(styles.scrolled);
-      } else {
-        header.classList.remove(styles.scrolled);
+      if (headerRef.current) {
+        if (window.scrollY > 20) {
+          headerRef.current.classList.add(styles.scrolled);
+        } else {
+          headerRef.current.classList.remove(styles.scrolled);
+        }
       }
     };
 
@@ -105,7 +107,7 @@ export default function Header() {
 
   return (
     <>
-      <header className={styles.header}>
+      <header ref={headerRef} className={styles.header}>
         <div className={`container ${styles.headerContent}`}>
           <div className={styles.logo}>
             <Link href="/" passHref>

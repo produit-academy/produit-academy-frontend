@@ -9,7 +9,7 @@ import styles from '@/styles/Dashboard.module.css';
 export default function StudentProfile() {
     const router = useRouter();
     const { id } = router.query;
-    
+
     const [student, setStudent] = useState(null);
     const [history, setHistory] = useState([]);
     const [stats, setStats] = useState({ totalTests: 0, avgScore: 0 });
@@ -20,11 +20,6 @@ export default function StudentProfile() {
 
         const fetchData = async () => {
             try {
-                // 1. Fetch Student Basic Info (Using existing student list API but simplified for MVP)
-                // In a real app, you'd have a specific /api/admin/students/:id endpoint. 
-                // For now, we reuse the list or manage view logic if available, or just fetch all and find (temporary optimization).
-                // Better approach: Use the manage endpoint which we have: /api/admin/students/:id/
-                
                 const studentRes = await apiFetch(`/api/admin/students/${id}/`);
                 const historyRes = await apiFetch(`/api/admin/students/${id}/history/`);
 
@@ -34,7 +29,7 @@ export default function StudentProfile() {
                 if (historyRes.ok) {
                     const data = await historyRes.json();
                     setHistory(data);
-                    
+
                     // Calculate Stats
                     const totalScore = data.reduce((acc, curr) => acc + curr.score, 0);
                     const avg = data.length > 0 ? (totalScore / data.length).toFixed(1) : 0;
@@ -49,8 +44,8 @@ export default function StudentProfile() {
         fetchData();
     }, [id]);
 
-    if (loading) return <div style={{padding:'50px', textAlign:'center'}}>Loading Profile...</div>;
-    if (!student) return <div style={{padding:'50px', textAlign:'center'}}>Student not found.</div>;
+    if (loading) return <div style={{ padding: '50px', textAlign: 'center' }}>Loading Profile...</div>;
+    if (!student) return <div style={{ padding: '50px', textAlign: 'center' }}>Student not found.</div>;
 
     return (
         <>
@@ -59,7 +54,7 @@ export default function StudentProfile() {
             <main className="main-content">
                 <div className="container">
                     <button onClick={() => router.back()} style={{ marginBottom: '20px', background: 'none', border: 'none', color: '#0070f3', cursor: 'pointer' }}>← Back to Directory</button>
-                    
+
                     {/* 1. PROFILE CARD */}
                     <div className={styles.card} style={{ marginBottom: '30px', borderLeft: '5px solid #0070f3' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -75,7 +70,7 @@ export default function StudentProfile() {
                                 </span>
                                 <span style={{ color: '#888', fontSize: '0.9rem' }}>Student ID: {student.student_id}</span>
                                 <div style={{ marginTop: '15px' }}>
-                                    {student.is_active ? 
+                                    {student.is_active ?
                                         <span style={{ background: '#d4edda', color: '#155724', padding: '5px 10px', borderRadius: '15px', fontSize: '0.8rem' }}>Active</span> :
                                         <span style={{ background: '#f8d7da', color: '#721c24', padding: '5px 10px', borderRadius: '15px', fontSize: '0.8rem' }}>Disabled</span>
                                     }
@@ -126,9 +121,9 @@ export default function StudentProfile() {
                                                     {record.quiz.total_marks}
                                                 </td>
                                                 <td style={{ padding: '12px', textAlign: 'center' }}>
-                                                    <span style={{ 
-                                                        color: percent >= 50 ? 'green' : 'red', 
-                                                        fontWeight: 'bold' 
+                                                    <span style={{
+                                                        color: percent >= 50 ? 'green' : 'red',
+                                                        fontWeight: 'bold'
                                                     }}>
                                                         {percent}%
                                                     </span>

@@ -12,14 +12,10 @@ const slideInUp = {
     visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } },
 };
 
-
 export default function AdminDashboard() {
     // --- State Management ---
     const [requests, setRequests] = useState([]);
-    const [students, setStudents] = useState([]);
     const [branches, setBranches] = useState([]);
-    const [quizzes, setQuizzes] = useState([]);
-    const [submissions, setSubmissions] = useState([]);
     const router = useRouter();
 
     // Upload Form State
@@ -30,7 +26,7 @@ export default function AdminDashboard() {
 
     const [isLoading, setIsLoading] = useState(true);
 
-    // Login Kick
+    // Login Check
     useEffect(() => {
         const role = localStorage.getItem('user_role');
         if (role !== 'admin') {
@@ -42,19 +38,15 @@ export default function AdminDashboard() {
     useEffect(() => {
         const fetchInitialData = async () => {
             try {
-                const [requestsRes, branchesRes, studentsRes, quizzesRes, subsRes] = await Promise.all([
-                    apiFetch('/api/admin/dashboard/'),
+                // We now only fetch Requests and Branches. 
+                // Questions and Categories are managed on their own pages to avoid loading heavy data here.
+                const [requestsRes, branchesRes] = await Promise.all([
+                    apiFetch('/api/admin/dashboard/'), // Returns pending course requests
                     apiFetch('/api/branches/'),
-                    apiFetch('/api/admin/students/'),
-                    apiFetch('/api/admin/quizzes/'),   // Fetch Quizzes
-                    apiFetch('/api/admin/analytics/')  // Fetch Global Analytics/Submissions
                 ]);
 
                 if (requestsRes.ok) setRequests(await requestsRes.json());
                 if (branchesRes.ok) setBranches(await branchesRes.json());
-                if (studentsRes.ok) setStudents(await studentsRes.json());
-                if (quizzesRes.ok) setQuizzes(await quizzesRes.json());
-                if (subsRes.ok) setSubmissions(await subsRes.json());
 
             } catch (error) {
                 console.error("Failed to fetch dashboard data:", error);
@@ -77,34 +69,6 @@ export default function AdminDashboard() {
             setRequests(prev => prev.filter(req => req.id !== requestId));
         } else {
             alert('Failed to update request.');
-        }
-    };
-
-    const handleDisableAccount = async (studentId) => {
-        if (!confirm('Are you sure you want to disable this account?')) return;
-        const res = await apiFetch(`/api/admin/students/${studentId}/`, {
-            method: 'DELETE',
-        });
-        if (res.ok) {
-            alert('Account has been disabled.');
-            setStudents(prev => prev.filter(s => s.id !== studentId));
-        } else {
-            alert('Failed to disable account.');
-        }
-    };
-
-    const handleDeleteQuiz = async (quizId) => {
-        if (!confirm('Are you sure you want to delete this quiz? This action cannot be undone.')) return;
-
-        const res = await apiFetch(`/api/admin/quizzes/${quizId}/`, {
-            method: 'DELETE',
-        });
-
-        if (res.ok) {
-            alert('Quiz deleted successfully.');
-            setQuizzes(prev => prev.filter(q => q.id !== quizId));
-        } else {
-            alert('Failed to delete quiz.');
         }
     };
 
@@ -148,140 +112,115 @@ export default function AdminDashboard() {
                 <div className="container">
                     <motion.div className="dashboard-container" variants={slideInUp} initial="hidden" animate="visible">
 
-                        {/* --- TOP HEADER & ACTIONS --- */}
+                        {/* --- HEADER --- */}
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', flexWrap: 'wrap', gap: '15px' }}>
                             <h1 className="dashboard-title" style={{ margin: 0 }}>Admin Dashboard</h1>
-                            <div style={{ display: 'flex', gap: '15px' }}>
-                                <Link href="/admin/students" style={{
-                                    background: '#0070f3', color: 'white', padding: '12px 20px',
-                                    borderRadius: '6px', textDecoration: 'none', fontWeight: 'bold',
-                                    boxShadow: '0 4px 6px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', gap: '8px'
-                                }}>
-                                    👥 Existing Students
-                                </Link>
+                            <Link href="/admin/students" style={{
+                                background: '#0070f3', color: 'white', padding: '12px 20px',
+                                borderRadius: '6px', textDecoration: 'none', fontWeight: 'bold',
+                                boxShadow: '0 4px 6px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', gap: '8px'
+                            }}>
+                                👥 Manage Students
+                            </Link>
+                        </div>
 
-                                <Link href="/admin/create-quiz" style={{
-                                    backgroundColor: '#28a745', color: 'white', padding: '12px 20px',
-                                    borderRadius: '6px', textDecoration: 'none', fontWeight: 'bold',
-                                    boxShadow: '0 4px 6px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', gap: '8px'
-                                }}>
-                                    + Create Quiz
-                                </Link>
+                        {/* --- NEW SECTION: EXAMINATION SYSTEM MANAGEMENT --- */}
+                        <div className="dashboard-section">
+                            <h2 className="section-title">Examination System</h2>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
+
+                                {/* 1. Question Bank Card */}
+                                <div onClick={() => router.push('/admin/questions')}
+                                    style={{
+                                        padding: '20px', background: 'white', border: '1px solid #ddd', borderRadius: '8px',
+                                        cursor: 'pointer', boxShadow: '0 2px 5px rgba(0,0,0,0.05)', transition: 'transform 0.2s'
+                                    }}
+                                    onMouseOver={e => e.currentTarget.style.transform = 'translateY(-3px)'}
+                                    onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
+                                >
+                                    <div style={{ fontSize: '2rem', marginBottom: '10px' }}>📚</div>
+                                    <h3 style={{ margin: '0 0 10px 0', color: '#0070f3' }}>Question Bank</h3>
+                                    <p style={{ color: '#666', fontSize: '0.9rem', margin: 0 }}>
+                                        Add, edit, or delete questions. Questions added here are available for student mock tests.
+                                    </p>
+                                </div>
+
+                                {/* 2. Categories Card */}
+                                <div onClick={() => router.push('/admin/categories')}
+                                    style={{
+                                        padding: '20px', background: 'white', border: '1px solid #ddd', borderRadius: '8px',
+                                        cursor: 'pointer', boxShadow: '0 2px 5px rgba(0,0,0,0.05)', transition: 'transform 0.2s'
+                                    }}
+                                    onMouseOver={e => e.currentTarget.style.transform = 'translateY(-3px)'}
+                                    onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
+                                >
+                                    <div style={{ fontSize: '2rem', marginBottom: '10px' }}>🏷️</div>
+                                    <h3 style={{ margin: '0 0 10px 0', color: '#28a745' }}>Manage Categories</h3>
+                                    <p style={{ color: '#666', fontSize: '0.9rem', margin: 0 }}>
+                                        Create topics like "Aptitude", "Thermodynamics", etc., to organize your questions.
+                                    </p>
+                                </div>
+
+                                {/* 3. Create Question Shortcut */}
+                                <div onClick={() => router.push('/admin/questions/create')}
+                                    style={{
+                                        padding: '20px', background: 'white', border: '1px dashed #0070f3', borderRadius: '8px',
+                                        cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'
+                                    }}
+                                >
+                                    <div style={{ fontSize: '2rem', color: '#0070f3', marginBottom: '5px' }}>+</div>
+                                    <h3 style={{ margin: 0, color: '#0070f3' }}>Add New Question</h3>
+                                </div>
+
                             </div>
                         </div>
 
-                        {/* --- SECTION 1: MANAGE QUIZZES --- */}
-                        <div className="dashboard-section">
-                            <h2 className="section-title">Manage Quizzes</h2>
-                            {quizzes.length > 0 ? (
-                                <div style={{ display: 'grid', gap: '15px' }}>
-                                    {quizzes.map(quiz => (
-                                        <div key={quiz.id} style={{
-                                            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                                            padding: '15px', background: 'white', border: '1px solid #ddd', borderRadius: '8px',
-                                            boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
-                                        }}>
-                                            <div>
-                                                <h3 style={{ margin: '0 0 5px 0', fontSize: '1.1rem', color: '#333' }}>{quiz.title}</h3>
-                                                <span style={{ fontSize: '0.9rem', color: '#666' }}>
-                                                    ID: {quiz.id} • Duration: {quiz.duration_minutes}m • Marks: {quiz.total_marks}
-                                                </span>
-                                            </div>
-                                            <div style={{ display: 'flex', gap: '10px' }}>
-                                                <Link href={`/admin/edit-quiz/${quiz.id}`} style={{
-                                                    background: '#ffc107', color: '#333', border: 'none', padding: '8px 12px',
-                                                    borderRadius: '4px', cursor: 'pointer', textDecoration: 'none', fontWeight: 'bold', fontSize: '0.9rem'
-                                                }}>
-                                                    Edit
-                                                </Link>
-                                                <button
-                                                    onClick={() => handleDeleteQuiz(quiz.id)}
-                                                    style={{ background: '#dc3545', color: 'white', border: 'none', padding: '8px 12px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
-                                                >
-                                                    Delete
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <p style={{ color: '#666', fontStyle: 'italic' }}>No quizzes created yet. Click &quot;Create Quiz&quot; to add one.</p>
-                            )}
-                        </div>
-
-                        {/* --- SECTION 2: RECENT STUDENT ACTIVITY --- */}
-                        <div className="dashboard-section">
-                            <h2 className="section-title">Recent Student Submissions</h2>
-                            {submissions.length > 0 ? (
-                                <div style={{ overflowX: 'auto', border: '1px solid #ddd', borderRadius: '8px' }}>
-                                    <table style={{ width: '100%', borderCollapse: 'collapse', background: 'white' }}>
-                                        <thead>
-                                            <tr style={{ background: '#f8f9fa', borderBottom: '2px solid #ddd', textAlign: 'left' }}>
-                                                <th style={{ padding: '12px' }}>Student</th>
-                                                <th style={{ padding: '12px' }}>Quiz Title</th>
-                                                <th style={{ padding: '12px' }}>Score</th>
-                                                <th style={{ padding: '12px' }}>Date</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {submissions.slice(0, 5).map(sub => (
-                                                <tr key={sub.id} style={{ borderBottom: '1px solid #eee' }}>
-                                                    <td style={{ padding: '12px' }}>
-                                                        {/* Handle possible missing user data safely */}
-                                                        {students.find(s => s.id === sub.student)?.username || `Student #${sub.student}`}
-                                                    </td>
-                                                    <td style={{ padding: '12px' }}>{sub.quiz.title}</td>
-                                                    <td style={{ padding: '12px', fontWeight: 'bold', color: '#007bff' }}>
-                                                        {sub.score} / {sub.quiz.total_marks}
-                                                    </td>
-                                                    <td style={{ padding: '12px', color: '#666' }}>
-                                                        {new Date(sub.submitted_at).toLocaleDateString()}
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                    {submissions.length > 5 && (
-                                        <div style={{ padding: '10px', textAlign: 'center', background: '#f8f9fa' }}>
-                                            <Link href="/admin/students" style={{ color: '#0070f3', fontWeight: 'bold' }}>View all in Student Directory</Link>
-                                        </div>
-                                    )}
-                                </div>
-                            ) : (
-                                <p style={{ color: '#666' }}>No recent exam submissions.</p>
-                            )}
-                        </div>
-
-                        {/* --- SECTION 3: PENDING REQUESTS --- */}
+                        {/* --- SECTION 2: PENDING REQUESTS --- */}
                         <div className="dashboard-section">
                             <h2 className="section-title">Pending Course Requests</h2>
                             {requests.length > 0 ? requests.map(req => (
-                                <div key={req.id} className="request-item">
+                                <div key={req.id} className="request-item" style={{
+                                    display: 'flex', justifyContent: 'space-between', padding: '15px',
+                                    background: 'white', border: '1px solid #eee', borderRadius: '6px', marginBottom: '10px'
+                                }}>
                                     <span>
                                         <strong>{req.student.username}</strong> ({req.student.student_id})
                                         <span style={{ color: '#666' }}> wants to join </span>
                                         <strong style={{ color: '#0070f3' }}>{req.branch.name}</strong>
                                     </span>
-                                    <div className="request-actions">
-                                        <button className="btn btn-approve" onClick={() => handleRequestUpdate(req.id, 'Approved')}>Approve</button>
-                                        <button className="btn btn-reject" onClick={() => handleRequestUpdate(req.id, 'Rejected')}>Reject</button>
+                                    <div className="request-actions" style={{ display: 'flex', gap: '10px' }}>
+                                        <button className="btn btn-approve"
+                                            onClick={() => handleRequestUpdate(req.id, 'Approved')}
+                                            style={{ background: '#28a745', color: 'white', border: 'none', padding: '5px 15px', borderRadius: '4px', cursor: 'pointer' }}
+                                        >Approve</button>
+                                        <button className="btn btn-reject"
+                                            onClick={() => handleRequestUpdate(req.id, 'Rejected')}
+                                            style={{ background: '#dc3545', color: 'white', border: 'none', padding: '5px 15px', borderRadius: '4px', cursor: 'pointer' }}
+                                        >Reject</button>
                                     </div>
                                 </div>
-                            )) : <p style={{ color: '#666' }}>No pending requests.</p>}
+                            )) : <p style={{ color: '#666', fontStyle: 'italic' }}>No pending requests.</p>}
                         </div>
 
-                        {/* --- SECTION 4: UPLOAD MATERIALS --- */}
+                        {/* --- SECTION 3: UPLOAD MATERIALS --- */}
                         <div className="dashboard-section">
                             <h2 className="section-title">Upload Study Materials</h2>
-                            <form className="upload-form" onSubmit={handleUpload}>
-                                <input type="text" placeholder="Material Title (e.g. Thermodynamics Notes)" required onChange={(e) => setTitle(e.target.value)} />
+                            <form className="upload-form" onSubmit={handleUpload} style={{ background: 'white', padding: '20px', borderRadius: '8px', border: '1px solid #ddd' }}>
+                                <div style={{ marginBottom: '15px' }}>
+                                    <input type="text" placeholder="Material Title (e.g. Thermodynamics Notes)" required
+                                        onChange={(e) => setTitle(e.target.value)} value={title}
+                                        style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+                                    />
+                                </div>
 
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                                    <select required onChange={(e) => setBranch(e.target.value)}>
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '15px' }}>
+                                    <select required onChange={(e) => setBranch(e.target.value)} value={branch}
+                                        style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}>
                                         <option value="">Select Branch</option>
                                         {branches.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
                                     </select>
-                                    <select required onChange={(e) => setClassification(e.target.value)}>
+                                    <select required onChange={(e) => setClassification(e.target.value)} value={classification}
+                                        style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}>
                                         <option value="">Select Category</option>
                                         <option value="PYQ">PYQ</option>
                                         <option value="Notes">Notes</option>
@@ -289,8 +228,14 @@ export default function AdminDashboard() {
                                     </select>
                                 </div>
 
-                                <input type="file" required onChange={(e) => setFile(e.target.files[0])} />
-                                <button type="submit" className="cta-btn">Upload Material</button>
+                                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                                    <input type="file" required onChange={(e) => setFile(e.target.files[0])} style={{ flex: 1 }} />
+                                    <button type="submit" className="cta-btn"
+                                        style={{ background: '#0070f3', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+                                    >
+                                        Upload Material
+                                    </button>
+                                </div>
                             </form>
                         </div>
 
