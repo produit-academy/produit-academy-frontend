@@ -47,7 +47,6 @@ export default function CreateTest() {
             } catch (e) { console.error(e); }
         }
         loadData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [router]);
 
     const handleGenerate = async (e) => {

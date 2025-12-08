@@ -48,7 +48,6 @@ export default function StudentDashboard() {
       }
     };
     loadDashboard();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   // Check if the student is approved
