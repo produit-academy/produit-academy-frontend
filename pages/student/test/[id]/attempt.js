@@ -132,18 +132,22 @@ export default function AttemptTest() {
 
                     <div className={styles.questionText}>
                         {currentQ.question_text}
+                        {currentQ.question_image && <div style={{ margin: '15px 0' }}><img src={currentQ.question_image} alt="Question" style={{ maxWidth: '100%', maxHeight: '400px' }} /></div>}
                     </div>
 
                     <div className={styles.optionsList}>
                         {currentQ.choices.map(choice => (
-                            <label key={choice.id} className={styles.optionItem}>
-                                <input
-                                    type="radio"
-                                    name={`q-${currentQ.question_id}`}
-                                    checked={answers[currentQ.question_id] === choice.id}
-                                    onChange={() => handleOptionSelect(currentQ.question_id, choice.id)}
-                                />
-                                <span>{choice.text}</span>
+                            <label key={choice.id} className={styles.optionItem} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <input
+                                        type="radio"
+                                        name={`q-${currentQ.question_id}`}
+                                        checked={answers[currentQ.question_id] === choice.id}
+                                        onChange={() => handleOptionSelect(currentQ.question_id, choice.id)}
+                                    />
+                                    <span>{choice.text}</span>
+                                </div>
+                                {choice.image && <div style={{ marginLeft: '30px', marginTop: '5px' }}><img src={choice.image} alt="Option" style={{ maxWidth: '200px', maxHeight: '150px' }} /></div>}
                             </label>
                         ))}
                     </div>

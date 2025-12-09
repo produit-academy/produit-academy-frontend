@@ -51,7 +51,7 @@ export default function Footer() {
 
       <div className={styles.footerBottom}>
         <div className={`container ${styles.footerBottomContainer}`}>
-          <p>Copyright @ 2024. All rights reserved.</p>
+          <p>Copyright @ 2025. All rights reserved.</p>
           <div className={styles.socialIcons}>
             <Link href="https://facebook.com" passHref><Image src="/icons/facebook.svg" alt="Facebook" width={24} height={24} /></Link>
             <Link href="https://twitter.com" passHref><Image src="/icons/twitter.svg" alt="Twitter" width={24} height={24} /></Link>

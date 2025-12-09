@@ -8,7 +8,6 @@ export default function ExamInstructions() {
     const [testData, setTestData] = useState(null);
 
     useEffect(() => {
-        p
         const stored = localStorage.getItem('currentTestSession');
         if (stored) setTestData(JSON.parse(stored));
     }, []);

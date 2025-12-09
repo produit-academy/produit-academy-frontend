@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { fetchAllQuestions, deleteQuestion } from '../../../utils/api';
+import { fetchAllQuestions, deleteQuestion } from '@/utils/api';
+import styles from '@/styles/QuestionBank.module.css';
 
 export default function QuestionBank() {
     const router = useRouter();
@@ -23,7 +24,13 @@ export default function QuestionBank() {
 
     const handleDelete = async (id) => {
         if (confirm('Delete this question?')) {
-            await deleteQuestion(id);
+            try {
+                await deleteQuestion(id);
+            } catch (error) {
+                console.error("Error deleting question:", error);
+                // Even if it fails (e.g. 404), we should refresh the list to show current state
+                alert('Question might have already been deleted. Refreshing list.');
+            }
             const res = await fetchAllQuestions();
             if (res.data) setQuestions(res.data);
         }
@@ -34,63 +41,91 @@ export default function QuestionBank() {
         : questions.filter(q => q.category === filterCategory);
 
     return (
-        <div className="container" style={{ maxWidth: '1000px', margin: '40px auto' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                <h1>Question Bank</h1>
-
-                {/* CATEGORY FILTER DROPDOWN */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <span style={{ fontWeight: 'bold' }}>Filter:</span>
-                    <select
-                        value={filterCategory}
-                        onChange={(e) => setFilterCategory(e.target.value)}
-                        style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
-                    >
-                        <option value="All">All Categories</option>
-                        {categories.map(c => <option key={c} value={c}>{c}</option>)}
-                    </select>
+        <div className={styles.container}>
+            <header className={styles.header}>
+                <div className={styles.titleGroup}>
+                    <button onClick={() => router.push('/admin/dashboard')} className={styles.backBtn}>
+                        ← Back
+                    </button>
+                    <h1 className={styles.pageTitle}>Question Bank</h1>
                 </div>
 
-                <button
-                    onClick={() => router.push('/admin/questions/create')}
-                    style={{ padding: '12px 24px', background: '#0070f3', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
-                >
-                    + Add New Question
-                </button>
-            </div>
+                <div className={styles.actions}>
+                    {/* CATEGORY FILTER DROPDOWN */}
+                    <div className={styles.filterGroup}>
+                        <span className={styles.filterLabel}>Filter:</span>
+                        <select
+                            value={filterCategory}
+                            onChange={(e) => setFilterCategory(e.target.value)}
+                            className={styles.select}
+                        >
+                            <option value="All">All Categories</option>
+                            {categories.map(c => <option key={c} value={c}>{c}</option>)}
+                        </select>
+                    </div>
 
-            {filteredQuestions.length === 0 ? <p>No questions found.</p> : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                    <button
+                        onClick={() => router.push('/admin/questions/create')}
+                        className={styles.addBtn}
+                    >
+                        + Add New Question
+                    </button>
+                </div>
+            </header>
+
+            {filteredQuestions.length === 0 ? (
+                <div className={styles.emptyState}>
+                    <p>No questions found.</p>
+                </div>
+            ) : (
+                <div className={styles.grid}>
                     {filteredQuestions.map(q => (
-                        <div key={q.id} className="card" style={{ padding: '20px', border: '1px solid #eee' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <div>
-                                    <span style={{ background: '#eee', padding: '4px 8px', borderRadius: '4px', fontSize: '12px', marginRight: '10px' }}>
+                        <div key={q.id} className={styles.card}>
+                            <div className={styles.cardHeader}>
+                                <div className={styles.metaTags}>
+                                    <span className={`${styles.tag} ${styles.tagCategory}`}>
                                         {q.category || 'Uncategorized'}
                                     </span>
                                     {q.branch_name && (
-                                        <span style={{ background: '#e3f2fd', color: '#0d47a1', padding: '4px 8px', borderRadius: '4px', fontSize: '12px' }}>
+                                        <span className={`${styles.tag} ${styles.tagBranch}`}>
                                             {q.branch_name}
                                         </span>
                                     )}
                                 </div>
-                                <span style={{ fontWeight: 'bold' }}>Marks: {q.marks}</span>
+                                <span className={styles.marks}>Marks: {q.marks}</span>
                             </div>
-                            <p style={{ margin: '15px 0', fontSize: '16px' }}>{q.text}</p>
 
-                            {/* Simple Option Preview */}
-                            <div style={{ fontSize: '14px', color: '#555', marginBottom: '15px' }}>
+                            <p className={styles.questionText}>{q.text}</p>
+                            {q.image && <div style={{ marginBottom: '15px' }}><img src={q.image} alt="Question" style={{ maxWidth: '100%', maxHeight: '200px', borderRadius: '8px', border: '1px solid #eee' }} /></div>}
+
+                            <div className={styles.optionsGrid}>
                                 {q.choices.map((c, i) => (
-                                    <span key={c.id} style={{ marginRight: '15px', color: c.is_correct ? 'green' : 'inherit' }}>
-                                        {String.fromCharCode(65 + i)}. {c.text} {c.is_correct ? '✔' : ''}
-                                    </span>
+                                    <div
+                                        key={c.id}
+                                        className={`${styles.option} ${c.is_correct ? styles.correctOption : ''}`}
+                                    >
+                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                            <span style={{ fontWeight: 'bold', marginRight: '8px' }}>
+                                                {String.fromCharCode(65 + i)}.
+                                            </span>
+                                            {c.text}
+                                            {c.is_correct && <span style={{ marginLeft: '5px' }}>✔</span>}
+                                        </div>
+                                        {c.image && <div style={{ marginTop: '5px', marginLeft: '25px' }}><img src={c.image} alt="Option" style={{ maxHeight: '80px', border: '1px solid #ddd', borderRadius: '4px' }} /></div>}
+                                    </div>
                                 ))}
                             </div>
 
-                            <div style={{ borderTop: '1px solid #eee', paddingTop: '10px', textAlign: 'right' }}>
+                            <div className={styles.cardFooter}>
+                                <button
+                                    onClick={() => router.push(`/admin/questions/${q.id}/edit`)}
+                                    className={styles.editBtn}
+                                >
+                                    Edit Question
+                                </button>
                                 <button
                                     onClick={() => handleDelete(q.id)}
-                                    style={{ color: 'red', background: 'none', border: 'none', cursor: 'pointer' }}
+                                    className={styles.deleteBtn}
                                 >
                                     Delete Question
                                 </button>

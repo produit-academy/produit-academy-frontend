@@ -68,6 +68,15 @@
     white-space: pre-wrap;
 }
 
+.questionText img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+    margin: 10px 0;
+    object-fit: contain;
+}
+
 .optionsList {
     display: flex;
     flex-direction: column;
@@ -94,6 +103,17 @@
     margin-right: 15px;
     width: 18px;
     height: 18px;
+    flex-shrink: 0;
+}
+
+.optionItem img {
+    max-width: 200px;
+    max-height: 150px;
+    height: auto;
+    width: auto;
+    object-fit: contain;
+    border-radius: 4px;
+    margin-left: 10px;
 }
 
 .footerButtons {

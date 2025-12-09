@@ -103,19 +103,25 @@ export default function GateExamInterface() {
                         <span>Marks: {currentQ.marks}</span>
                     </div>
 
-                    <div className={styles.questionText}>{currentQ.text}</div>
+                    <div className={styles.questionText}>
+                        {currentQ.text}
+                        {currentQ.image && <div style={{ margin: '15px 0' }}><img src={currentQ.image} alt="Question" style={{ maxWidth: '100%', maxHeight: '300px' }} /></div>}
+                    </div>
 
                     <div>
                         {currentQ.choices.map(c => (
-                            <label key={c.id} className={styles.optionLabel}>
-                                <input
-                                    type="radio"
-                                    name="opt"
-                                    className={styles.radio}
-                                    checked={answers[currentQ.id] === c.id}
-                                    onChange={() => handleAnswer(c.id)}
-                                />
-                                {c.text}
+                            <label key={c.id} className={styles.optionLabel} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <input
+                                        type="radio"
+                                        name="opt"
+                                        className={styles.radio}
+                                        checked={answers[currentQ.id] === c.id}
+                                        onChange={() => handleAnswer(c.id)}
+                                    />
+                                    {c.text}
+                                </div>
+                                {c.image && <div style={{ marginLeft: '30px', marginTop: '5px' }}><img src={c.image} alt="Option" style={{ maxWidth: '200px', maxHeight: '150px' }} /></div>}
                             </label>
                         ))}
                     </div>

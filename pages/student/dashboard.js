@@ -100,7 +100,7 @@ export default function StudentDashboard() {
               </div>
               <div
                 className={isApproved ? "card-hover" : ""}
-                onClick={() => isApproved ? router.push('/materials') : alert('Your account is not approved yet.')}
+                onClick={() => isApproved ? router.push('/workinprogress') : alert('Your account is not approved yet.')}
                 style={{
                   padding: '25px',
                   background: 'white',
