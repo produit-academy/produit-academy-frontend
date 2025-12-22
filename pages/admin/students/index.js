@@ -27,11 +27,14 @@ export default function StudentList() {
                 <div className="container">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                         <h1>Existing Students Directory</h1>
-                        <input
-                            placeholder="🔍 Search by Name or ID..."
-                            style={{ padding: '10px', width: '300px', borderRadius: '5px', border: '1px solid #ccc' }}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
+                        <div style={{ position: 'relative', width: '300px' }}>
+                            <img src="/search.png" alt="Search" style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', width: '18px', height: '18px', opacity: 0.6 }} />
+                            <input
+                                placeholder="Search by Name or ID..."
+                                style={{ padding: '10px 10px 10px 38px', width: '100%', borderRadius: '5px', border: '1px solid #ccc' }}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </div>
                     </div>
 
                     <div className={styles.card} style={{ padding: 0, overflow: 'hidden' }}>

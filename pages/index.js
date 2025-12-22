@@ -169,18 +169,24 @@ export default function Home() {
 
             <motion.div className="features-grid" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
               <motion.div variants={itemVariants} className="feature-card">
-                <div className="feature-icon">🧠</div>
+                <div className="feature-icon">
+                  <Image src="/brain.png" alt="AI" width={50} height={50} />
+                </div>
                 <h3>AI-Powered Assistance</h3>
                 <h4>(Coming Soon)</h4>
                 <p>Get instant, branch-aware academic help from our AI Chatbot whenever you&apos;re stuck on a concept.</p>
               </motion.div>
               <motion.div variants={itemVariants} className="feature-card">
-                <div className="feature-icon">📚</div>
+                <div className="feature-icon">
+                  <Image src="/materials.png" alt="Materials" width={50} height={50} />
+                </div>
                 <h3>Structured Materials</h3>
                 <p>Access Previous Year Questions (PYQ), detailed notes, and concise short notes, all logically organized.</p>
               </motion.div>
               <motion.div variants={itemVariants} className="feature-card">
-                <div className="feature-icon">📊</div>
+                <div className="feature-icon">
+                  <Image src="/analytics.png" alt="Analytics" width={50} height={50} />
+                </div>
                 <h3>In-Depth Analytics</h3>
                 <p>Track your exam scores and view detailed personal progress reports to identify and improve weak topics.</p>
               </motion.div>
@@ -191,13 +197,17 @@ export default function Home() {
                 <p>Our Premium Plan includes a dedicated mentor who analyzes your progress reports and provides targeted feedback.</p>
               </motion.div>
               <motion.div variants={itemVariants} className="feature-card">
-                <div className="feature-icon">📅</div>
+                <div className="feature-icon">
+                  <Image src="/study-time.png" alt="Study Time" width={50} height={50} />
+                </div>
                 <h3>Flexible Learning Plans</h3>
                 <h4>(Coming Soon)</h4>
                 <p>Choose between Normal and Premium course types with flexible 6-month or 1-year plan durations to fit your schedule.</p>
               </motion.div>
               <motion.div variants={itemVariants} className="feature-card">
-                <div className="feature-icon">📝</div>
+                <div className="feature-icon">
+                  <Image src="/score.png" alt="Score" width={50} height={50} />
+                </div>
                 <h3>Comprehensive Exams</h3>
                 <p>Our system supports both auto-graded Questions and manually graded subjective questions for thorough evaluation.</p>
               </motion.div>

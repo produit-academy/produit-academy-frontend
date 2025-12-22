@@ -93,7 +93,10 @@ export default function StudentDashboard() {
                   cursor: isApproved ? 'pointer' : 'not-allowed',
                   boxShadow: isApproved ? '0 4px 10px rgba(0,112,243,0.3)' : 'none'
                 }}>
-                <h2 style={{ margin: '0 0 10px 0' }}>📝 Take a Mock Test</h2>
+                <h2 style={{ margin: '0 0 10px 0', display: 'flex', alignItems: 'center' }}>
+                  <img src="/exam.png" alt="Exam" style={{ width: '30px', height: '30px', marginRight: '10px' }} />
+                  Take a Mock Test
+                </h2>
                 <p style={{ margin: 0, opacity: 0.9 }}>
                   {isApproved ? 'Generate a custom test based on your preferences.' : 'Waiting for approval...'}
                 </p>
@@ -110,7 +113,10 @@ export default function StudentDashboard() {
                   boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
                   opacity: isApproved ? 1 : 0.6
                 }}>
-                <h2 style={{ margin: '0 0 10px 0', color: '#333' }}>📚 Study Materials</h2>
+                <h2 style={{ margin: '0 0 10px 0', display: 'flex', alignItems: 'center' }}>
+                  <img src="/materials.png" alt="Exam" style={{ width: '30px', height: '30px', marginRight: '10px' }} />
+                  Study Materials
+                </h2>
                 <p style={{ color: '#666', margin: 0 }}>Access Notes, PYQs, and One-shots for your branch.</p>
               </div>
               <div
@@ -125,7 +131,10 @@ export default function StudentDashboard() {
                   boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
                   opacity: isApproved ? 1 : 0.6
                 }}>
-                <h2 style={{ margin: '0 0 10px 0', color: '#333' }}>📊 Past Results</h2>
+                <h2 style={{ margin: '0 0 10px 0', display: 'flex', alignItems: 'center' }}>
+                  <img src="/analytics.png" alt="Exam" style={{ width: '30px', height: '30px', marginRight: '10px' }} />
+                  Past Results
+                </h2>
                 <p style={{ color: '#666', margin: 0 }}>View detailed analytics and review answers.</p>
               </div>
             </div>

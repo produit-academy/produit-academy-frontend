@@ -29,15 +29,32 @@ export default function CreateTest() {
                     apiFetch('/api/student/dashboard/')
                 ]);
 
+                let availableBranches = [];
+                if (branchRes.ok) {
+                    availableBranches = await branchRes.json();
+                }
+
                 if (userRes.ok) {
                     const userData = await userRes.json();
                     if (!userData.college || !userData.phone_number) {
                         router.push('/student/complete-profile');
                         return;
                     }
-                }
 
-                if (branchRes.ok) setBranches(await branchRes.json());
+                    if (userData.branch) {
+                        // Filter to only the user's branch
+                        const userBranch = availableBranches.find(b => b.id === userData.branch);
+                        if (userBranch) {
+                            setBranches([userBranch]);
+                            setSelectedBranch(userBranch.id);
+                        } else {
+                            // Fallback if ID matches nothing (shouldn't happen if DB is consistent)
+                            setBranches(availableBranches);
+                        }
+                    } else {
+                        setBranches(availableBranches);
+                    }
+                }
             } catch (e) { console.error(e); }
         }
         loadData();
@@ -95,13 +112,14 @@ export default function CreateTest() {
 
                             {/* 1. Branch Selection */}
                             <div style={{ marginBottom: '25px' }}>
-                                <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold' }}>Select Branch (Optional)</label>
+                                <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold' }}>Branch</label>
                                 <select
                                     value={selectedBranch}
                                     onChange={(e) => setSelectedBranch(e.target.value)}
-                                    style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+                                    disabled={branches.length === 1}
+                                    style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc', backgroundColor: branches.length === 1 ? '#e9ecef' : 'white' }}
                                 >
-                                    <option value="">All Branches (Mixed)</option>
+                                    {branches.length > 1 && <option value="">All Branches (Mixed)</option>}
                                     {branches.map(b => (
                                         <option key={b.id} value={b.id}>{b.name}</option>
                                     ))}

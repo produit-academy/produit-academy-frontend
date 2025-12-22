@@ -110,7 +110,8 @@ export default function AdminDashboard() {
                                 borderRadius: '6px', textDecoration: 'none', fontWeight: 'bold',
                                 boxShadow: '0 4px 6px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', gap: '8px'
                             }}>
-                                👥 Manage Students
+                                <img src="/student.png" alt="Exam" style={{ width: '30px', height: '30px', marginRight: '10px' }} />
+                                Manage Students
                             </Link>
                         </div>
 
@@ -127,7 +128,9 @@ export default function AdminDashboard() {
                                     onMouseOver={e => e.currentTarget.style.transform = 'translateY(-3px)'}
                                     onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
                                 >
-                                    <div style={{ fontSize: '2rem', marginBottom: '10px' }}>📚</div>
+                                    <div style={{ fontSize: '2rem', marginBottom: '10px' }}>
+                                        <img src="/bank.png" alt="Exam" style={{ width: '30px', height: '30px', marginRight: '10px' }} />
+                                    </div>
                                     <h3 style={{ margin: '0 0 10px 0', color: '#0070f3' }}>Question Bank</h3>
                                     <p style={{ color: '#666', fontSize: '0.9rem', margin: 0 }}>
                                         Add, edit, or delete questions. Questions added here are available for student mock tests.
