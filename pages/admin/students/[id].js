@@ -68,10 +68,13 @@ export default function StudentProfile() {
                                 </span>
                                 <span style={{ color: '#888', fontSize: '0.9rem' }}>Student ID: {student.student_id}</span>
                                 <div style={{ marginTop: '15px' }}>
-                                    {student.is_active ?
-                                        <span style={{ background: '#d4edda', color: '#155724', padding: '5px 10px', borderRadius: '15px', fontSize: '0.8rem' }}>Active</span> :
-                                        <span style={{ background: '#f8d7da', color: '#721c24', padding: '5px 10px', borderRadius: '15px', fontSize: '0.8rem' }}>Disabled</span>
-                                    }
+                                    {(() => {
+                                        const status = student.course_request_status;
+                                        if (status === 'Approved') return <span style={{ background: '#d4edda', color: '#155724', padding: '5px 10px', borderRadius: '15px', fontSize: '0.8rem' }}>Approved</span>;
+                                        if (status === 'Pending') return <span style={{ background: '#fff3cd', color: '#856404', padding: '5px 10px', borderRadius: '15px', fontSize: '0.8rem' }}>Pending</span>;
+                                        if (status === 'Rejected') return <span style={{ background: '#f8d7da', color: '#721c24', padding: '5px 10px', borderRadius: '15px', fontSize: '0.8rem' }}>Rejected</span>;
+                                        return <span style={{ background: '#e2e3e5', color: '#383d41', padding: '5px 10px', borderRadius: '15px', fontSize: '0.8rem' }}>Not Requested</span>;
+                                    })()}
                                 </div>
                             </div>
                         </div>
