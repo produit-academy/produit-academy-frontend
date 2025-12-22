@@ -171,6 +171,7 @@ export default function Home() {
               <motion.div variants={itemVariants} className="feature-card">
                 <div className="feature-icon">🧠</div>
                 <h3>AI-Powered Assistance</h3>
+                <h4>(Coming Soon)</h4>
                 <p>Get instant, branch-aware academic help from our AI Chatbot whenever you&apos;re stuck on a concept.</p>
               </motion.div>
               <motion.div variants={itemVariants} className="feature-card">
@@ -186,17 +187,19 @@ export default function Home() {
               <motion.div variants={itemVariants} className="feature-card">
                 <div className="feature-icon">👨‍🏫</div>
                 <h3>Dedicated Mentorship</h3>
+                <h4>(Coming Soon)</h4>
                 <p>Our Premium Plan includes a dedicated mentor who analyzes your progress reports and provides targeted feedback.</p>
               </motion.div>
               <motion.div variants={itemVariants} className="feature-card">
                 <div className="feature-icon">📅</div>
                 <h3>Flexible Learning Plans</h3>
+                <h4>(Coming Soon)</h4>
                 <p>Choose between Normal and Premium course types with flexible 6-month or 1-year plan durations to fit your schedule.</p>
               </motion.div>
               <motion.div variants={itemVariants} className="feature-card">
                 <div className="feature-icon">📝</div>
                 <h3>Comprehensive Exams</h3>
-                <p>Our system supports both auto-graded Multiple Choice Questions (MCQs) and manually graded subjective questions for thorough evaluation.</p>
+                <p>Our system supports both auto-graded Questions and manually graded subjective questions for thorough evaluation.</p>
               </motion.div>
             </motion.div>
           </section>
