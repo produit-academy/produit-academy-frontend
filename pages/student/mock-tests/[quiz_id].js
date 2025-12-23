@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import styles from '@/styles/GateExam.module.css';
 import apiFetch from '@/utils/api';
 
@@ -83,7 +84,7 @@ export default function GateExamInterface() {
         }
     };
 
-    if (loading) return <div style={{ padding: '20px' }}>Loading Exam...</div>;
+    if (loading) return <LoadingSpinner />;
     if (!quiz) return <div style={{ padding: '20px' }}>Quiz not found.</div>;
 
     const currentQ = quiz.questions[qIndex];
@@ -95,7 +96,7 @@ export default function GateExamInterface() {
                 <div className={styles.timer}>Time Remaining: {quiz.duration_minutes}:00</div>
             </header>
 
-            <div className={styles.main}>
+            <div className={styles.mainContent}>
                 {/* Left Area: Question */}
                 <div className={styles.questionArea}>
                     <div className={styles.questionHeader}>
@@ -126,7 +127,7 @@ export default function GateExamInterface() {
                         ))}
                     </div>
 
-                    <div className={styles.footer}>
+                    <div className={styles.footerButtons}>
                         <button className={`${styles.btn} ${styles.btnReview}`} onClick={markForReview}>Mark for Review</button>
                         <button className={`${styles.btn} ${styles.btnClear}`} onClick={() => {
                             const newAns = { ...answers }; delete newAns[currentQ.id]; setAnswers(newAns);
@@ -144,11 +145,11 @@ export default function GateExamInterface() {
                         <div className={styles.legendItem}><span className={`${styles.dot} ${styles.status_not_visited}`}></span> Not Visit</div>
                     </div>
 
-                    <div className={styles.palette}>
+                    <div className={styles.paletteGrid}>
                         {quiz.questions.map((q, idx) => (
                             <button
                                 key={q.id}
-                                className={`${styles.qBtn} ${styles[`status_${status[q.id]}`]} ${qIndex === idx ? styles.active : ''}`}
+                                className={`${styles.paletteBtn} ${styles[status[q.id]]} ${qIndex === idx ? styles.active : ''}`}
                                 onClick={() => changeQuestion(idx)}
                             >
                                 {idx + 1}

@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { submitMockTest } from '@/utils/api';
 import styles from '@/styles/GateExam.module.css';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function AttemptTest() {
     const router = useRouter();
@@ -110,7 +111,7 @@ export default function AttemptTest() {
         return 'white';
     };
 
-    if (!testData || questions.length === 0) return <div>Loading Exam Interface...</div>;
+    if (!testData || questions.length === 0) return <LoadingSpinner />;
 
     const currentQ = questions[currentQIndex];
 

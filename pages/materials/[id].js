@@ -3,10 +3,11 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import apiFetch from '@/utils/api';
 import styles from '@/styles/Dashboard.module.css';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const Document = dynamic(() => import('react-pdf').then(mod => mod.Document), {
     ssr: false,
-    loading: () => <p style={{ color: 'white' }}>Loading PDF...</p>,
+    loading: () => <div style={{ display: 'flex', justifyContent: 'center', height: '100vh', alignItems: 'center' }}><LoadingSpinner /></div>,
 });
 const Page = dynamic(() => import('react-pdf').then(mod => mod.Page), {
     ssr: false,
@@ -55,7 +56,7 @@ export default function SecurePdfViewer() {
                         file={fileUrl}
                         onLoadSuccess={onDocumentLoadSuccess}
                         error={<div style={{ color: 'white' }}>Failed to load PDF.</div>}
-                        loading={<div style={{ color: 'white' }}>Loading...</div>}
+                        loading={<div style={{ display: 'flex', justifyContent: 'center', height: '100%' }}><LoadingSpinner /></div>}
                     >
                         <Page pageNumber={pageNumber} renderTextLayer={false} renderAnnotationLayer={false} height={800} />
                     </Document>

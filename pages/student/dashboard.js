@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import apiFetch from '@/utils/api';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { motion } from 'framer-motion';
 
 export default function StudentDashboard() {
@@ -50,7 +51,7 @@ export default function StudentDashboard() {
 
   const isApproved = courseReq?.status === 'Approved';
 
-  if (loading) return <div style={{ padding: '50px', textAlign: 'center' }}>Loading Dashboard...</div>;
+  if (loading) return <LoadingSpinner />;
 
   return (
     <>
@@ -61,9 +62,9 @@ export default function StudentDashboard() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
 
             {/* 1. Welcome Section */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', marginTop: '20px', flexWrap: 'wrap', gap: '1rem' }}>
               <div>
-                <h1 style={{ margin: 0 }}>Welcome, {user?.username}!</h1>
+                <h1 style={{ margin: 0, fontFamily: "'Segoe UI', sans-serif", fontWeight: '700', letterSpacing: '-0.5px' }}>Welcome, {user?.username}!</h1>
                 <p style={{ color: '#666', marginTop: '5px' }}>
                   {user?.branch_name ? `Branch: ${user.branch_name}` : 'No Branch Selected'}
                   {courseReq && ` • Status: ${courseReq.status}`}
@@ -149,42 +150,44 @@ export default function StudentDashboard() {
               </div>
 
               {recentTests.length > 0 ? (
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                  <thead>
-                    <tr style={{ borderBottom: '2px solid #f0f0f0', textAlign: 'left', color: '#888' }}>
-                      <th style={{ padding: '10px 0' }}>Date</th>
-                      <th style={{ padding: '10px 0' }}>Status</th>
-                      <th style={{ padding: '10px 0' }}>Score</th>
-                      <th style={{ padding: '10px 0', textAlign: 'right' }}>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {recentTests.map(test => (
-                      <tr key={test.id} style={{ borderBottom: '1px solid #f9f9f9' }}>
-                        <td style={{ padding: '15px 0' }}>{new Date(test.created_at).toLocaleDateString()}</td>
-                        <td style={{ padding: '15px 0' }}>
-                          <span style={{
-                            padding: '4px 8px', borderRadius: '4px', fontSize: '12px',
-                            background: test.is_completed ? '#d4edda' : '#fff3cd',
-                            color: test.is_completed ? '#155724' : '#856404'
-                          }}>
-                            {test.is_completed ? 'Completed' : 'In Progress'}
-                          </span>
-                        </td>
-                        <td style={{ padding: '15px 0', fontWeight: 'bold' }}>
-                          {test.is_completed ? test.score : '-'}
-                        </td>
-                        <td style={{ padding: '15px 0', textAlign: 'right' }}>
-                          {test.is_completed ? (
-                            <button onClick={() => router.push(`/student/test/${test.id}/result`)} style={{ color: '#0070f3', background: 'none', border: 'none', cursor: 'pointer' }}>View Analysis</button>
-                          ) : (
-                            <button onClick={() => router.push(`/student/test/${test.id}/attempt`)} style={{ color: '#e0a800', background: 'none', border: 'none', cursor: 'pointer' }}>Resume</button>
-                          )}
-                        </td>
+                <div style={{ overflowX: 'auto' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '500px' }}>
+                    <thead>
+                      <tr style={{ borderBottom: '2px solid #f0f0f0', textAlign: 'left', color: '#888' }}>
+                        <th style={{ padding: '10px 0' }}>Date</th>
+                        <th style={{ padding: '10px 0' }}>Status</th>
+                        <th style={{ padding: '10px 0' }}>Score</th>
+                        <th style={{ padding: '10px 0', textAlign: 'right' }}>Action</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {recentTests.map(test => (
+                        <tr key={test.id} style={{ borderBottom: '1px solid #f9f9f9' }}>
+                          <td style={{ padding: '15px 0' }}>{new Date(test.created_at).toLocaleDateString()}</td>
+                          <td style={{ padding: '15px 0' }}>
+                            <span style={{
+                              padding: '4px 8px', borderRadius: '4px', fontSize: '12px',
+                              background: test.is_completed ? '#d4edda' : '#fff3cd',
+                              color: test.is_completed ? '#155724' : '#856404'
+                            }}>
+                              {test.is_completed ? 'Completed' : 'In Progress'}
+                            </span>
+                          </td>
+                          <td style={{ padding: '15px 0', fontWeight: 'bold' }}>
+                            {test.is_completed ? test.score : '-'}
+                          </td>
+                          <td style={{ padding: '15px 0', textAlign: 'right' }}>
+                            {test.is_completed ? (
+                              <button onClick={() => router.push(`/student/test/${test.id}/result`)} style={{ color: '#0070f3', background: 'none', border: 'none', cursor: 'pointer' }}>View Analysis</button>
+                            ) : (
+                              <button onClick={() => router.push(`/student/test/${test.id}/attempt`)} style={{ color: '#e0a800', background: 'none', border: 'none', cursor: 'pointer' }}>Resume</button>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               ) : (
                 <p style={{ color: '#666', fontStyle: 'italic', textAlign: 'center', padding: '20px' }}>
                   {isApproved ? "You haven't taken any tests yet." : "Approvals pending."}

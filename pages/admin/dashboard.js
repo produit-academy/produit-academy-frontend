@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import apiFetch from '@/utils/api';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const slideInUp = {
     hidden: { opacity: 0, y: 50 },
@@ -92,7 +93,7 @@ export default function AdminDashboard() {
         }
     };
 
-    if (isLoading) return <div style={{ padding: '50px', textAlign: 'center', fontSize: '1.2rem' }}>Loading Admin Dashboard...</div>;
+    if (isLoading) return <LoadingSpinner />;
 
     return (
         <>

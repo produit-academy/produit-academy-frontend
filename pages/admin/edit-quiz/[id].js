@@ -4,6 +4,7 @@ import Head from 'next/head';
 import apiFetch from '@/utils/api';
 import styles from '@/styles/CreateQuiz.module.css'
 import Header from '@/components/Header';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function EditQuiz() {
     const router = useRouter();
@@ -130,7 +131,7 @@ export default function EditQuiz() {
         }
     };
 
-    if (isLoading) return <div style={{ textAlign: 'center', padding: '50px' }}>Loading Quiz...</div>;
+    if (isLoading) return <LoadingSpinner />;
 
     return (
         <>

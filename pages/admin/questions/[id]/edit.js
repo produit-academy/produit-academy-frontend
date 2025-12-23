@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import apiFetch from '@/utils/api';
 import QuestionForm from '@/components/QuestionForm';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function EditQuestion() {
     const router = useRouter();
@@ -38,7 +39,7 @@ export default function EditQuestion() {
         }
     };
 
-    if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading...</div>;
+    if (loading) return <LoadingSpinner />;
     if (!question) return <div style={{ padding: '40px', textAlign: 'center' }}>Question not found.</div>;
 
     return <QuestionForm initialData={question} onSubmit={handleSubmit} title="Edit Question" />;

@@ -4,8 +4,13 @@
   left: 0;
   width: 100%;
   z-index: 1000;
-  padding: 1rem 0; /* Increased padding for more space */
-  background-color: rgba(255, 255, 255, 0.9); /* Slightly less transparent */
+  padding: 1rem 0;
+  /* Keep original padding as base */
+  padding-top: calc(1rem + env(safe-area-inset-top));
+  /* Add safe area to top padding */
+  height: auto;
+  /* Let content determine height, but min-height could be useful */
+  background-color: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--card-border);
   transition: box-shadow 0.3s ease;
@@ -48,7 +53,8 @@
 
 .hamburger span {
   display: block;
-  width: 28px; /* Slightly wider */
+  width: 28px;
+  /* Slightly wider */
   height: 3px;
   background-color: var(--text-primary);
   transition: all 0.3s ease;
@@ -76,7 +82,8 @@
 
 .desktopNav a {
   color: var(--text-secondary);
-  font-weight: 500; /* Slightly bolder */
+  font-weight: 500;
+  /* Slightly bolder */
   font-size: 1rem;
   transition: color 0.3s ease;
   padding-bottom: 5px;
@@ -108,7 +115,9 @@
   gap: 1rem;
 }
 
-.loginBtn, .signupBtn, .enquiryBtn {
+.loginBtn,
+.signupBtn,
+.enquiryBtn {
   padding: 0.6rem 1.5rem;
   border-radius: 8px;
   font-weight: 600;
@@ -187,11 +196,12 @@
   position: absolute;
   background-color: #fff;
   min-width: 220px;
-  box-shadow: 0px 8px 24px rgba(0,0,0,0.1);
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
   z-index: 1;
   border-radius: 8px;
   padding: 0.5rem 0;
-  top: 120%; /* Position it lower */
+  top: 120%;
+  /* Position it lower */
   left: 50%;
   transform: translateX(-50%);
   opacity: 0;
@@ -376,10 +386,14 @@
   .desktopNav {
     gap: 1.5rem;
   }
+
   .authButtons {
     gap: 0.75rem;
   }
-  .loginBtn, .signupBtn, .enquiryBtn {
+
+  .loginBtn,
+  .signupBtn,
+  .enquiryBtn {
     padding: 0.5rem 1rem;
   }
 }

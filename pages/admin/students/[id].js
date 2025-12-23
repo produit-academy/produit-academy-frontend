@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import apiFetch from '@/utils/api';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import styles from '@/styles/Dashboard.module.css';
 
 export default function StudentProfile() {
@@ -42,7 +43,7 @@ export default function StudentProfile() {
         fetchData();
     }, [id]);
 
-    if (loading) return <div style={{ padding: '50px', textAlign: 'center' }}>Loading Profile...</div>;
+    if (loading) return <LoadingSpinner />;
     if (!student) return <div style={{ padding: '50px', textAlign: 'center' }}>Student not found.</div>;
 
     return (

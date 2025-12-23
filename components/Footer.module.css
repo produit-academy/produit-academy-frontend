@@ -8,7 +8,8 @@
 
 .footerGrid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr; /* 5 columns */
+  grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+  /* 5 columns */
   gap: 2rem;
   padding-bottom: 3rem;
 }
@@ -21,7 +22,8 @@
   font-family: 'Lora', serif;
   font-size: 2.5rem;
   font-weight: 600;
-  color: var(--accent-blue); /* Using your theme color */
+  color: var(--accent-blue);
+  /* Using your theme color */
   margin-bottom: 1rem;
 }
 
@@ -89,7 +91,7 @@
 
 /* ========== MOBILE RESPONSIVE STYLES ========== */
 
-/* Tablet and below (768px) */
+/* Tablet and Mobile (768px and below) */
 @media screen and (max-width: 768px) {
   .footer {
     padding-top: 3rem;
@@ -97,36 +99,47 @@
 
   .footerGrid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    padding: 0 1rem 2rem;
+    /* 2 columns for horizontal flow */
+    gap: 1.5rem;
+    padding: 0 1.5rem 2rem;
+    text-align: left;
+  }
+
+  .footerColumn:first-child {
+    grid-column: 1 / -1;
+    /* Make logo span full width */
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .footerColumn {
+    padding: 0;
   }
 
   .logoText {
     font-size: 2rem;
+    margin-bottom: 0.5rem;
   }
 
   .footerHeading {
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin-bottom: 1rem;
   }
 
   .footerLinks li {
-    margin-bottom: 0.5rem;
-  }
-
-  .footerLinks a {
-    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
   }
 
   .footerBottomContainer {
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
     text-align: center;
-    padding: 0 1rem;
+    padding: 0 1.5rem;
   }
 
   .socialIcons {
     justify-content: center;
+    gap: 1.5rem;
   }
 }
 
@@ -137,8 +150,9 @@
   }
 
   .footerGrid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    /* Keep 2 columns even on small mobile */
+    gap: 1rem;
     padding: 0 1rem 1.5rem;
   }
 

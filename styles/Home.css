@@ -1,13 +1,13 @@
 .main-content {
-  padding-top: 95px; 
+  padding-top: 95px;
 }
 
 /* Hero Section */
 .hero {
   text-align: center;
   padding: 7rem 0;
-  position: relative; 
-  overflow: hidden;   
+  position: relative;
+  overflow: hidden;
 }
 
 .hero-title {
@@ -113,7 +113,7 @@
   align-items: center;
 }
 
-.animated-logo-section > div {
+.animated-logo-section>div {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -128,7 +128,7 @@
 }
 
 /* Features Section */
-#features > div:first-child {
+#features>div:first-child {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -193,7 +193,7 @@
 }
 
 /* Courses Section */
-#courses > div:first-child {
+#courses>div:first-child {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -209,18 +209,21 @@
   display: flex;
   flex-direction: column;
 }
+
 .course-card h4 {
   font-family: 'Lora', serif;
   font-size: 1.4rem;
   color: var(--accent-blue);
   margin-bottom: 1rem;
 }
+
 .course-card p {
   color: var(--text-secondary);
   line-height: 1.7;
   flex-grow: 1;
   margin-bottom: 1.5rem;
 }
+
 .course-card a {
   color: var(--accent-blue);
   font-weight: 600;
@@ -228,6 +231,7 @@
   transition: transform 0.3s ease;
   display: inline-block;
 }
+
 .course-card a:hover {
   transform: translateX(5px);
 }
@@ -243,20 +247,24 @@
   color: #ffffff;
   text-align: center;
 }
+
 .cta-section h2 {
   font-family: 'Lora', serif;
   font-size: 2.5rem;
   margin-bottom: 1rem;
 }
+
 .cta-section p {
   font-size: 1.15rem;
   margin-bottom: 2rem;
   opacity: 0.9;
 }
+
 .cta-section .cta-btn {
   background-color: #ffffff;
   color: var(--accent-blue);
 }
+
 .cta-section .cta-btn:hover {
   background-color: var(--background-light);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
@@ -280,23 +288,40 @@
 
 /* Define two different flight paths */
 @keyframes flyPath1 {
-  0% { transform: translateX(-10vw) translateY(20vh) rotate(-10deg); }
-  50% { transform: translateX(50vw) translateY(-10vh) rotate(10deg); }
-  100% { transform: translateX(110vw) translateY(5vh) rotate(-5deg); }
+  0% {
+    transform: translateX(-10vw) translateY(20vh) rotate(-10deg);
+  }
+
+  50% {
+    transform: translateX(50vw) translateY(-10vh) rotate(10deg);
+  }
+
+  100% {
+    transform: translateX(110vw) translateY(5vh) rotate(-5deg);
+  }
 }
 
 @keyframes flyPath2 {
-  0% { transform: translateX(-10vw) translateY(10vh) rotate(10deg); }
-  50% { transform: translateX(60vw) translateY(15vh) rotate(-15deg); }
-  100% { transform: translateX(110vw) translateY(-5vh) rotate(5deg); }
+  0% {
+    transform: translateX(-10vw) translateY(10vh) rotate(10deg);
+  }
+
+  50% {
+    transform: translateX(60vw) translateY(15vh) rotate(-15deg);
+  }
+
+  100% {
+    transform: translateX(110vw) translateY(-5vh) rotate(5deg);
+  }
 }
 
 /* Apply animations randomly to each kite */
 .kite:nth-child(1) {
   top: 5%;
-  font-size: 4em; 
+  font-size: 4em;
   animation: flyPath1 18s linear infinite;
-  animation-delay: -2s; /* Start part-way through */
+  animation-delay: -2s;
+  /* Start part-way through */
 }
 
 .kite:nth-child(2) {
@@ -321,7 +346,7 @@
 }
 
 /* --- NEW: STYLES FOR UPDATED CONTACT SECTION --- */
-#contact > div:first-child {
+#contact>div:first-child {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -447,7 +472,14 @@
   }
 
   .hero {
-    padding: 4rem 0;
+    min-height: 100vh;
+    /* Full screen height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 1rem;
+    /* Adjust padding */
     text-align: center;
   }
 
@@ -561,7 +593,7 @@
     text-align: center;
   }
 
-  .animated-logo-section > div {
+  .animated-logo-section>div {
     text-align: center;
   }
 
@@ -570,9 +602,9 @@
   }
 
   /* Ensure proper centering for section content */
-  #features > div:first-child,
-  #courses > div:first-child,
-  #contact > div:first-child {
+  #features>div:first-child,
+  #courses>div:first-child,
+  #contact>div:first-child {
     text-align: center;
     width: 100%;
   }
@@ -734,11 +766,11 @@
     text-align: center;
   }
 
-  .animated-logo-section > div {
+  .animated-logo-section>div {
     text-align: center;
   }
 
-  .animated-logo-section > div img {
+  .animated-logo-section>div img {
     width: 150px !important;
     height: 150px !important;
   }
@@ -748,10 +780,10 @@
   }
 
   /* Ensure proper centering for section content on mobile */
-  #features > div:first-child,
-  #courses > div:first-child,
-  #contact > div:first-child,
-  .animated-logo-section > div:first-child {
+  #features>div:first-child,
+  #courses>div:first-child,
+  #contact>div:first-child,
+  .animated-logo-section>div:first-child {
     text-align: center;
     width: 100%;
   }

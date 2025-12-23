@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import apiFetch from '@/utils/api';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function History() {
     const router = useRouter();
@@ -28,7 +29,7 @@ export default function History() {
             .catch(err => setLoading(false));
     }, [router]);
 
-    if (loading) return <div className="container" style={{ paddingTop: '50px', textAlign: 'center' }}>Loading history...</div>;
+    if (loading) return <LoadingSpinner />;
 
     return (
         <>

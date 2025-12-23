@@ -9,6 +9,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/app": "^8.0.0",
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/status-bar": "^8.0.0",
     "axios": "^1.13.2",
     "framer-motion": "^12.23.13",
     "next": "^15.5.7",

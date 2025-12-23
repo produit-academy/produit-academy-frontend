@@ -302,3 +302,39 @@
 .submitBtn:hover {
     background-color: #218838;
 }
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+    .examContainer {
+        height: auto;
+        /* Allow scrolling on mobile */
+        min-height: 100vh;
+    }
+
+    .mainContent {
+        flex-direction: column;
+        /* Stack Question Area and Sidebar */
+    }
+
+    .questionArea {
+        margin: 10px;
+        padding: 20px;
+        flex: none;
+        /* Disable flex-grow */
+        width: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+        /* Full width sidebar at bottom/top */
+        border-left: none;
+        border-top: 1px solid #ddd;
+        flex: none;
+        overflow-y: visible;
+        /* Let it wrap content */
+    }
+
+    .paletteGrid {
+        grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    }
+}

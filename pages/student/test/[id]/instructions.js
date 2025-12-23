@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function ExamInstructions() {
     const router = useRouter();
@@ -18,7 +19,7 @@ export default function ExamInstructions() {
         }
     };
 
-    if (!testData) return <div>Loading...</div>;
+    if (!testData) return <LoadingSpinner />;
 
     return (
         <div style={{ padding: '40px', maxWidth: '900px', margin: '0 auto', fontFamily: 'Arial, sans-serif' }}>

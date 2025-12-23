@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { fetchTestAnalytics } from '@/utils/api';
 import styles from '@/styles/Dashboard.module.css';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function TestResult() {
     const router = useRouter();
@@ -14,7 +15,7 @@ export default function TestResult() {
         }
     }, [id]);
 
-    if (!result) return <div>Loading Results...</div>;
+    if (!result) return <LoadingSpinner />;
 
     const percentage = ((result.score / (result.questions.length * 1)) * 100).toFixed(2);
 
@@ -22,7 +23,7 @@ export default function TestResult() {
         <div className="container" style={{ padding: '40px' }}>
             <h1 style={{ textAlign: 'center' }}>Test Result Analysis</h1>
 
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', margin: '30px 0' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', margin: '30px 0', flexWrap: 'wrap' }}>
                 <div className="card" style={{ padding: '20px', textAlign: 'center', minWidth: '150px' }}>
                     <h3>Score</h3>
                     <h1 style={{ color: '#0070f3' }}>{result.score}</h1>
