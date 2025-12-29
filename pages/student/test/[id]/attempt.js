@@ -32,7 +32,7 @@ export default function AttemptTest() {
 
         const payload = Object.entries(answers).map(([qId, cId]) => ({
             question_id: parseInt(qId),
-            choice_id: parseInt(cId)
+            answer: parseInt(cId)
         }));
 
         try {
@@ -54,12 +54,50 @@ export default function AttemptTest() {
                         handleSubmit(true);
                         return 0;
                     }
-                    return prev - 1;
+                    const newTime = prev - 1;
+                    return newTime;
                 });
             }, 1000);
         }
         return () => clearInterval(timerRef.current);
-    }, [timeLeft, handleSubmit]);
+    }, [timeLeft, handleSubmit, testData]);
+
+    // Persist session state changes
+    useEffect(() => {
+        if (!testData) return;
+
+        const sessionStr = localStorage.getItem('currentTestSession');
+        const currentSession = sessionStr ? JSON.parse(sessionStr) : {};
+
+        const updatedSession = {
+            ...currentSession,
+            timeLeft,
+            answers,
+            visited: Array.from(visited),
+            markedForReview: Array.from(markedForReview),
+            currentQIndex
+        };
+
+        localStorage.setItem('currentTestSession', JSON.stringify(updatedSession));
+    }, [timeLeft, answers, visited, markedForReview, currentQIndex, testData]);
+
+    // Restore session state on load
+    useEffect(() => {
+        const stored = localStorage.getItem('currentTestSession');
+        if (stored) {
+            const data = JSON.parse(stored);
+            setTestData(data);
+            setQuestions(data.questions || []);
+
+            if (data.timeLeft !== undefined) setTimeLeft(data.timeLeft);
+            else setTimeLeft(data.time_limit_minutes * 60);
+
+            if (data.answers) setAnswers(data.answers);
+            if (data.visited) setVisited(new Set(data.visited));
+            if (data.markedForReview) setMarkedForReview(new Set(data.markedForReview));
+            if (data.currentQIndex !== undefined) setCurrentQIndex(data.currentQIndex);
+        }
+    }, [id]);
 
     const formatTime = (seconds) => {
         const h = Math.floor(seconds / 3600);
@@ -78,6 +116,13 @@ export default function AttemptTest() {
     };
 
     const handleSaveNext = () => {
+        const currentQId = questions[currentQIndex].question_id;
+        if (markedForReview.has(currentQId)) {
+            const newMarked = new Set(markedForReview);
+            newMarked.delete(currentQId);
+            setMarkedForReview(newMarked);
+        }
+
         if (currentQIndex < questions.length - 1) {
             handleQuestionSelect(currentQIndex + 1);
         }
@@ -111,7 +156,7 @@ export default function AttemptTest() {
         return 'white';
     };
 
-    if (!testData || questions.length === 0) return <LoadingSpinner />;
+    if (!testData || !questions || questions.length === 0) return <LoadingSpinner />;
 
     const currentQ = questions[currentQIndex];
 

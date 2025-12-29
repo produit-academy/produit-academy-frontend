@@ -42,7 +42,20 @@ export default function TestResult() {
             <div style={{ marginTop: '20px' }}>
                 {result.questions.map((q, index) => (
                     <div key={q.id} className="card" style={{ marginBottom: '15px', padding: '15px', borderLeft: q.is_correct ? '5px solid green' : '5px solid red' }}>
-                        <p><strong>Q{index + 1}: {q.question.text}</strong></p>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <p><strong>Q{index + 1}: {q.question.text}</strong></p>
+                            <span style={{
+                                backgroundColor: q.awarded_marks > 0 ? '#d4edda' : (q.awarded_marks < 0 ? '#f8d7da' : '#e2e3e5'),
+                                color: q.awarded_marks > 0 ? '#155724' : (q.awarded_marks < 0 ? '#721c24' : '#383d41'),
+                                padding: '2px 8px',
+                                borderRadius: '4px',
+                                fontSize: '0.9em',
+                                fontWeight: 'bold',
+                                marginLeft: '10px'
+                            }}>
+                                Marks: {q.awarded_marks > 0 ? '+' : ''}{q.awarded_marks}
+                            </span>
+                        </div>
 
                         <div style={{ margin: '10px 0' }}>
                             {q.question.choices.map(c => (
