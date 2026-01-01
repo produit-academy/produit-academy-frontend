@@ -68,8 +68,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Produit Academy - GATE Coaching</title>
-        <meta name="description" content="Professional educational platform for GATE coaching." />
+        <title>Produit Academy - GATE</title>
+        <meta name="description" content="Professional educational platform for GATE Practicing." />
         <link rel="icon" href="/logo.ico" />
       </Head>
 
@@ -95,7 +95,7 @@ export default function Home() {
               Unlock Your Potential with <span className="highlight"><br />Produit Academy</span>
             </motion.h1>
             <motion.p className="hero-subtitle" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
-              A premier educational platform for excelling in GATE. Access expert-led classes, comprehensive materials, and track your progress seamlessly.
+              A premier educational platform for excelling in GATE. Access mock tests, comprehensive materials, and track your progress seamlessly.
             </motion.p>
             <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.4 }}>
               <a href="#courses" className="cta-btn">Explore Courses</a>
@@ -112,16 +112,16 @@ export default function Home() {
         <motion.section className="stats-bar" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }}>
           <div className="container">
             <motion.div variants={itemVariants} className="stat-item">
-              <h3><AnimatedNumber value={50} />+</h3>
+              <h3><AnimatedNumber value={25} />+</h3>
               <p>Students Enrolled</p>
             </motion.div>
             <motion.div variants={itemVariants} className="stat-item">
-              <h3><AnimatedNumber value={10} />+</h3>
-              <p>Expert Mentors</p>
+              <h3><AnimatedNumber value={100} />+</h3>
+              <p>Previous Year Questions</p>
             </motion.div>
             <motion.div variants={itemVariants} className="stat-item">
-              <h3><AnimatedNumber value={100} />+</h3>
-              <p>Hours of Content</p>
+              <h3><AnimatedNumber value={Infinity} />+</h3>
+              <p>Mock Tests</p>
             </motion.div>
             <motion.div variants={itemVariants} className="stat-item">
               <h3><AnimatedNumber value={100} />%</h3>
