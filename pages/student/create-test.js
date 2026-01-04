@@ -12,6 +12,7 @@ export default function CreateTest() {
     const [loading, setLoading] = useState(false);
     const [selectedBranch, setSelectedBranch] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedTypes, setSelectedTypes] = useState([]);
     const [numQuestions, setNumQuestions] = useState(10);
     const [timeLimit, setTimeLimit] = useState(15);
     const [allowRepeats, setAllowRepeats] = useState(true);
@@ -69,7 +70,8 @@ export default function CreateTest() {
             categories: selectedCategories.length > 0 ? selectedCategories : [], // Send empty list if none selected
             number_of_questions: parseInt(numQuestions),
             time_limit_minutes: parseInt(timeLimit),
-            allow_repeats: allowRepeats
+            allow_repeats: allowRepeats,
+            question_types: selectedTypes.length > 0 ? selectedTypes : []
         };
 
         try {
@@ -97,6 +99,11 @@ export default function CreateTest() {
     const toggleCat = (id) => {
         if (selectedCategories.includes(id)) setSelectedCategories(prev => prev.filter(c => c !== id));
         else setSelectedCategories(prev => [...prev, id]);
+    };
+
+    const toggleType = (type) => {
+        if (selectedTypes.includes(type)) setSelectedTypes(prev => prev.filter(t => t !== type));
+        else setSelectedTypes(prev => [...prev, type]);
     };
 
     return (
@@ -148,6 +155,28 @@ export default function CreateTest() {
                                 </div>
                             </div>
 
+
+                            {/* Question Type Selection */}
+                            <div style={{ marginBottom: '25px' }}>
+                                <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold' }}>Select Question Types (Optional)</label>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                                    {['MCQ', 'MSQ', 'NAT'].map(type => (
+                                        <div key={type}
+                                            onClick={() => toggleType(type)}
+                                            style={{
+                                                padding: '8px 15px', borderRadius: '20px', cursor: 'pointer',
+                                                border: '1px solid #0070f3',
+                                                background: selectedTypes.includes(type) ? '#0070f3' : 'white',
+                                                color: selectedTypes.includes(type) ? 'white' : '#0070f3',
+                                                transition: 'all 0.2s'
+                                            }}
+                                        >
+                                            {type}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
                             {/* 3. Sliders/Inputs */}
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '25px' }}>
                                 <div>
@@ -180,7 +209,7 @@ export default function CreateTest() {
                         </form>
                     </motion.div>
                 </div>
-            </main>
+            </main >
             <Footer />
         </>
     );

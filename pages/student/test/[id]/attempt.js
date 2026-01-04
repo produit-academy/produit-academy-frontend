@@ -30,9 +30,9 @@ export default function AttemptTest() {
     const handleSubmit = useCallback(async (auto = false) => {
         if (!auto && !confirm("Are you sure you want to submit the test?")) return;
 
-        const payload = Object.entries(answers).map(([qId, cId]) => ({
+        const payload = Object.entries(answers).map(([qId, val]) => ({
             question_id: parseInt(qId),
-            answer: parseInt(cId)
+            answer: val
         }));
 
         try {
@@ -115,6 +115,18 @@ export default function AttemptTest() {
         setAnswers(prev => ({ ...prev, [qId]: cId }));
     };
 
+    const handleMSQSelect = (qId, cId) => {
+        setAnswers(prev => {
+            const current = prev[qId] || [];
+            const list = Array.isArray(current) ? current : [];
+            if (list.includes(cId)) {
+                return { ...prev, [qId]: list.filter(id => id !== cId) };
+            } else {
+                return { ...prev, [qId]: [...list, cId] };
+            }
+        });
+    };
+
     const handleSaveNext = () => {
         const currentQId = questions[currentQIndex].question_id;
         if (markedForReview.has(currentQId)) {
@@ -173,7 +185,12 @@ export default function AttemptTest() {
                 <div className={styles.questionArea}>
                     <div className={styles.questionHeader}>
                         <h3>Question {currentQIndex + 1}</h3>
-                        <div className={styles.marks}>Marks: {currentQ.marks}</div>
+                        <div style={{ display: 'flex', gap: '15px' }}>
+                            <div className={styles.marks}>Marks: {currentQ.marks}</div>
+                            <div className={styles.marks} style={{ backgroundColor: '#e2e3e5', color: '#333' }}>
+                                Type: {currentQ.question_type}
+                            </div>
+                        </div>
                     </div>
 
                     <div className={styles.questionText}>
@@ -182,20 +199,51 @@ export default function AttemptTest() {
                     </div>
 
                     <div className={styles.optionsList}>
-                        {currentQ.choices.map(choice => (
-                            <label key={choice.id} className={styles.optionItem} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <input
-                                        type="radio"
-                                        name={`q-${currentQ.question_id}`}
-                                        checked={answers[currentQ.question_id] === choice.id}
-                                        onChange={() => handleOptionSelect(currentQ.question_id, choice.id)}
-                                    />
-                                    <span>{choice.text}</span>
-                                </div>
-                                {choice.image && <div style={{ marginLeft: '30px', marginTop: '5px' }}><img src={choice.image} alt="Option" style={{ maxWidth: '200px', maxHeight: '150px' }} /></div>}
-                            </label>
-                        ))}
+                        {currentQ.question_type === 'NAT' ? (
+                            <div className={styles.natInputContainer} style={{ marginTop: '20px' }}>
+                                <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '10px' }}>Enter your numerical answer:</label>
+                                <input
+                                    type="number"
+                                    step="any"
+                                    className={styles.natInput}
+                                    style={{ padding: '10px', fontSize: '1.2rem', borderRadius: '4px', border: '1px solid #ccc', width: '200px' }}
+                                    value={answers[currentQ.question_id] || ''}
+                                    onChange={(e) => handleOptionSelect(currentQ.question_id, e.target.value)}
+                                    placeholder="Type answer here"
+                                />
+                            </div>
+                        ) : currentQ.question_type === 'MSQ' ? (
+                            currentQ.choices.map(choice => (
+                                <label key={choice.id} className={styles.optionItem} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <input
+                                            type="checkbox"
+                                            name={`q-${currentQ.question_id}`}
+                                            checked={(answers[currentQ.question_id] || []).includes(choice.id)}
+                                            onChange={() => handleMSQSelect(currentQ.question_id, choice.id)}
+                                            style={{ width: '20px', height: '20px', marginRight: '10px', cursor: 'pointer' }}
+                                        />
+                                        <span>{choice.text}</span>
+                                    </div>
+                                    {choice.image && <div style={{ marginLeft: '30px', marginTop: '5px' }}><img src={choice.image} alt="Option" style={{ maxWidth: '200px', maxHeight: '150px' }} /></div>}
+                                </label>
+                            ))
+                        ) : (
+                            currentQ.choices.map(choice => (
+                                <label key={choice.id} className={styles.optionItem} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <input
+                                            type="radio"
+                                            name={`q-${currentQ.question_id}`}
+                                            checked={answers[currentQ.question_id] === choice.id}
+                                            onChange={() => handleOptionSelect(currentQ.question_id, choice.id)}
+                                        />
+                                        <span>{choice.text}</span>
+                                    </div>
+                                    {choice.image && <div style={{ marginLeft: '30px', marginTop: '5px' }}><img src={choice.image} alt="Option" style={{ maxWidth: '200px', maxHeight: '150px' }} /></div>}
+                                </label>
+                            ))
+                        )}
                     </div>
 
                     <div className={styles.footerButtons}>

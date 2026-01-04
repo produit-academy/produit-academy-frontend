@@ -38,7 +38,7 @@ export const createCategory = (data) => API.post('/admin/categories/', data);
 export const deleteCategory = (id) => API.delete(`/admin/categories/${id}/`);
 
 // --- ADMIN: QUESTION BANK MANAGEMENT ---
-export const fetchAllQuestions = () => API.get('/admin/questions/');
+export const fetchAllQuestions = (page = 1) => API.get(`/admin/questions/?page=${page}`);
 export const fetchQuestion = (id) => API.get(`/admin/questions/${id}/`);
 export const createQuestion = (data) => API.post('/admin/questions/', data);
 export const updateQuestion = (id, data) => API.put(`/admin/questions/${id}/`, data);
