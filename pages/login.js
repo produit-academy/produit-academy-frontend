@@ -13,10 +13,13 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
     setError('');
+    setIsSubmitting(true);
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/login/`, {
@@ -37,13 +40,13 @@ export default function Login() {
 
         // 2. Redirect based on Role
         if (data.role === 'admin') {
-          window.location.href = '/admin/dashboard';
+          router.push('/admin/dashboard');
         } else {
           // Check if profile is complete
           if (data.profile_complete === false) {
-            window.location.href = '/student/complete-profile';
+            router.push('/student/complete-profile');
           } else {
-            window.location.href = '/student/dashboard';
+            router.push('/student/dashboard');
           }
         }
       } else {
@@ -53,11 +56,13 @@ export default function Login() {
           router.push(`/verify-otp?email=${email}`);
         } else {
           setError(data.detail || 'No active account found with the given credentials.');
+          setIsSubmitting(false);
         }
       }
     } catch (error) {
       setError('A network or parsing error occurred. Please try again.');
       console.error('Fetch Error:', error);
+      setIsSubmitting(false);
     }
   };
 
@@ -88,7 +93,9 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button type="submit" className="cta-btn">Login</button>
+              <button type="submit" className="cta-btn" disabled={isSubmitting}>
+                {isSubmitting ? 'Logging in...' : 'Login'}
+              </button>
             </form>
 
             <div className="auth-switch" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1.5rem', alignItems: 'center' }}>
