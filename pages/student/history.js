@@ -48,14 +48,14 @@ export default function History() {
                         </div>
                     ) : (
                         <div style={{ display: 'grid', gap: '15px' }}>
-                            {tests.map(test => (
+                            {tests.map((test, index) => (
                                 <div key={test.id} style={{
                                     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                                     padding: '20px', background: 'white', border: '1px solid #ddd', borderRadius: '8px',
                                     boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
                                 }}>
                                     <div>
-                                        <h3 style={{ margin: '0 0 5px 0' }}>Mock Test #{test.id}</h3>
+                                        <h3 style={{ margin: '0 0 5px 0' }}>Mock Test #{tests.length - index}</h3>
                                         <p style={{ margin: 0, color: '#666', fontSize: '0.9rem' }}>
                                             {new Date(test.created_at).toLocaleString()} • {test.total_questions} Questions
                                         </p>

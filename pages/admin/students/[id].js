@@ -108,12 +108,12 @@ export default function StudentProfile() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {history.map((record) => {
+                                    {history.map((record, index) => {
                                         const totalMarks = record.total_marks || record.total_questions; // Fallback
                                         const percent = totalMarks > 0 ? ((record.score / totalMarks) * 100).toFixed(1) : 0;
                                         return (
                                             <tr key={record.id} style={{ borderBottom: '1px solid #eee' }}>
-                                                <td style={{ padding: '12px', fontWeight: '500' }}>Mock Test #{record.id}</td>
+                                                <td style={{ padding: '12px', fontWeight: '500' }}>Mock Test #{history.length - index}</td>
                                                 <td style={{ padding: '12px', textAlign: 'center', color: '#666' }}>
                                                     {new Date(record.completed_at || record.created_at).toLocaleDateString()}
                                                 </td>
