@@ -138,6 +138,25 @@ export default function StudentDashboard() {
                 </h2>
                 <p style={{ color: '#666', margin: 0 }}>View detailed analytics and review answers.</p>
               </div>
+              <div
+                className={isApproved ? "card-hover" : ""}
+                onClick={() => router.push('/student/complaints')}
+                style={{
+                  padding: '25px',
+                  background: 'white',
+                  border: '1px solid #eee',
+                  borderRadius: '10px',
+                  cursor: 'pointer',
+                  boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+                  opacity: 1
+                }}>
+                <h2 style={{ margin: '0 0 10px 0', display: 'flex', alignItems: 'center' }}>
+                  <img src="/complaint.png" alt="Support" style={{ width: '30px', height: '30px', marginRight: '10px', objectFit: 'contain' }}
+                    onError={(e) => { e.target.onerror = null; e.target.src = "https://cdn-icons-png.flaticon.com/512/4961/4961759.png" }} />
+                  Help & Support
+                </h2>
+                <p style={{ color: '#666', margin: 0 }}>Report technical issues or submit complaints.</p>
+              </div>
             </div>
 
             {/* 3. Recent Activity Section */}

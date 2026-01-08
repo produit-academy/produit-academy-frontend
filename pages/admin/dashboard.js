@@ -140,6 +140,25 @@ export default function AdminDashboard() {
 
 
 
+                                {/* 2. Student Complaints */}
+                                <div onClick={() => router.push('/admin/complaints')}
+                                    style={{
+                                        padding: '20px', background: 'white', border: '1px solid #ddd', borderRadius: '8px',
+                                        cursor: 'pointer', boxShadow: '0 2px 5px rgba(0,0,0,0.05)', transition: 'transform 0.2s'
+                                    }}
+                                    onMouseOver={e => e.currentTarget.style.transform = 'translateY(-3px)'}
+                                    onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
+                                >
+                                    <div style={{ fontSize: '2rem', marginBottom: '10px' }}>
+                                        <img src="/complaint.png" alt="Support" style={{ width: '30px', height: '30px', marginRight: '10px', objectFit: 'contain' }}
+                                            onError={(e) => { e.target.onerror = null; e.target.src = "https://cdn-icons-png.flaticon.com/512/4961/4961759.png" }} />
+                                    </div>
+                                    <h3 style={{ margin: '0 0 10px 0', color: '#dc3545' }}>Student Complaints</h3>
+                                    <p style={{ color: '#666', fontSize: '0.9rem', margin: 0 }}>
+                                        View and resolve reported issues from students.
+                                    </p>
+                                </div>
+
                                 {/* 3. Create Question Shortcut */}
                                 <div onClick={() => router.push('/admin/questions/create')}
                                     style={{
