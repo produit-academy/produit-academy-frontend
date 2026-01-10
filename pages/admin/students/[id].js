@@ -43,6 +43,26 @@ export default function StudentProfile() {
         fetchData();
     }, [id]);
 
+    const handleDelete = async () => {
+        if (!confirm('Are you sure you want to PERMANENTLY delete this student? This action cannot be undone and will remove all their data.')) return;
+
+        try {
+            const res = await apiFetch(`/api/admin/students/${id}/`, {
+                method: 'DELETE',
+            });
+
+            if (res.ok) {
+                alert('Student deleted successfully.');
+                router.push('/admin/students');
+            } else {
+                alert('Failed to delete student.');
+            }
+        } catch (err) {
+            console.error(err);
+            alert('An error occurred.');
+        }
+    };
+
     if (loading) return <LoadingSpinner />;
     if (!student) return <div style={{ padding: '50px', textAlign: 'center' }}>Student not found.</div>;
 
@@ -52,7 +72,10 @@ export default function StudentProfile() {
             <Header />
             <main className="main-content">
                 <div className="container">
-                    <button onClick={() => router.back()} style={{ marginBottom: '20px', background: 'none', border: 'none', color: '#0070f3', cursor: 'pointer' }}>← Back to Directory</button>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                        <button onClick={() => router.back()} style={{ background: 'none', border: 'none', color: '#0070f3', cursor: 'pointer' }}>← Back to Directory</button>
+                        <button onClick={handleDelete} style={{ background: '#dc3545', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer', fontWeight: 'bold' }}>Delete Student</button>
+                    </div>
 
                     {/* 1. PROFILE CARD */}
                     <div className={styles.card} style={{ marginBottom: '30px', borderLeft: '5px solid #0070f3' }}>
