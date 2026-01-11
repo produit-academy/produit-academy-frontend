@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import apiFetch from '@/utils/api';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { motion } from 'framer-motion';
+import styles from '../../styles/Dashboard.module.css';
 
 export default function StudentDashboard() {
   const router = useRouter();
@@ -70,7 +71,7 @@ export default function StudentDashboard() {
                   {courseReq && ` • Status: ${courseReq.status}`}
                 </p>
               </div>
-              <button onClick={() => router.push('/profile')} style={{ padding: '8px 16px', border: '1px solid #ccc', background: 'white', borderRadius: '4px', cursor: 'pointer' }}>
+              <button onClick={() => router.push('/profile')} className="glass-btn">
                 Edit Profile
               </button>
             </div>
@@ -82,18 +83,11 @@ export default function StudentDashboard() {
             )}
 
             {/* 2. Main Action Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', marginBottom: '40px' }}>
+            <div className={styles.dashboardGrid}>
               <div
-                className={isApproved ? "card-hover" : ""}
+                className={`${styles.glassCardPrimary} ${!isApproved ? styles.disabled : ''}`}
                 onClick={() => isApproved ? router.push('/student/create-test') : alert('Your account is not approved yet.')}
-                style={{
-                  padding: '25px',
-                  background: isApproved ? 'linear-gradient(135deg, #0070f3 0%, #005bb5 100%)' : '#e0e0e0',
-                  color: isApproved ? 'white' : '#888',
-                  borderRadius: '10px',
-                  cursor: isApproved ? 'pointer' : 'not-allowed',
-                  boxShadow: isApproved ? '0 4px 10px rgba(0,112,243,0.3)' : 'none'
-                }}>
+              >
                 <h2 style={{ margin: '0 0 10px 0', display: 'flex', alignItems: 'center' }}>
                   <img src="/exam.png" alt="Exam" style={{ width: '30px', height: '30px', marginRight: '10px' }} />
                   Take a Mock Test
@@ -103,17 +97,10 @@ export default function StudentDashboard() {
                 </p>
               </div>
               <div
-                className={isApproved ? "card-hover" : ""}
+                className={`glass-card ${!isApproved ? 'disabled' : ''}`}
                 onClick={() => isApproved ? router.push('/workinprogress') : alert('Your account is not approved yet.')}
-                style={{
-                  padding: '25px',
-                  background: 'white',
-                  border: '1px solid #eee',
-                  borderRadius: '10px',
-                  cursor: isApproved ? 'pointer' : 'not-allowed',
-                  boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
-                  opacity: isApproved ? 1 : 0.6
-                }}>
+                style={{ padding: '25px', cursor: isApproved ? 'pointer' : 'not-allowed', opacity: isApproved ? 1 : 0.7 }}
+              >
                 <h2 style={{ margin: '0 0 10px 0', display: 'flex', alignItems: 'center' }}>
                   <img src="/materials.png" alt="Exam" style={{ width: '30px', height: '30px', marginRight: '10px' }} />
                   Study Materials
@@ -121,17 +108,10 @@ export default function StudentDashboard() {
                 <p style={{ color: '#666', margin: 0 }}>Access Notes, PYQs, and One-shots for your branch.</p>
               </div>
               <div
-                className={isApproved ? "card-hover" : ""}
+                className={`glass-card ${!isApproved ? 'disabled' : ''}`}
                 onClick={() => isApproved ? router.push('/student/history') : alert('Your account is not approved yet.')}
-                style={{
-                  padding: '25px',
-                  background: 'white',
-                  border: '1px solid #eee',
-                  borderRadius: '10px',
-                  cursor: isApproved ? 'pointer' : 'not-allowed',
-                  boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
-                  opacity: isApproved ? 1 : 0.6
-                }}>
+                style={{ padding: '25px', cursor: isApproved ? 'pointer' : 'not-allowed', opacity: isApproved ? 1 : 0.7 }}
+              >
                 <h2 style={{ margin: '0 0 10px 0', display: 'flex', alignItems: 'center' }}>
                   <img src="/analytics.png" alt="Exam" style={{ width: '30px', height: '30px', marginRight: '10px' }} />
                   Past Results
@@ -139,17 +119,10 @@ export default function StudentDashboard() {
                 <p style={{ color: '#666', margin: 0 }}>View detailed analytics and review answers.</p>
               </div>
               <div
-                className={isApproved ? "card-hover" : ""}
+                className="glass-card"
                 onClick={() => router.push('/student/complaints')}
-                style={{
-                  padding: '25px',
-                  background: 'white',
-                  border: '1px solid #eee',
-                  borderRadius: '10px',
-                  cursor: 'pointer',
-                  boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
-                  opacity: 1
-                }}>
+                style={{ padding: '25px', cursor: 'pointer' }}
+              >
                 <h2 style={{ margin: '0 0 10px 0', display: 'flex', alignItems: 'center' }}>
                   <img src="/complaint.png" alt="Support" style={{ width: '30px', height: '30px', marginRight: '10px', objectFit: 'contain' }}
                     onError={(e) => { e.target.onerror = null; e.target.src = "https://cdn-icons-png.flaticon.com/512/4961/4961759.png" }} />

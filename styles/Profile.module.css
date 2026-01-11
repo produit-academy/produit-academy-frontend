@@ -2,9 +2,12 @@
     max-width: 800px;
     margin: 3rem auto;
     padding: 3rem;
-    background-color: var(--background-white);
-    border-radius: 10px;
-    box-shadow: var(--card-shadow);
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .profileTitle {

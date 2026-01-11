@@ -151,8 +151,8 @@ export default function Header() {
               </div>
             ) : (
               <>
-                <Link href="/#contact" passHref><button className={styles.loginBtn}>Enquiry Now</button></Link>
-                <Link href="/signup" passHref><button className={styles.signupBtn}>Start Learning</button></Link>
+                <Link href="/#contact" passHref><button className="glass-btn">Enquiry Now</button></Link>
+                <Link href="/signup" passHref><button className="glass-btn primary">Start Learning</button></Link>
               </>
             )}
           </div>
@@ -206,8 +206,8 @@ export default function Header() {
               </>
             ) : (
               <>
-                <Link href="/#contact" passHref><button className={styles.sidebarBtn} onClick={closeMenu}>Enquiry Now</button></Link>
-                <Link href="/signup" passHref><button className={styles.sidebarBtnPrimary} onClick={closeMenu}>Start Learning</button></Link>
+                <Link href="/#contact" passHref><button className="glass-btn" onClick={closeMenu}>Enquiry Now</button></Link>
+                <Link href="/signup" passHref><button className="glass-btn primary" onClick={closeMenu}>Start Learning</button></Link>
               </>
             )}
           </div>

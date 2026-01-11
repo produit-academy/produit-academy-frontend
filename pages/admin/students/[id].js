@@ -72,8 +72,8 @@ export default function StudentProfile() {
             <Header />
             <main className="main-content">
                 <div className="container">
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                        <button onClick={() => router.back()} style={{ background: 'none', border: 'none', color: '#0070f3', cursor: 'pointer' }}>← Back to Directory</button>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', marginTop: '40px' }}>
+                        <button onClick={() => router.back()} className="glass-btn">← Back to Directory</button>
                         <button onClick={handleDelete} style={{ background: '#dc3545', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer', fontWeight: 'bold' }}>Delete Student</button>
                     </div>
 

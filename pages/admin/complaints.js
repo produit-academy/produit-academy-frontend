@@ -67,7 +67,7 @@ export default function AdminComplaints() {
                 <div className="container">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
                         <h1>Student Complaints</h1>
-                        <button onClick={() => router.push('/admin/dashboard')} style={{ padding: '8px 16px', border: '1px solid #ccc', background: 'white', borderRadius: '4px', cursor: 'pointer' }}>
+                        <button onClick={() => router.push('/admin/dashboard')} className="glass-btn">
                             Back to Dashboard
                         </button>
                     </div>

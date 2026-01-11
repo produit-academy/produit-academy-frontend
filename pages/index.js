@@ -73,18 +73,7 @@ export default function Home() {
         <link rel="icon" href="/logo.ico" />
       </Head>
 
-      <ul className="floating-elements">
-        <li>α</li>
-        <li>β</li>
-        <li>Σ</li>
-        <li>π</li>
-        <li>∫</li>
-        <li>λ</li>
-        <li>ω</li>
-        <li>μ</li>
-        <li>δ</li>
-        <li>ε</li>
-      </ul>
+
 
       <Header />
 
@@ -98,7 +87,7 @@ export default function Home() {
               A premier educational platform for excelling in GATE. Access mock tests, comprehensive materials, and track your progress seamlessly.
             </motion.p>
             <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.4 }}>
-              <a href="#courses" className="cta-btn">Explore Courses</a>
+              <a href="#courses" className="glass-btn primary">Explore Courses</a>
             </motion.div>
             <div className="kites-container">
               <div className="kite">🪁</div>
@@ -239,7 +228,7 @@ export default function Home() {
           <div className="container">
             <h2>Ready to Start Your GATE Preparation?</h2>
             <p>Join thousands of students who trust Produit Academy to achieve their dreams.</p>
-            <Link href="/signup" className="cta-btn">Enroll Now</Link>
+            <Link href="/signup" className="glass-btn primary">Enroll Now</Link>
           </div>
         </motion.section>
 
@@ -291,7 +280,7 @@ export default function Home() {
                   <label htmlFor="message">Message</label>
                   <textarea id="message" name="message" rows="5" value={formData.message} onChange={handleChange} required></textarea>
                 </div>
-                <button type="submit" className="cta-btn" disabled={isSubmitting}>{isSubmitting ? 'Sending…' : 'Send Message'}</button>
+                <button type="submit" className="glass-btn primary" disabled={isSubmitting}>{isSubmitting ? 'Sending…' : 'Send Message'}</button>
                 {submitResult.message && (
                   <p style={{ marginTop: '0.75rem', color: submitResult.type === 'success' ? 'green' : 'crimson' }}>
                     {submitResult.message}

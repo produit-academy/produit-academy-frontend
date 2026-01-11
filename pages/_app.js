@@ -25,7 +25,23 @@ function MyApp({ Component, pageProps }) {
     });
   }, []);
 
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <ul className="floating-elements">
+        <li>α</li>
+        <li>β</li>
+        <li>Σ</li>
+        <li>π</li>
+        <li>∫</li>
+        <li>λ</li>
+        <li>ω</li>
+        <li>μ</li>
+        <li>δ</li>
+        <li>ε</li>
+      </ul>
+      <Component {...pageProps} />
+    </>
+  );
 }
 
 export default MyApp;

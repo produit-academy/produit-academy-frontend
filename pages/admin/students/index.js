@@ -60,9 +60,10 @@ export default function StudentList() {
                                         </td>
                                         <td style={{ padding: '15px' }}>{student.email}</td>
                                         <td style={{ padding: '15px', textAlign: 'center' }}>
-                                            <Link href={`/admin/students/${student.id}`} style={{
-                                                background: '#0070f3', color: 'white', padding: '6px 12px',
-                                                borderRadius: '4px', textDecoration: 'none', fontSize: '0.9rem'
+                                            <Link href={`/admin/students/${student.id}`} className="glass-btn primary" style={{
+                                                padding: '6px 12px',
+                                                textDecoration: 'none',
+                                                fontSize: '0.9rem'
                                             }}>
                                                 View Performance
                                             </Link>

@@ -128,7 +128,7 @@ export default function Signup() {
                             </ul>
                         </div>
 
-                        <button type="submit" className="cta-btn">Sign Up</button>
+                        <button type="submit" className="cta-btn primary">Sign Up</button>
                     </form>
                     <p className="auth-switch">Already have an account? <Link href="/login">Login</Link></p>
                 </div>

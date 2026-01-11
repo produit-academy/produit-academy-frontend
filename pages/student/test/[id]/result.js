@@ -108,7 +108,7 @@ export default function TestResult() {
                 ))}
             </div>
 
-            <button onClick={() => router.push('/student/dashboard')} style={{ padding: '10px 20px', marginTop: '20px', cursor: 'pointer' }}>
+            <button onClick={() => router.push('/student/dashboard')} className="glass-btn" style={{ marginTop: '20px' }}>
                 Back to Dashboard
             </button>
         </div>

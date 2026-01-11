@@ -7,7 +7,13 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={`container ${styles.footerGrid}`}>
         <div className={styles.footerColumn}>
-          <h2 className={styles.logoText}>Produit Academy</h2>
+          <h2 className={styles.logoText}>Produit<br />Academy</h2>
+          <div className={styles.socialIcons} style={{ marginTop: '20px' }}>
+            <Link href="https://facebook.com" passHref><Image src="/icons/facebook.svg" alt="Facebook" width={24} height={24} /></Link>
+            <Link href="https://twitter.com" passHref><Image src="/icons/twitter.svg" alt="Twitter" width={24} height={24} /></Link>
+            <Link href="https://linkedin.com" passHref><Image src="/icons/linkedin.svg" alt="LinkedIn" width={24} height={24} /></Link>
+            <Link href="https://www.instagram.com/produit.academy/" passHref><Image src="/icons/instagram.svg" alt="Instagram" width={24} height={24} /></Link>
+          </div>
         </div>
 
         <div className={styles.footerColumn}>
@@ -52,12 +58,6 @@ export default function Footer() {
       <div className={styles.footerBottom}>
         <div className={`container ${styles.footerBottomContainer}`}>
           <p>Copyright @ 2025. All rights reserved.</p>
-          <div className={styles.socialIcons}>
-            <Link href="https://facebook.com" passHref><Image src="/icons/facebook.svg" alt="Facebook" width={24} height={24} /></Link>
-            <Link href="https://twitter.com" passHref><Image src="/icons/twitter.svg" alt="Twitter" width={24} height={24} /></Link>
-            <Link href="https://linkedin.com" passHref><Image src="/icons/linkedin.svg" alt="LinkedIn" width={24} height={24} /></Link>
-            <Link href="https://www.instagram.com/produit.academy/" passHref><Image src="/icons/instagram.svg" alt="Instagram" width={24} height={24} /></Link>
-          </div>
         </div>
       </div>
     </footer>

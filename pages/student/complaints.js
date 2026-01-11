@@ -73,10 +73,10 @@ export default function StudentComplaints() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
                         <h1>Help & Support</h1>
                         <div style={{ display: 'flex', gap: '10px' }}>
-                            <button onClick={() => router.push('/student/dashboard')} style={{ padding: '8px 15px', background: 'white', border: '1px solid #ccc', borderRadius: '4px', cursor: 'pointer', color: '#333' }}>
+                            <button onClick={() => router.push('/student/dashboard')} className="glass-btn">
                                 Back to Dashboard
                             </button>
-                            <button onClick={fetchComplaints} style={{ padding: '8px 15px', background: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+                            <button onClick={fetchComplaints} className="glass-btn primary">
                                 Refresh Status
                             </button>
                         </div>

@@ -93,7 +93,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button type="submit" className="cta-btn" disabled={isSubmitting}>
+              <button type="submit" className="cta-btn primary" disabled={isSubmitting}>
                 {isSubmitting ? 'Logging in...' : 'Login'}
               </button>
             </form>

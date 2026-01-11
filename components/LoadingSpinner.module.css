@@ -2,25 +2,66 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
-    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(4px);
 }
 
-.spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border-left-color: var(--accent-green, #33ae78);
-    animation: spin 1s linear infinite;
+.book {
+    border: 4px solid #33ae78;
+    width: 60px;
+    height: 45px;
+    position: relative;
+    perspective: 150px;
+    background: transparent;
+    border-radius: 4px;
 }
 
-@keyframes spin {
+.page {
+    display: block;
+    width: 28px;
+    height: 38px;
+    border: 2px solid #33ae78;
+    border-left: 1px solid #33ae78;
+    margin: 0;
+    position: absolute;
+    right: -2px;
+    top: -2px;
+    overflow: hidden;
+    background: #33ae78;
+    transform-origin: left;
+    animation: flip 1.2s cubic-bezier(0, .26, .58, 1) infinite;
+}
+
+.page:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.page:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.page:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes flip {
     0% {
-        transform: rotate(0deg);
+        transform: rotateY(0deg);
+        background: transparent;
+    }
+
+    50% {
+        background: rgba(51, 174, 120, 0.2);
     }
 
     100% {
-        transform: rotate(360deg);
+        transform: rotateY(-180deg);
+        background: transparent;
     }
 }

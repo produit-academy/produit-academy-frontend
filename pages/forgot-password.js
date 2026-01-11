@@ -41,7 +41,7 @@ export default function ForgotPassword() {
                     <p className="auth-subtitle">Enter your email to receive a password reset OTP.</p>
                     <form className="auth-form" onSubmit={handleSubmit}>
                         <input type="email" placeholder="Your Email" required value={email} onChange={(e) => setEmail(e.target.value)} />
-                        <button type="submit" className="cta-btn">Send Reset OTP</button>
+                        <button type="submit" className="cta-btn primary">Send Reset OTP</button>
                         {message && <p style={{ color: 'green', marginTop: '1rem' }}>{message}</p>}
                         {error && <p className="auth-error">{error}</p>}
                     </form>

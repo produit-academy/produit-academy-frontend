@@ -71,7 +71,7 @@ export default function QuestionBank() {
         <div className={styles.container}>
             <header className={styles.header}>
                 <div className={styles.titleGroup}>
-                    <button onClick={() => router.push('/admin/dashboard')} className={styles.backBtn}>
+                    <button onClick={() => router.push('/admin/dashboard')} className="glass-btn">
                         ← Back
                     </button>
                     <h1 className={styles.pageTitle}>Question Bank</h1>
@@ -93,7 +93,7 @@ export default function QuestionBank() {
 
                     <button
                         onClick={() => router.push('/admin/questions/create')}
-                        className={styles.addBtn}
+                        className="glass-btn primary"
                     >
                         + Add New Question
                     </button>
@@ -158,13 +158,15 @@ export default function QuestionBank() {
                                 <div className={styles.cardFooter}>
                                     <button
                                         onClick={() => router.push(`/admin/questions/${q.id}/edit`)}
-                                        className={styles.editBtn}
+                                        className="glass-btn"
+                                        style={{ marginRight: '10px' }}
                                     >
                                         Edit Question
                                     </button>
                                     <button
                                         onClick={() => handleDelete(q.id)}
-                                        className={styles.deleteBtn}
+                                        className="glass-btn"
+                                        style={{ color: '#dc3545', borderColor: '#dc3545' }}
                                     >
                                         Delete Question
                                     </button>

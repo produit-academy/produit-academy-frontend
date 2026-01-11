@@ -160,7 +160,7 @@ export default function QuestionForm({ initialData = null, onSubmit, title = "Qu
         <div className={styles.container}>
             <header className={styles.header}>
                 <div className={styles.titleGroup}>
-                    <button onClick={() => router.push('/admin/questions')} className={styles.backBtn}>
+                    <button onClick={() => router.push('/admin/questions')} className="glass-btn">
                         ← Back
                     </button>
                     <h1 className={styles.pageTitle}>{title}</h1>
@@ -330,9 +330,9 @@ export default function QuestionForm({ initialData = null, onSubmit, title = "Qu
 
                     <button
                         type="submit"
-                        className={styles.submitBtn}
+                        className="glass-btn primary"
                         disabled={loading}
-                        style={{ marginTop: '20px' }}
+                        style={{ marginTop: '20px', width: '100%', padding: '15px', fontSize: '1.2rem' }}
                     >
                         {loading ? 'Saving...' : 'Save Question'}
                     </button>

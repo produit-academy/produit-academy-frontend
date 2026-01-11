@@ -68,35 +68,85 @@ a:hover {
 }
 
 /* Main content area to push below fixed header */
+/* Main content area to push below fixed header */
 .main-content {
-  padding-top: 80px;
+  padding-top: 0;
+  /* content behind header for glass effect */
   padding-bottom: 4rem;
   min-height: 100vh;
 }
 
-/* Reusable button styles */
-.cta-btn {
-  display: inline-block;
-  background-color: var(--accent-green);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  text-align: center;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+/* Ensure the first section (usually hero) has top padding to clear the header */
+.main-content>.container>section:first-child,
+.hero {
+  padding-top: 100px;
 }
 
-.cta-btn:hover {
-  background-color: var(--accent-green-dark);
+/* Reusable button styles */
+/* Reusable button styles - Glassy */
+/* Reusable button styles - Glassy */
+.cta-btn,
+.glass-btn {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  /* White Glass */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--text-primary);
+  padding: 10px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.cta-btn:hover,
+.glass-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
   transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.cta-btn.primary,
+.glass-btn.primary {
+  background: rgba(51, 174, 120, 0.8);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cta-btn.primary:hover,
+.glass-btn.primary:hover {
+  background: rgba(51, 174, 120, 1);
+}
+
+/* Global Glass Utility */
+.glass-card,
+.glass-panel {
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  background-color: rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 }
 
 /* Floating animation */
 .floating-elements {
   position: fixed;
   top: 0;
+  /* ... existing styles below ... */
   left: 0;
   width: 100%;
   height: 100%;
