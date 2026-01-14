@@ -69,46 +69,76 @@ export default function StudentComplaints() {
             <Head><title>H&S Support - Produit Academy</title></Head>
             <Header />
             <main className="main-content">
-                <div className="container">
+                <div className="container" style={{ maxWidth: '1000px', marginTop: '40px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
-                        <h1>Help & Support</h1>
+                        <h1 style={{ fontSize: '2rem', color: '#333' }}>Help & Support</h1>
                         <div style={{ display: 'flex', gap: '10px' }}>
                             <button onClick={() => router.push('/student/dashboard')} className="glass-btn">
-                                Back to Dashboard
+                                ← Back to Dashboard
                             </button>
                             <button onClick={fetchComplaints} className="glass-btn primary">
-                                Refresh Status
+                                ↻ Refresh Status
                             </button>
                         </div>
                     </div>
 
                     {/* Submission Form */}
-                    <div style={{ background: 'white', padding: '25px', borderRadius: '10px', boxShadow: '0 2px 5px rgba(0,0,0,0.05)', marginBottom: '40px' }}>
-                        <h2 style={{ marginTop: 0 }}>Report an Issue</h2>
+                    <div style={{
+                        background: 'white',
+                        padding: '30px',
+                        borderRadius: '12px',
+                        boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+                        marginBottom: '40px',
+                        border: '1px solid #f0f0f0'
+                    }}>
+                        <h2 style={{ marginTop: 0, marginBottom: '20px', color: '#444' }}>Report an Issue</h2>
                         <form onSubmit={handleSubmit}>
-                            {successMsg && <div style={{ padding: '10px', background: '#d4edda', color: '#155724', borderRadius: '4px', marginBottom: '15px' }}>{successMsg}</div>}
-                            {errorMsg && <div style={{ padding: '10px', background: '#f8d7da', color: '#721c24', borderRadius: '4px', marginBottom: '15px' }}>{errorMsg}</div>}
+                            {successMsg && <div style={{ padding: '15px', background: '#d4edda', color: '#155724', borderRadius: '8px', marginBottom: '20px' }}>{successMsg}</div>}
+                            {errorMsg && <div style={{ padding: '15px', background: '#f8d7da', color: '#721c24', borderRadius: '8px', marginBottom: '20px' }}>{errorMsg}</div>}
 
-                            <div style={{ marginBottom: '15px' }}>
-                                <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Subject</label>
+                            <div style={{ marginBottom: '20px' }}>
+                                <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#555' }}>Subject</label>
                                 <input
                                     type="text"
                                     value={subject}
                                     onChange={(e) => setSubject(e.target.value)}
                                     required
-                                    style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '4px' }}
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px',
+                                        border: '1px solid #eee',
+                                        borderRadius: '8px',
+                                        background: '#fafafa',
+                                        fontSize: '1rem',
+                                        transition: 'border-color 0.2s',
+                                        outline: 'none'
+                                    }}
+                                    onFocus={(e) => e.target.style.borderColor = '#0070f3'}
+                                    onBlur={(e) => e.target.style.borderColor = '#eee'}
                                     placeholder="Brief summary of the issue..."
                                 />
                             </div>
 
-                            <div style={{ marginBottom: '15px' }}>
-                                <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Description</label>
+                            <div style={{ marginBottom: '25px' }}>
+                                <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#555' }}>Description</label>
                                 <textarea
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
                                     required
-                                    rows="4"
-                                    style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '4px', fontFamily: 'inherit' }}
+                                    rows="5"
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px',
+                                        border: '1px solid #eee',
+                                        borderRadius: '8px',
+                                        fontFamily: 'inherit',
+                                        background: '#fafafa',
+                                        fontSize: '1rem',
+                                        transition: 'border-color 0.2s',
+                                        outline: 'none'
+                                    }}
+                                    onFocus={(e) => e.target.style.borderColor = '#0070f3'}
+                                    onBlur={(e) => e.target.style.borderColor = '#eee'}
                                     placeholder="Detailed explanation..."
                                 />
                             </div>

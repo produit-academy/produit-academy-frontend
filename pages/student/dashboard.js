@@ -63,7 +63,7 @@ export default function StudentDashboard() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
 
             {/* 1. Welcome Section */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', marginTop: '20px', flexWrap: 'wrap', gap: '1rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px', marginTop: '30px', flexWrap: 'wrap', gap: '1rem' }}>
               <div>
                 <h1 style={{ margin: 0, fontFamily: "'Segoe UI', sans-serif", fontWeight: '700', letterSpacing: '-0.5px' }}>Welcome, {user?.username}!</h1>
                 <p style={{ color: '#666', marginTop: '5px' }}>
@@ -88,9 +88,9 @@ export default function StudentDashboard() {
                 className={`${styles.glassCardPrimary} ${!isApproved ? styles.disabled : ''}`}
                 onClick={() => isApproved ? router.push('/student/create-test') : alert('Your account is not approved yet.')}
               >
-                <h2 style={{ margin: '0 0 10px 0', display: 'flex', alignItems: 'center' }}>
+                <h2 style={{ margin: '0 0 15px 0', display: 'flex', alignItems: 'center', fontSize: '1.4rem', whiteSpace: 'nowrap' }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/exam.png" alt="Exam" style={{ width: '30px', height: '30px', marginRight: '10px' }} />
+                  <img src="/exam.png" alt="Exam" style={{ width: '32px', height: '32px', marginRight: '12px', flexShrink: 0 }} />
                   Take a Mock Test
                 </h2>
                 <p style={{ margin: 0, opacity: 0.9 }}>
@@ -102,9 +102,9 @@ export default function StudentDashboard() {
                 onClick={() => isApproved ? router.push('/workinprogress') : alert('Your account is not approved yet.')}
                 style={{ padding: '25px', cursor: isApproved ? 'pointer' : 'not-allowed', opacity: isApproved ? 1 : 0.7 }}
               >
-                <h2 style={{ margin: '0 0 10px 0', display: 'flex', alignItems: 'center' }}>
+                <h2 style={{ margin: '0 0 15px 0', display: 'flex', alignItems: 'center', fontSize: '1.4rem', color: '#333', whiteSpace: 'nowrap' }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/materials.png" alt="Exam" style={{ width: '30px', height: '30px', marginRight: '10px' }} />
+                  <img src="/materials.png" alt="Exam" style={{ width: '32px', height: '32px', marginRight: '12px', flexShrink: 0 }} />
                   Study Materials
                 </h2>
                 <p style={{ color: '#666', margin: 0 }}>Access Notes, PYQs, and One-shots for your branch.</p>
@@ -114,9 +114,9 @@ export default function StudentDashboard() {
                 onClick={() => isApproved ? router.push('/student/history') : alert('Your account is not approved yet.')}
                 style={{ padding: '25px', cursor: isApproved ? 'pointer' : 'not-allowed', opacity: isApproved ? 1 : 0.7 }}
               >
-                <h2 style={{ margin: '0 0 10px 0', display: 'flex', alignItems: 'center' }}>
+                <h2 style={{ margin: '0 0 15px 0', display: 'flex', alignItems: 'center', fontSize: '1.4rem', color: '#333', whiteSpace: 'nowrap' }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/analytics.png" alt="Exam" style={{ width: '30px', height: '30px', marginRight: '10px' }} />
+                  <img src="/analytics.png" alt="Exam" style={{ width: '32px', height: '32px', marginRight: '12px', flexShrink: 0 }} />
                   Past Results
                 </h2>
                 <p style={{ color: '#666', margin: 0 }}>View detailed analytics and review answers.</p>
@@ -126,9 +126,9 @@ export default function StudentDashboard() {
                 onClick={() => router.push('/student/complaints')}
                 style={{ padding: '25px', cursor: 'pointer' }}
               >
-                <h2 style={{ margin: '0 0 10px 0', display: 'flex', alignItems: 'center' }}>
+                <h2 style={{ margin: '0 0 15px 0', display: 'flex', alignItems: 'center', fontSize: '1.4rem', color: '#333', whiteSpace: 'nowrap' }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/complaint.png" alt="Support" style={{ width: '30px', height: '30px', marginRight: '10px', objectFit: 'contain' }}
+                  <img src="/complaint.png" alt="Support" style={{ width: '32px', height: '32px', marginRight: '12px', objectFit: 'contain', flexShrink: 0 }}
                     onError={(e) => { e.target.onerror = null; e.target.src = "https://cdn-icons-png.flaticon.com/512/4961/4961759.png" }} />
                   Help & Support
                 </h2>

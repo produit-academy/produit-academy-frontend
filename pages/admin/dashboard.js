@@ -177,16 +177,7 @@ export default function AdminDashboard() {
                                     </p>
                                 </div>
 
-                                {/* 3. Create Question Shortcut */}
-                                <div onClick={() => router.push('/admin/questions/create')}
-                                    style={{
-                                        padding: '20px', background: 'white', border: '1px dashed #0070f3', borderRadius: '8px',
-                                        cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'
-                                    }}
-                                >
-                                    <div style={{ fontSize: '2rem', color: '#0070f3', marginBottom: '5px' }}>+</div>
-                                    <h3 style={{ margin: 0, color: '#0070f3' }}>Add New Question</h3>
-                                </div>
+
 
                             </div>
                         </div>
