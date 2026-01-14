@@ -168,7 +168,7 @@ export default function AdminDashboard() {
                                     onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
                                 >
                                     <div style={{ fontSize: '2rem', marginBottom: '10px' }}>
-                                        <img src="/complaint.png" alt="Support" style={{ width: '30px', height: '30px', marginRight: '10px', objectFit: 'contain' }}
+                                        <img src="/analytics.png" alt="Support" style={{ width: '30px', height: '30px', marginRight: '10px', objectFit: 'contain' }}
                                             onError={(e) => { e.target.onerror = null; e.target.src = "https://cdn-icons-png.flaticon.com/512/4961/4961759.png" }} />
                                     </div>
                                     <h3 style={{ margin: '0 0 10px 0', color: '#dc3545' }}>Student Complaints</h3>

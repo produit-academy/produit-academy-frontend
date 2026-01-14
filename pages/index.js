@@ -97,7 +97,7 @@ export default function Home() {
               A premier educational platform for excelling in GATE. Access our specialized custom mock tests, track your progress, and get exam-ready.
             </motion.p>
             <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.4 }}>
-              <a href="/signup" className="glass-btn primary">Explore Custom Tests</a>
+              <Link href="/signup" className="glass-btn primary">Explore Custom Tests</Link>
             </motion.div>
             <div className="kites-container">
               <div className="kite">🪁</div>

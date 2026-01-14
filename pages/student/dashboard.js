@@ -89,6 +89,7 @@ export default function StudentDashboard() {
                 onClick={() => isApproved ? router.push('/student/create-test') : alert('Your account is not approved yet.')}
               >
                 <h2 style={{ margin: '0 0 10px 0', display: 'flex', alignItems: 'center' }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/exam.png" alt="Exam" style={{ width: '30px', height: '30px', marginRight: '10px' }} />
                   Take a Mock Test
                 </h2>
@@ -102,6 +103,7 @@ export default function StudentDashboard() {
                 style={{ padding: '25px', cursor: isApproved ? 'pointer' : 'not-allowed', opacity: isApproved ? 1 : 0.7 }}
               >
                 <h2 style={{ margin: '0 0 10px 0', display: 'flex', alignItems: 'center' }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/materials.png" alt="Exam" style={{ width: '30px', height: '30px', marginRight: '10px' }} />
                   Study Materials
                 </h2>
@@ -113,6 +115,7 @@ export default function StudentDashboard() {
                 style={{ padding: '25px', cursor: isApproved ? 'pointer' : 'not-allowed', opacity: isApproved ? 1 : 0.7 }}
               >
                 <h2 style={{ margin: '0 0 10px 0', display: 'flex', alignItems: 'center' }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/analytics.png" alt="Exam" style={{ width: '30px', height: '30px', marginRight: '10px' }} />
                   Past Results
                 </h2>
@@ -124,6 +127,7 @@ export default function StudentDashboard() {
                 style={{ padding: '25px', cursor: 'pointer' }}
               >
                 <h2 style={{ margin: '0 0 10px 0', display: 'flex', alignItems: 'center' }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/complaint.png" alt="Support" style={{ width: '30px', height: '30px', marginRight: '10px', objectFit: 'contain' }}
                     onError={(e) => { e.target.onerror = null; e.target.src = "https://cdn-icons-png.flaticon.com/512/4961/4961759.png" }} />
                   Help & Support

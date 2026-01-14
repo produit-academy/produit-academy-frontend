@@ -28,6 +28,7 @@ export default function StudentList() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                         <h1>Existing Students Directory</h1>
                         <div style={{ position: 'relative', width: '300px' }}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src="/search.png" alt="Search" style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', width: '18px', height: '18px', opacity: 0.6 }} />
                             <input
                                 placeholder="Search by Name or ID..."

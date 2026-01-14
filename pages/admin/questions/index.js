@@ -128,7 +128,10 @@ export default function QuestionBank() {
                                 </div>
 
                                 <p className={styles.questionText}>{q.text}</p>
-                                {q.image && <div style={{ marginBottom: '15px' }}><img src={q.image} alt="Question" style={{ maxWidth: '100%', maxHeight: '200px', borderRadius: '8px', border: '1px solid #eee' }} /></div>}
+                                {q.image && <div style={{ marginBottom: '15px' }}>
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img src={q.image} alt="Question" style={{ maxWidth: '100%', maxHeight: '200px', borderRadius: '8px', border: '1px solid #eee' }} />
+                                </div>}
 
                                 <div className={styles.optionsGrid}>
                                     {q.question_type === 'NAT' ? (
@@ -149,7 +152,10 @@ export default function QuestionBank() {
                                                     {c.text}
                                                     {c.is_correct && <span style={{ marginLeft: '5px' }}>✔</span>}
                                                 </div>
-                                                {c.image && <div style={{ marginTop: '5px', marginLeft: '25px' }}><img src={c.image} alt="Option" style={{ maxHeight: '80px', border: '1px solid #ddd', borderRadius: '4px' }} /></div>}
+                                                {c.image && <div style={{ marginTop: '5px', marginLeft: '25px' }}>
+                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                    <img src={c.image} alt="Option" style={{ maxHeight: '80px', border: '1px solid #ddd', borderRadius: '4px' }} />
+                                                </div>}
                                             </div>
                                         ))
                                     )}
