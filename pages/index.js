@@ -7,7 +7,7 @@ import Carousel from '../components/Carousel';
 import { SwiperSlide } from 'swiper/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const coursesData = [
   { title: "GATE for Electrical Engineering", description: "Comprehensive mock test series covering all core subjects, from circuits to power systems." },
@@ -40,8 +40,18 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitResult, setSubmitResult] = useState({ type: '', message: '' });
 
+  const [branches, setBranches] = useState([]);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/branches/')
+      .then(res => res.json())
+      .then(data => setBranches(data))
+      .catch(err => console.error("Failed to fetch branches", err));
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+    // setBranches(prev => prev); // dummy removed
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -50,7 +60,7 @@ export default function Home() {
     setIsSubmitting(true);
     setSubmitResult({ type: '', message: '' });
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch('http://127.0.0.1:8000/api/contact/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -267,11 +277,19 @@ export default function Home() {
                   <label htmlFor="course">Exam Category</label>
                   <select id="course" name="course" value={formData.course} onChange={handleChange} required>
                     <option value="">Select an exam category</option>
-                    <option value="GATE EE">GATE Electrical</option>
-                    <option value="GATE ME">GATE Mechanical</option>
-                    <option value="GATE CE">GATE Civil</option>
-                    <option value="GATE CS">GATE Computer Science</option>
-                    <option value="GATE ECE">GATE Electronics & Comm.</option>
+                    {branches.length > 0 ? (
+                      branches.map(branch => (
+                        <option key={branch.id} value={branch.name}>{branch.name}</option>
+                      ))
+                    ) : (
+                      <>
+                        <option value="GATE EE">GATE Electrical</option>
+                        <option value="GATE ME">GATE Mechanical</option>
+                        <option value="GATE CE">GATE Civil</option>
+                        <option value="GATE CS">GATE Computer Science</option>
+                        <option value="GATE ECE">GATE Electronics & Comm.</option>
+                      </>
+                    )}
                   </select>
                 </div>
                 <div className="form-group">

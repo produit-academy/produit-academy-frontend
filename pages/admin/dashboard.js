@@ -138,6 +138,24 @@ export default function AdminDashboard() {
                                     </p>
                                 </div>
 
+                                {/* 1.5 Contact Inquiries Card */}
+                                <div onClick={() => router.push('/admin/inquiries')}
+                                    style={{
+                                        padding: '20px', background: 'white', border: '1px solid #ddd', borderRadius: '8px',
+                                        cursor: 'pointer', boxShadow: '0 2px 5px rgba(0,0,0,0.05)', transition: 'transform 0.2s'
+                                    }}
+                                    onMouseOver={e => e.currentTarget.style.transform = 'translateY(-3px)'}
+                                    onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
+                                >
+                                    <div style={{ fontSize: '2rem', marginBottom: '10px' }}>
+                                        <span style={{ fontSize: '30px' }}>📩</span>
+                                    </div>
+                                    <h3 style={{ margin: '0 0 10px 0', color: '#ffc107' }}>Contact Inquiries</h3>
+                                    <p style={{ color: '#666', fontSize: '0.9rem', margin: 0 }}>
+                                        View messages from prospective students.
+                                    </p>
+                                </div>
+
 
 
                                 {/* 2. Student Complaints */}
