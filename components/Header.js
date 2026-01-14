@@ -124,11 +124,11 @@ export default function Header() {
 
             <div className={styles.dropdown}>
               <button className={styles.dropdownBtn}>
-                Courses <span>&#9662;</span>
+                Test Series <span>&#9662;</span>
               </button>
               <div className={styles.dropdownContent}>
                 {renderCourseLinks()}
-                <Link href="/#courses">All Courses</Link>
+                <Link href="/#courses">All Test Series</Link>
               </div>
             </div>
 
@@ -175,11 +175,11 @@ export default function Header() {
 
             <div className={`${styles.mobileDropdown} ${isMobileCoursesOpen ? styles.open : ''}`}>
               <button className={styles.dropdownBtn} onClick={toggleMobileCourses} aria-expanded={isMobileCoursesOpen} aria-controls="mobile-courses">
-                Courses <span>{isMobileCoursesOpen ? '\u25B2' : '\u25BC'}</span>
+                Test Series <span>{isMobileCoursesOpen ? '\u25B2' : '\u25BC'}</span>
               </button>
               <div id="mobile-courses" className={`${styles.dropdownContent} ${isMobileCoursesOpen ? styles.show : ''}`}>
                 {renderCourseLinks(closeMenu)}
-                <Link href="/#courses" onClick={closeMenu}>All Courses</Link>
+                <Link href="/#courses" onClick={closeMenu}>All Test Series</Link>
               </div>
             </div>
 

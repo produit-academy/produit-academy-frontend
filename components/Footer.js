@@ -17,7 +17,7 @@ export default function Footer() {
         </div>
 
         <div className={styles.footerColumn}>
-          <h3 className={styles.footerHeading}>Categories</h3>
+          <h3 className={styles.footerHeading}>Test Series</h3>
           <ul className={styles.footerLinks}>
             <li><Link href="/workinprogress">GATE Electrical</Link></li>
             <li><Link href="/workinprogress">GATE Mechanical</Link></li>
@@ -31,18 +31,16 @@ export default function Footer() {
           <ul className={styles.footerLinks}>
             <li><Link href="/#features">About Us</Link></li>
             <li><Link href="/#contact">Contact Us</Link></li>
-            <li><Link href="/workinprogress">Blogs</Link></li>
-            <li><Link href="/workinprogress">Affiliate</Link></li>
           </ul>
         </div>
 
         <div className={styles.footerColumn}>
           <h3 className={styles.footerHeading}>Support</h3>
           <ul className={styles.footerLinks}>
-            <li><Link href="/workinprogress">Help Center</Link></li>
-            <li><Link href="/workinprogress">FAQ&apos;s</Link></li>
-            <li><Link href="/workinprogress">Privacy Policy</Link></li>
-            <li><Link href="/workinprogress">Terms & Conditions</Link></li>
+            <li><Link href="/help-center">Help Center</Link></li>
+            <li><Link href="/faqs">FAQ&apos;s</Link></li>
+            <li><Link href="/privacy-policy">Privacy Policy</Link></li>
+            <li><Link href="/terms-and-conditions">Terms & Conditions</Link></li>
           </ul>
         </div>
 

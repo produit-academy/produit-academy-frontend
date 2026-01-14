@@ -10,11 +10,11 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 const coursesData = [
-  { title: "GATE for Electrical Engineering", description: "Comprehensive coverage of all core subjects, from circuits to power systems." },
-  { title: "GATE for Mechanical Engineering", description: "Master thermodynamics, fluid mechanics, and machine design with expert guidance." },
-  { title: "GATE for Civil Engineering", description: "Build a strong foundation in structural analysis, geotechnical, and environmental engineering." },
-  { title: "GATE for Computer Science", description: "Deep dive into algorithms, data structures, and computer networks to ace the exam." },
-  { title: "GATE for Electronics & Comm.", description: "Explore digital circuits, communication systems, and advanced electronics." },
+  { title: "GATE for Electrical Engineering", description: "Comprehensive mock test series covering all core subjects, from circuits to power systems." },
+  { title: "GATE for Mechanical Engineering", description: "Master thermodynamics, fluid mechanics, and machine design with our expert-curated tests." },
+  { title: "GATE for Civil Engineering", description: "Test your knowledge in structural analysis, geotechnical, and environmental engineering." },
+  { title: "GATE for Computer Science", description: "Deep dive into algorithms, data structures, and computer networks with our practice sets." },
+  { title: "GATE for Electronics & Comm.", description: "Practice questions on digital circuits, communication systems, and advanced electronics." },
 ];
 
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.2 } } };
@@ -84,10 +84,10 @@ export default function Home() {
               Unlock Your Potential with <span className="highlight"><br />Produit Academy</span>
             </motion.h1>
             <motion.p className="hero-subtitle" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
-              A premier educational platform for excelling in GATE. Access mock tests, comprehensive materials, and track your progress seamlessly.
+              A premier educational platform for excelling in GATE. Access our specialized custom mock tests, track your progress, and get exam-ready.
             </motion.p>
             <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.4 }}>
-              <a href="#courses" className="glass-btn primary">Explore Courses</a>
+              <a href="/signup" className="glass-btn primary">Explore Custom Tests</a>
             </motion.div>
             <div className="kites-container">
               <div className="kite">🪁</div>
@@ -159,18 +159,18 @@ export default function Home() {
             <motion.div className="features-grid" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
               <motion.div variants={itemVariants} className="feature-card">
                 <div className="feature-icon">
-                  <Image src="/brain.png" alt="AI" width={50} height={50} />
+                  <Image src="/exam.png" alt="Pricing" width={50} height={50} />
                 </div>
-                <h3>AI-Powered Assistance</h3>
-                <h4>(Coming Soon)</h4>
-                <p>Get instant, branch-aware academic help from our AI Chatbot whenever you&apos;re stuck on a concept.</p>
+                <h3>Affordable Pricing</h3>
+                <p>Get full access to our comprehensive Custom Mock Test platform for just <strong>₹29</strong>.</p>
               </motion.div>
               <motion.div variants={itemVariants} className="feature-card">
                 <div className="feature-icon">
                   <Image src="/materials.png" alt="Materials" width={50} height={50} />
                 </div>
-                <h3>Structured Materials</h3>
-                <p>Access Previous Year Questions (PYQ), detailed notes, and concise short notes, all logically organized.</p>
+                <h3>Study Materials</h3>
+                <h4>(Coming Soon)</h4>
+                <p>We are working on providing Previous Year Questions (PYQ) and detailed notes. Stay tuned!</p>
               </motion.div>
               <motion.div variants={itemVariants} className="feature-card">
                 <div className="feature-icon">
@@ -180,25 +180,23 @@ export default function Home() {
                 <p>Track your exam scores and view detailed personal progress reports to identify and improve weak topics.</p>
               </motion.div>
               <motion.div variants={itemVariants} className="feature-card">
-                <div className="feature-icon">👨‍🏫</div>
-                <h3>Dedicated Mentorship</h3>
-                <h4>(Coming Soon)</h4>
-                <p>Our Premium Plan includes a dedicated mentor who analyzes your progress reports and provides targeted feedback.</p>
+                <div className="feature-icon">
+                  <Image src="/bank.png" alt="Custom" width={50} height={50} />
+                </div>
+                <h3>Custom Mock Tests</h3>
+                <p>Create your own tests by adjusting question count, duration, and question types to fit your study schedule.</p>
               </motion.div>
               <motion.div variants={itemVariants} className="feature-card">
-                <div className="feature-icon">
-                  <Image src="/study-time.png" alt="Study Time" width={50} height={50} />
-                </div>
-                <h3>Flexible Learning Plans</h3>
-                <h4>(Coming Soon)</h4>
-                <p>Choose between Normal and Premium course types with flexible 6-month or 1-year plan durations to fit your schedule.</p>
+                <div className="feature-icon">👨‍💻</div>
+                <h3>Real Exam Interface</h3>
+                <p>Our platform mimics the actual GATE exam interface to help you get familiar with the environment.</p>
               </motion.div>
               <motion.div variants={itemVariants} className="feature-card">
                 <div className="feature-icon">
                   <Image src="/score.png" alt="Score" width={50} height={50} />
                 </div>
-                <h3>Comprehensive Exams</h3>
-                <p>Our system supports both auto-graded Questions and manually graded subjective questions for thorough evaluation.</p>
+                <h3>Detailed Reports</h3>
+                <p>Get in-depth analysis of your performance after every test, including time management and topic-wise strength.</p>
               </motion.div>
             </motion.div>
           </section>
@@ -206,8 +204,8 @@ export default function Home() {
           {/* Courses */}
           <section id="courses" className="section">
             <motion.div variants={slideInUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }}>
-              <h2 className="section-title">Our Premier Courses</h2>
-              <p className="section-subtitle">Specialized curriculum designed by experts for each engineering discipline.</p>
+              <h2 className="section-title">Our Premier Mock Test Series</h2>
+              <p className="section-subtitle">Specialized test series designed by experts for each engineering discipline.</p>
             </motion.div>
             <Carousel>
               {coursesData.map((course, index) => (
@@ -227,8 +225,8 @@ export default function Home() {
         <motion.section className="cta-section" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8 }}>
           <div className="container">
             <h2>Ready to Start Your GATE Preparation?</h2>
-            <p>Join thousands of students who trust Produit Academy to achieve their dreams.</p>
-            <Link href="/signup" className="glass-btn primary">Enroll Now</Link>
+            <p>Get unlimited access to custom mock tests for just <strong>₹29</strong>.</p>
+            <Link href="/#contact" className="glass-btn primary">Contact to Enroll</Link>
           </div>
         </motion.section>
 
@@ -266,9 +264,9 @@ export default function Home() {
                   <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} placeholder="e.g., 9876543210" required />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="course">Course</label>
+                  <label htmlFor="course">Exam Category</label>
                   <select id="course" name="course" value={formData.course} onChange={handleChange} required>
-                    <option value="">Select a course</option>
+                    <option value="">Select an exam category</option>
                     <option value="GATE EE">GATE Electrical</option>
                     <option value="GATE ME">GATE Mechanical</option>
                     <option value="GATE CE">GATE Civil</option>
