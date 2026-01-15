@@ -195,12 +195,8 @@ export default function Header() {
                 )}
                 <Link href={dashboardUrl} passHref><button className={styles.sidebarBtn} onClick={closeMenu}>Dashboard</button></Link>
 
-                {user.role === 'student' && (
-                  <>
-                    <Link href="/student/mock-tests" passHref><button className={styles.sidebarBtn} onClick={closeMenu}>Mock Tests</button></Link>
-                    <Link href="/student/analytics" passHref><button className={styles.sidebarBtn} onClick={closeMenu}>Analytics</button></Link>
-                  </>
-                )}
+
+
 
                 <button onClick={() => { closeMenu(); handleLogout(); }} className={styles.sidebarBtnDanger}>Logout</button>
               </>

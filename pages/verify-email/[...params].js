@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+
 import Link from 'next/link';
 
 export default function VerifyEmail() {
@@ -54,7 +54,7 @@ export default function VerifyEmail() {
                     )}
                 </div>
             </main>
-            <Footer />
+
         </>
     );
 }

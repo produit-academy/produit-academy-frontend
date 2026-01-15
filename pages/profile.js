@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+
 import styles from '../styles/Profile.module.css';
 import apiFetch from '@/utils/api';
 
@@ -81,25 +81,25 @@ export default function Profile() {
             <main className="main-content">
                 <div className={styles.profileContainer}>
                     <h1 className={styles.profileTitle}>My Profile</h1>
-                    
+
                     {message && <p className={`${styles.message} ${styles.success}`}>{message}</p>}
                     {error && <p className={`${styles.message} ${styles.error}`}>{error}</p>}
-                    
+
                     <div className={styles.formSection}>
                         <h2 className={styles.formTitle}>Personal Details</h2>
                         <form className={styles.profileForm} onSubmit={handleProfileUpdate}>
                             <label className={styles.label} htmlFor="username">Name</label>
-                            <input id="username" type="text" value={profile.username || ''} onChange={(e) => setProfile({...profile, username: e.target.value})} />
-                            
+                            <input id="username" type="text" value={profile.username || ''} onChange={(e) => setProfile({ ...profile, username: e.target.value })} />
+
                             <label className={styles.label} htmlFor="email">Email (cannot be changed)</label>
                             <input id="email" type="email" value={profile.email || ''} readOnly disabled />
-                            
+
                             <label className={styles.label} htmlFor="college">College</label>
-                            <input id="college" type="text" placeholder="Your college name" value={profile.college || ''} onChange={(e) => setProfile({...profile, college: e.target.value})} />
-                            
+                            <input id="college" type="text" placeholder="Your college name" value={profile.college || ''} onChange={(e) => setProfile({ ...profile, college: e.target.value })} />
+
                             <label className={styles.label} htmlFor="phone">Phone Number</label>
-                            <input id="phone" type="text" placeholder="Your phone number" value={profile.phone_number || ''} onChange={(e) => setProfile({...profile, phone_number: e.target.value})} />
-                            
+                            <input id="phone" type="text" placeholder="Your phone number" value={profile.phone_number || ''} onChange={(e) => setProfile({ ...profile, phone_number: e.target.value })} />
+
                             <button type="submit" className={styles.submitButton}>Update Profile</button>
                         </form>
                     </div>
@@ -116,7 +116,7 @@ export default function Profile() {
                     </div>
                 </div>
             </main>
-            <Footer />
+
         </>
     );
 }

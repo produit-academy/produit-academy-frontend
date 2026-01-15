@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+
 import apiFetch from '@/utils/api';
 import { useRouter } from 'next/router';
 import LoadingSpinner from '@/components/LoadingSpinner';
@@ -165,7 +165,7 @@ export default function Inquiries() {
                     </div>
                 </div>
             </main>
-            <Footer />
+
         </>
     );
 }

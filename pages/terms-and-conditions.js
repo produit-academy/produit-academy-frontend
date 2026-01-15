@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
 
 export default function TermsAndConditions() {
     return (
@@ -45,7 +44,7 @@ export default function TermsAndConditions() {
                     </section>
                 </div>
             </main>
-            <Footer />
+
         </>
     );
 }

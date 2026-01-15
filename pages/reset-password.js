@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+
 
 export default function ResetPassword() {
     const router = useRouter();
@@ -54,7 +54,7 @@ export default function ResetPassword() {
                     </form>
                 </div>
             </main>
-            <Footer />
+
         </>
     );
 }

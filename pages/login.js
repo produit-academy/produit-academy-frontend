@@ -3,8 +3,9 @@ import Head from 'next/head';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import Link from 'next/link';
+
+
 
 const slideInUp = { hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } } };
 
@@ -110,7 +111,7 @@ export default function Login() {
           </motion.div>
         </div>
       </main>
-      <Footer />
+
     </>
   );
 }

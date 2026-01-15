@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+
 import Link from 'next/link';
 import apiFetch from '../utils/api';
 
@@ -133,7 +133,7 @@ export default function Signup() {
                     <p className="auth-switch">Already have an account? <Link href="/login">Login</Link></p>
                 </div>
             </main>
-            <Footer />
+
         </>
     );
 }

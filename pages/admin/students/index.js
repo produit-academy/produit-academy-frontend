@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+
 import apiFetch from '@/utils/api';
 import Link from 'next/link';
 import styles from '@/styles/Dashboard.module.css';
@@ -11,7 +11,18 @@ export default function StudentList() {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        apiFetch('/api/admin/students/').then(r => r.json()).then(setStudents);
+        apiFetch('/api/admin/students/')
+            .then(r => r.json())
+            .then(data => {
+                if (Array.isArray(data)) {
+                    // Sort by registered date (newest first)
+                    // Assuming 'date_joined' or 'id' available. Using date_joined as it's standard.
+                    const sorted = data.sort((a, b) => new Date(b.date_joined) - new Date(a.date_joined));
+                    setStudents(sorted);
+                } else {
+                    setStudents([]);
+                }
+            });
     }, []);
 
     const filteredStudents = students.filter(s =>
@@ -38,14 +49,15 @@ export default function StudentList() {
                         </div>
                     </div>
 
-                    <div className={styles.card} style={{ padding: 0, overflow: 'hidden' }}>
-                        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                    <div className={styles.card} style={{ padding: 0, overflowX: 'auto' }}>
+                        <table style={{ width: '100%', minWidth: '600px', borderCollapse: 'collapse' }}>
                             <thead style={{ background: '#f4f4f4', borderBottom: '2px solid #ddd' }}>
                                 <tr>
                                     <th style={{ padding: '15px', textAlign: 'left' }}>Student ID</th>
                                     <th style={{ padding: '15px', textAlign: 'left' }}>Name</th>
                                     <th style={{ padding: '15px', textAlign: 'left' }}>Branch</th>
                                     <th style={{ padding: '15px', textAlign: 'left' }}>Contact</th>
+                                    <th style={{ padding: '15px', textAlign: 'left' }}>Date Joined</th>
                                     <th style={{ padding: '15px', textAlign: 'center' }}>Action</th>
                                 </tr>
                             </thead>
@@ -60,6 +72,9 @@ export default function StudentList() {
                                             </span>
                                         </td>
                                         <td style={{ padding: '15px' }}>{student.email}</td>
+                                        <td style={{ padding: '15px' }}>
+                                            {student.date_joined ? new Date(student.date_joined).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit' }) : 'N/A'}
+                                        </td>
                                         <td style={{ padding: '15px', textAlign: 'center' }}>
                                             <Link href={`/admin/students/${student.id}`} className="glass-btn primary" style={{
                                                 padding: '6px 12px',
@@ -77,7 +92,7 @@ export default function StudentList() {
                     </div>
                 </div>
             </main>
-            <Footer />
+
         </>
     );
 }

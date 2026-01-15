@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+
 
 export default function VerifyOTP() {
     const router = useRouter();
@@ -72,7 +72,7 @@ export default function VerifyOTP() {
                     </button>
                 </div>
             </main>
-            <Footer />
+
         </>
     );
 }   

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -50,7 +50,7 @@ export default function ForgotPassword() {
                     </p>
                 </div>
             </main>
-            <Footer />
+
         </>
     );
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+
 import apiFetch from '@/utils/api';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -249,7 +249,6 @@ export default function AdminDashboard() {
                     </motion.div>
                 </div>
             </main>
-            <Footer />
         </>
     );
 }

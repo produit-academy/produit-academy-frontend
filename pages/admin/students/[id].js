@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+
 import apiFetch from '@/utils/api';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import styles from '@/styles/Dashboard.module.css';
@@ -119,8 +119,8 @@ export default function StudentProfile() {
                     {/* 3. PERFORMANCE HISTORY TABLE */}
                     <h2 style={{ marginBottom: '15px' }}>Detailed Exam History</h2>
                     {history.length > 0 ? (
-                        <div className={styles.card} style={{ padding: 0, overflow: 'hidden' }}>
-                            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                        <div className={styles.card} style={{ padding: 0, overflowX: 'auto' }}>
+                            <table style={{ width: '100%', minWidth: '600px', borderCollapse: 'collapse' }}>
                                 <thead style={{ background: '#f8f9fa', borderBottom: '2px solid #ddd' }}>
                                     <tr>
                                         <th style={{ padding: '12px', textAlign: 'left' }}>Exam Title</th>
@@ -165,7 +165,7 @@ export default function StudentProfile() {
                     )}
                 </div>
             </main>
-            <Footer />
+
         </>
     );
 }
